@@ -1162,6 +1162,16 @@
     showToast('<strong>Dados salvos.</strong> Um novo arquivo .html foi baixado com peso, medidas e preços preenchidos. Da próxima vez, abra esse arquivo (não o original) para continuar de onde parou.');
   });
 
+  // Ao focar num campo que está com "0", seleciona o valor —
+  // assim digitar já substitui, sem precisar apagar antes.
+  document.addEventListener('focusin', function(ev){
+    var el = ev.target;
+    if(el.tagName === 'INPUT' && el.value === '0' &&
+       (el.type === 'number' || el.getAttribute('inputmode') === 'decimal')){
+      el.select();
+    }
+  });
+
   renderActiveTab();
 })();
 </script>
