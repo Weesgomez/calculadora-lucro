@@ -113,9 +113,17 @@
   .kpi-value.neg{ color:var(--critical); }
   .kpi-sub{margin-top:8px; font-size:12px; color:var(--text-muted);}
 
+  /* KPI rows rendered with an explicit column count (2 or 3 cards) get their own
+     classes instead of an inline style, so they can still collapse on narrow
+     screens — an inline style would otherwise beat any @media rule below. */
+  .kpi-row-3{ grid-template-columns:repeat(3,1fr); }
+  @media (max-width: 640px){ .kpi-row-3{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width: 420px){ .kpi-row-3{ grid-template-columns:1fr; } }
+
   /* ---------- Cards / grid ---------- */
   .grid-2col{display:grid; grid-template-columns:1.35fr 1fr; gap:16px; align-items:start; margin-bottom:16px;}
   @media (max-width: 980px){ .grid-2col{grid-template-columns:1fr;} .kpi-row{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width: 420px){ .kpi-row{grid-template-columns:1fr;} }
 
   .card{
     background:var(--surface-1); border:1px solid var(--border); border-radius:var(--radius-lg);
@@ -129,6 +137,8 @@
   /* ---------- Form fields ---------- */
   .field-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px 16px; }
   .field-grid.cols-3{ grid-template-columns:1fr 1fr 1fr; }
+  @media (max-width: 560px){ .field-grid.cols-3{ grid-template-columns:1fr 1fr; } }
+  @media (max-width: 380px){ .field-grid{ grid-template-columns:1fr; } .field-grid.cols-3{ grid-template-columns:1fr; } .field.span-2{ grid-column:span 1; } }
   .field{display:flex; flex-direction:column; gap:6px;}
   .field.span-2{ grid-column: span 2; }
   .field label{font-size:10.5px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); font-weight:700;}
@@ -258,6 +268,34 @@
   .meta-mc-bar .mc-bar-icon svg{ width:16px; height:16px; }
   .meta-mc-bar .mc-bar-label{ font-size:12.5px; font-weight:650; color:var(--text-primary); white-space:nowrap; }
   .meta-mc-bar .mc-bar-field .input-wrap{ width:88px; }
+
+  /* ---------- Ads/ROAS, metas de preço, desconto, promoção, comparador, saúde ---------- */
+  .info-ic{
+    display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px;
+    border-radius:50%; background:var(--surface-3); color:var(--text-muted); font-size:10.5px; font-style:normal;
+    cursor:help; margin-left:5px; vertical-align:1px; line-height:1; user-select:none;
+  }
+  .info-ic:hover{ background:var(--accent-soft); color:var(--accent-2); }
+
+  .health-card{ padding:22px; border:1px solid var(--border); }
+  .health-card.health-good{ border-color:rgba(32,212,122,.35); box-shadow:0 0 0 1px rgba(32,212,122,.2), var(--shadow-card); }
+  .health-card.health-warn{ border-color:rgba(245,184,61,.35); box-shadow:0 0 0 1px rgba(245,184,61,.2), var(--shadow-card); }
+  .health-card.health-bad{ border-color:rgba(239,74,94,.35); box-shadow:0 0 0 1px rgba(239,74,94,.2), var(--shadow-card); }
+  .health-top{ display:flex; align-items:center; gap:10px; margin-bottom:6px; }
+  .health-emoji{ font-size:22px; line-height:1; }
+  .health-title{ font-size:16px; font-weight:800; letter-spacing:.01em; }
+  .health-good .health-title{ color:var(--good); }
+  .health-warn .health-title{ color:var(--warning); }
+  .health-bad .health-title{ color:var(--critical); }
+  .health-msg{ font-size:12.5px; color:var(--text-secondary); margin:6px 0 14px; line-height:1.5; }
+  .health-grid{ margin-top:4px; border-top:1px solid var(--border); }
+  .health-grid .rk{ display:flex; align-items:center; }
+
+  .compare-table td.better{ color:var(--good); font-weight:700; }
+  .compare-table td.worse{ color:var(--critical); font-weight:700; }
+  .compare-table th.best-col, .compare-table td.best-col{ background:rgba(32,212,122,.07); color:var(--good); }
+  .compare-table thead th.best-col{ color:var(--good); }
+
   .meta-mc-bar .mc-bar-hint{ font-size:11.5px; color:var(--text-muted); margin-left:auto; text-align:right; max-width:360px; line-height:1.5; }
   @media (max-width: 720px){ .meta-mc-bar .mc-bar-hint{ margin-left:0; max-width:none; width:100%; } }
 
@@ -382,11 +420,16 @@
       },
       shopee: {
         sku:'Camiseta Premium', valorVenda:139.9, impostoPct:0.05, custoEnvio:18.45, custoProduto:45,
-        adsPct:0, outrosVariaveis:0.5
+        adsPct:0, outrosVariaveis:0.5, affiliatePct:0, adsMode:'pct', roas:8,
+        margemDesejadaPosAds:0.15, lucroDesejadoRS:15, roiDesejadoPct:0.5, discountMode:'zerar',
+        promoPrice:0, cmp:null
       },
       ml: {
         sku:'Camiseta Premium', tipoAnuncio:'Clássico', valorVenda:139.9, custoProduto:45, impostoPct:0.05,
-        tarifaPct:0.12, adsPct:0, outrosVariaveis:0.5, pesoReal:0.45, compr:36, larg:26, alt:10, freteAutomatico:true
+        tarifaPct:0.12, adsPct:0, outrosVariaveis:0.5, pesoReal:0.45, compr:36, larg:26, alt:10, freteAutomatico:true,
+        affiliatePct:0, adsMode:'pct', roas:8,
+        margemDesejadaPosAds:0.15, lucroDesejadoRS:15, roiDesejadoPct:0.5, discountMode:'zerar',
+        promoPrice:0, cmp:null
       }
     };
   }
@@ -469,42 +512,51 @@
   // ======================================================================
   // CÁLCULO SHOPEE
   // ======================================================================
-  function calcShopee(){
+  function calcShopee(vendaOverride){
     var s = state.shopee;
-    var venda = Number(s.valorVenda)||0;
+    var venda = vendaOverride!=null ? Number(vendaOverride)||0 : Number(s.valorVenda)||0;
     var band = shopeeBand(venda);
     var comissaoTotal = venda*band.comissaoPct + band.fixo;
     var valorSubsidio = venda*band.pixPct;
     var taxaLiquida = Math.max(0, comissaoTotal - valorSubsidio);
     var impostoRS = venda*(Number(s.impostoPct)||0);
-    var adsRS = venda*(Number(s.adsPct)||0);
+    var adsMode = s.adsMode || 'pct';
+    var roasIn = Number(s.roas)||0;
+    var adsPctEfetivo = adsMode==='roas' ? (roasIn>0 ? 1/roasIn : 0) : (Number(s.adsPct)||0);
+    var adsRS = venda*adsPctEfetivo;
+    var affiliatePct = Number(s.affiliatePct)||0;
+    var affiliateRS = venda*affiliatePct;
     var custoEnvio = Number(s.custoEnvio)||0;
     var custoProduto = Number(s.custoProduto)||0;
     var outrosVariaveis = Number(s.outrosVariaveis)||0;
     var rateioFixo = rateioPorVenda(state.fixedCosts.vendasMesShopee);
-    var custoTotal = taxaLiquida+impostoRS+adsRS+custoEnvio+custoProduto+outrosVariaveis+rateioFixo;
+    var custoTotal = taxaLiquida+impostoRS+adsRS+affiliateRS+custoEnvio+custoProduto+outrosVariaveis+rateioFixo;
     var mc = venda - custoTotal;
     var mcPct = venda>0 ? mc/venda : 0;
     var roi = custoTotal>0 ? mc/custoTotal : 0;
-    var denom = 1 - band.comissaoPct + band.pixPct - (Number(s.impostoPct)||0) - (Number(s.adsPct)||0);
+    var percentRate = band.comissaoPct - band.pixPct + (Number(s.impostoPct)||0) + adsPctEfetivo + affiliatePct;
+    var denom = 1 - percentRate;
     var fixedPart = band.fixo+custoEnvio+custoProduto+outrosVariaveis+rateioFixo;
     var precoMinZerar = denom>0.0001 ? fixedPart/denom : 0;
     var denomMeta = denom - state.config.metaMCPct;
     var precoMetaMC = denomMeta>0.0001 ? fixedPart/denomMeta : 0;
+    var mcSemAds = mc + adsRS;
     return {
       venda:venda, band:band, comissaoTotal:comissaoTotal, valorSubsidio:valorSubsidio, taxaLiquida:taxaLiquida,
-      impostoRS:impostoRS, adsRS:adsRS, custoEnvio:custoEnvio, custoProduto:custoProduto, outrosVariaveis:outrosVariaveis,
+      impostoRS:impostoRS, adsRS:adsRS, adsPctEfetivo:adsPctEfetivo, affiliateRS:affiliateRS, affiliatePct:affiliatePct,
+      custoEnvio:custoEnvio, custoProduto:custoProduto, outrosVariaveis:outrosVariaveis,
       rateioFixo:rateioFixo, custoTotal:custoTotal, mc:mc, mcPct:mcPct, roi:roi,
-      precoMinZerar:precoMinZerar, precoMetaMC:precoMetaMC
+      precoMinZerar:precoMinZerar, precoMetaMC:precoMetaMC,
+      fixedPart:fixedPart, percentRate:percentRate, mcSemAds:mcSemAds
     };
   }
 
   // ======================================================================
   // CÁLCULO MERCADO LIVRE
   // ======================================================================
-  function calcML(){
+  function calcML(vendaOverride){
     var m = state.ml;
-    var venda = Number(m.valorVenda)||0;
+    var venda = vendaOverride!=null ? Number(vendaOverride)||0 : Number(m.valorVenda)||0;
     var pesoCubado = (Number(m.compr)||0)*(Number(m.larg)||0)*(Number(m.alt)||0)/state.config.fatorCubagem;
     var pesoFaturavel = Math.max(Number(m.pesoReal)||0, pesoCubado);
     var fRow = freightRow(pesoFaturavel);
@@ -512,25 +564,33 @@
     var custoEnvio = m.freteAutomatico ? fRow.cols[colIdx] : 0;
     var tarifaRS = venda*(Number(m.tarifaPct)||0);
     var impostoRS = venda*(Number(m.impostoPct)||0);
-    var adsRS = venda*(Number(m.adsPct)||0);
+    var adsMode = m.adsMode || 'pct';
+    var roasIn = Number(m.roas)||0;
+    var adsPctEfetivo = adsMode==='roas' ? (roasIn>0 ? 1/roasIn : 0) : (Number(m.adsPct)||0);
+    var adsRS = venda*adsPctEfetivo;
+    var affiliatePct = Number(m.affiliatePct)||0;
+    var affiliateRS = venda*affiliatePct;
     var custoProduto = Number(m.custoProduto)||0;
     var outrosVariaveis = Number(m.outrosVariaveis)||0;
     var rateioFixo = rateioPorVenda(state.fixedCosts.vendasMesML);
-    var custoTotal = tarifaRS+custoEnvio+impostoRS+adsRS+custoProduto+outrosVariaveis+rateioFixo;
+    var custoTotal = tarifaRS+custoEnvio+impostoRS+adsRS+affiliateRS+custoProduto+outrosVariaveis+rateioFixo;
     var mc = venda - custoTotal;
     var mcPct = venda>0 ? mc/venda : 0;
     var roi = custoTotal>0 ? mc/custoTotal : 0;
-    var takeRate = (Number(m.tarifaPct)||0)+(Number(m.impostoPct)||0)+(Number(m.adsPct)||0);
-    var denom = 1 - takeRate;
+    var percentRate = (Number(m.tarifaPct)||0)+(Number(m.impostoPct)||0)+adsPctEfetivo+affiliatePct;
+    var denom = 1 - percentRate;
     var fixedPart = custoProduto+outrosVariaveis+custoEnvio+rateioFixo;
     var precoMinZerar = denom>0.0001 ? fixedPart/denom : 0;
     var denomMeta = denom - state.config.metaMCPct;
     var precoMetaMC = denomMeta>0.0001 ? fixedPart/denomMeta : 0;
+    var mcSemAds = mc + adsRS;
     return {
       venda:venda, pesoCubado:pesoCubado, pesoFaturavel:pesoFaturavel, faixaPesoLabel:fRow.label,
       faixaPrecoLabel:PRICE_BAND_LABELS[colIdx], custoEnvio:custoEnvio, tarifaRS:tarifaRS, impostoRS:impostoRS,
-      adsRS:adsRS, custoProduto:custoProduto, outrosVariaveis:outrosVariaveis, rateioFixo:rateioFixo,
-      custoTotal:custoTotal, mc:mc, mcPct:mcPct, roi:roi, precoMinZerar:precoMinZerar, precoMetaMC:precoMetaMC
+      adsRS:adsRS, adsPctEfetivo:adsPctEfetivo, affiliateRS:affiliateRS, affiliatePct:affiliatePct,
+      custoProduto:custoProduto, outrosVariaveis:outrosVariaveis, rateioFixo:rateioFixo,
+      custoTotal:custoTotal, mc:mc, mcPct:mcPct, roi:roi, precoMinZerar:precoMinZerar, precoMetaMC:precoMetaMC,
+      fixedPart:fixedPart, percentRate:percentRate, mcSemAds:mcSemAds
     };
   }
 
@@ -543,6 +603,320 @@
     else if(mcPct < state.config.metaMCPct){ cls='warning'; icon=ICONS.alert; text='MC abaixo da meta configurada ('+pct(state.config.metaMCPct)+').'; }
     else { cls='good'; icon=ICONS.check; text='Rentabilidade acima da meta de MC ('+pct(state.config.metaMCPct)+').'; }
     return '<div class="alert-banner '+cls+'">'+svgIcon(icon)+'<span>'+text+'</span></div>';
+  }
+
+  // ======================================================================
+  // MÉTRICAS AVANÇADAS: ROAS/ACOS, metas de preço, desconto máximo, saúde
+  // Recebe o resultado de calcShopee()/calcML() (r) e o objeto de estado da
+  // aba (state.shopee ou state.ml). Todas as divisões são protegidas contra
+  // zero/negativo — quando uma meta é matematicamente impossível, retorna
+  // null + uma mensagem em vez de NaN/Infinity.
+  // ======================================================================
+  function advancedMetrics(r, ps){
+    var out = {};
+
+    // Preço para lucro desejado (R$): venda*(1-percentRate) - fixedPart = lucroDesejado
+    var denomLucro = 1 - r.percentRate;
+    var lucroDesejado = Number(ps.lucroDesejadoRS)||0;
+    out.lucroDesejado = lucroDesejado;
+    out.precoLucroDesejado = denomLucro>0.0001 ? (r.fixedPart+lucroDesejado)/denomLucro : null;
+
+    // Preço para ROI desejado (%): (venda-custoTotal)/custoTotal = roiDesejado
+    var roiDesejado = Number(ps.roiDesejadoPct)||0;
+    out.roiDesejado = roiDesejado;
+    var denomRoi = 1 - r.percentRate*(1+roiDesejado);
+    out.precoRoiDesejado = denomRoi>0.0001 ? (r.fixedPart*(1+roiDesejado))/denomRoi : null;
+
+    // ROAS / ACOS (frações 0..1, exceto roasAtual/roasEquilibrio/roasNecessario que são razões)
+    out.acosAtual = r.adsPctEfetivo;
+    out.custoAdsAtual = r.adsRS;
+    out.roasAtual = r.adsPctEfetivo>0.0001 ? 1/r.adsPctEfetivo : null;
+
+    if(r.mcSemAds > 0.004){
+      out.roasEquilibrio = r.venda / r.mcSemAds;
+      out.acosMax = r.mcSemAds / r.venda;
+    } else {
+      out.roasEquilibrio = null;
+      out.acosMax = 0;
+    }
+
+    var margemDesejadaPosAds = Number(ps.margemDesejadaPosAds)||0;
+    var custoAdsNecessario = r.mcSemAds - margemDesejadaPosAds*r.venda;
+    if(r.mcSemAds <= 0.004){
+      out.roasNecessario = null; out.acosNecessario = null;
+      out.roasNecessarioMsg = 'Meta impossível a este preço mesmo sem Ads — revise preço ou custos.';
+    } else if(custoAdsNecessario <= 0.004){
+      out.roasNecessario = null; out.acosNecessario = null;
+      out.roasNecessarioMsg = 'Meta impossível a este preço mesmo sem investir em Ads — a margem sem Ads já é menor que a meta desejada. Aumente o preço ou reduza custos.';
+    } else {
+      out.roasNecessario = r.venda/custoAdsNecessario;
+      out.acosNecessario = custoAdsNecessario/r.venda;
+      out.roasNecessarioMsg = null;
+    }
+
+    // Desconto máximo
+    var discountMode = ps.discountMode || 'zerar';
+    var floorPrice = discountMode==='meta' ? r.precoMetaMC : r.precoMinZerar;
+    if(r.venda>0 && floorPrice>=0 && floorPrice<r.venda){
+      out.descontoMaxPct = (r.venda-floorPrice)/r.venda;
+      out.descontoMaxRS = r.venda-floorPrice;
+    } else {
+      out.descontoMaxPct = 0; out.descontoMaxRS = 0;
+    }
+    out.menorPrecoRecomendado = floorPrice;
+
+    // Saúde da venda
+    if(r.mc < -0.004) out.health = 'bad';
+    else if(r.mcPct < state.config.metaMCPct) out.health = 'warn';
+    else out.health = 'good';
+
+    return out;
+  }
+
+  function infoIcon(title, text){
+    var span = document.createElement('span');
+    span.className = 'info-ic';
+    span.textContent = 'i';
+    span.setAttribute('aria-label', title);
+    span.addEventListener('mousemove', function(ev){ showTooltip(ev.clientX, ev.clientY, title, text); });
+    span.addEventListener('mouseleave', hideTooltip);
+    span.addEventListener('click', function(ev){ ev.stopPropagation(); showTooltip(ev.clientX, ev.clientY, title, text); setTimeout(hideTooltip, 3800); });
+    return span;
+  }
+
+  function readoutRowRich(container, k, v, infoTitle, infoText){
+    var row = document.createElement('div'); row.className='readout-row';
+    var kSpan = document.createElement('span'); kSpan.className='rk';
+    kSpan.appendChild(document.createTextNode(k));
+    if(infoTitle){ kSpan.appendChild(infoIcon(infoTitle, infoText)); }
+    var vSpan = document.createElement('span'); vSpan.className='rv'; vSpan.textContent = v;
+    row.appendChild(kSpan); row.appendChild(vSpan);
+    container.appendChild(row);
+  }
+
+  // ---- Indicador de saúde da venda ----
+  function renderHealthCard(r, adv){
+    var card = document.createElement('section'); card.className='card health-card health-'+adv.health;
+    var icon = adv.health==='good' ? '🟢' : (adv.health==='warn' ? '🟡' : '🔴');
+    var title = adv.health==='good' ? 'VENDA SAUDÁVEL' : (adv.health==='warn' ? 'MARGEM BAIXA' : 'PREJUÍZO');
+    var top = document.createElement('div'); top.className='health-top';
+    top.innerHTML = '<span class="health-emoji">'+icon+'</span><span class="health-title">'+title+'</span>';
+    card.appendChild(top);
+
+    if(adv.health==='bad'){
+      var msgB = document.createElement('div'); msgB.className='health-msg';
+      msgB.textContent = 'Você perde '+money(Math.abs(r.mc))+' por venda. Preço mínimo para não ter prejuízo: '+money(r.precoMinZerar)+'.';
+      card.appendChild(msgB);
+    } else if(adv.health==='warn'){
+      var msgW = document.createElement('div'); msgW.className='health-msg';
+      msgW.textContent = 'A venda ainda tem lucro, mas está abaixo da meta de MC configurada ('+pct(state.config.metaMCPct)+').';
+      card.appendChild(msgW);
+    }
+
+    var grid = document.createElement('div'); grid.className='health-grid readout-list';
+    readoutRowRich(grid, 'Lucro líquido por venda', money(r.mc));
+    readoutRowRich(grid, 'MC', pct(r.mcPct), 'Margem de Contribuição', 'O que sobra da venda depois de todos os custos: comissão/tarifa, frete, imposto, produto, ads e rateio de custo fixo.');
+    readoutRowRich(grid, 'ROI', pct(r.roi), 'Retorno sobre o investimento', 'Quanto volta pra você a cada R$1 gasto com os custos totais dessa venda.');
+    if(adv.roasAtual!=null) readoutRowRich(grid, 'ROAS atual', num(adv.roasAtual));
+    readoutRowRich(grid, 'ROAS de equilíbrio', adv.roasEquilibrio!=null?num(adv.roasEquilibrio):'—', 'ROAS de equilíbrio', 'É o menor ROAS que sua campanha pode atingir antes da venda começar a gerar prejuízo.');
+    if(adv.roasNecessario!=null){
+      readoutRowRich(grid, 'ROAS p/ margem desejada', num(adv.roasNecessario), 'ROAS necessário', 'O ROAS mínimo pra manter a margem que você definiu em "Publicidade — Ads/ROAS", mesmo investindo em anúncios.');
+    }
+    readoutRowRich(grid, 'ACOS máximo', pct(adv.acosMax), 'ACOS máximo', 'O maior percentual da venda que dá pra gastar com Ads sem ter prejuízo.');
+    readoutRowRich(grid, 'Desconto máximo', pct(adv.descontoMaxPct), 'Desconto máximo', 'Até quanto dá pra abaixar o preço sem ultrapassar o limite escolhido no card "Desconto máximo".');
+    card.appendChild(grid);
+    return card;
+  }
+
+  // ---- Publicidade — Ads / ROAS ----
+  function renderAdsRoasCard(s, r, adv){
+    var card = document.createElement('section'); card.className='card';
+    var head = document.createElement('div'); head.className='card-head';
+    head.innerHTML = '<div><h2>Publicidade — Ads / ROAS</h2><div class="sub">Modele o investimento em anúncios por percentual da venda ou por ROAS.</div></div>';
+    card.appendChild(head);
+
+    var modeField = document.createElement('div'); modeField.className='field';
+    var modeLbl = document.createElement('label'); modeLbl.textContent='Definir Ads por'; modeField.appendChild(modeLbl);
+    var seg = document.createElement('div'); seg.className='seg-toggle';
+    [['%','pct'],['ROAS','roas']].forEach(function(pair){
+      var b=document.createElement('button'); b.type='button'; b.textContent=pair[0];
+      if((s.adsMode||'pct')===pair[1]) b.className='on good';
+      b.addEventListener('click', function(){ s.adsMode=pair[1]; renderActiveTab(); });
+      seg.appendChild(b);
+    });
+    modeField.appendChild(seg);
+    card.appendChild(modeField);
+
+    if((s.adsMode||'pct')==='roas'){
+      var fg = document.createElement('div'); fg.className='field-grid'; fg.style.marginTop='12px';
+      fg.appendChild(field({label:'ROAS atual/pretendido', value:s.roas, step:'0.1', onInput:function(v){ s.roas=v; }}));
+      card.appendChild(fg);
+      var hint = document.createElement('div'); hint.className='note';
+      hint.textContent = 'Com ROAS ativo, ele substitui o campo "Ads / publicidade (%)" da seção Entradas neste cálculo.';
+      card.appendChild(hint);
+    }
+
+    var kpiRow = document.createElement('div'); kpiRow.className='kpi-row'; kpiRow.style.gridTemplateColumns='repeat(2,1fr)'; kpiRow.style.margin='16px 0 0';
+    kpiRow.innerHTML =
+      kpiCard('ACOS atual', pct(adv.acosAtual), false, ICONS.percent, 'accent', 'custo de Ads: '+money(adv.custoAdsAtual)) +
+      kpiCard('ROAS atual', adv.roasAtual!=null ? num(adv.roasAtual) : '—', false, ICONS.trend, 'accent', adv.roasAtual!=null ? 'a cada R$1 em ads, retornam '+num(adv.roasAtual) : 'sem investimento em ads no momento');
+    card.appendChild(kpiRow);
+
+    var kpiRow2 = document.createElement('div'); kpiRow2.className='kpi-row'; kpiRow2.style.gridTemplateColumns='repeat(2,1fr)'; kpiRow2.style.marginTop='16px';
+    kpiRow2.innerHTML =
+      kpiCard('ROAS de equilíbrio', adv.roasEquilibrio!=null?num(adv.roasEquilibrio):'—', adv.roasEquilibrio==null, ICONS.scale, adv.roasEquilibrio==null?'critical':'accent', adv.roasEquilibrio!=null?'ACOS máximo: '+pct(adv.acosMax):'já há prejuízo antes dos Ads') +
+      kpiCard('Lucro após Ads', money(r.mc), r.mc<0, ICONS.wallet, r.mc<0?'critical':'good', pct(r.mcPct)+' de MC · ROI '+pct(r.roi));
+    card.appendChild(kpiRow2);
+
+    var goalWrap = document.createElement('div'); goalWrap.style.cssText='margin-top:16px; padding-top:14px; border-top:1px solid var(--border);';
+    var fgGoal = document.createElement('div'); fgGoal.className='field-grid';
+    fgGoal.appendChild(percentField({label:'Margem desejada pós-Ads', value:s.margemDesejadaPosAds||0,
+      infoTitle:'Margem desejada pós-Ads', infoText:'A margem de contribuição que você quer manter na venda mesmo depois de pagar o investimento em anúncios.',
+      onInput:function(v){ s.margemDesejadaPosAds=v; }}));
+    goalWrap.appendChild(fgGoal);
+    var goalResult = document.createElement('div'); goalResult.style.marginTop='12px';
+    if(adv.roasNecessarioMsg){
+      goalResult.innerHTML = '<div class="alert-banner warning" style="margin-bottom:0;">'+svgIcon(ICONS.alert)+'<span>'+adv.roasNecessarioMsg+'</span></div>';
+    } else {
+      goalResult.className='readout-list';
+      goalResult.innerHTML = readoutRow('ROAS necessário', num(adv.roasNecessario)) + readoutRow('ACOS máximo p/ essa meta', pct(adv.acosNecessario));
+    }
+    goalWrap.appendChild(goalResult);
+    card.appendChild(goalWrap);
+    return card;
+  }
+
+  // ---- Metas de preço (lucro desejado / ROI desejado) ----
+  function renderPriceGoalsCard(s, r, adv){
+    var card = document.createElement('section'); card.className='card';
+    card.innerHTML = '<div class="card-head"><div><h2>Metas de preço</h2><div class="sub">Quanto cobrar para bater um lucro ou ROI específico, considerando os custos atuais.</div></div></div>';
+    var fg = document.createElement('div'); fg.className='field-grid';
+    fg.appendChild(field({label:'Quero lucrar por venda', prefix:'R$', value:s.lucroDesejadoRS||0, step:'0.01', onInput:function(v){ s.lucroDesejadoRS=v; }}));
+    fg.appendChild(percentField({label:'ROI desejado', value:s.roiDesejadoPct||0, onInput:function(v){ s.roiDesejadoPct=v; }}));
+    card.appendChild(fg);
+    var res = document.createElement('div'); res.className='kpi-row'; res.style.gridTemplateColumns='repeat(2,1fr)'; res.style.margin='16px 0 0';
+    res.innerHTML =
+      (adv.precoLucroDesejado!=null
+        ? kpiCard('Preço necessário p/ esse lucro', money(adv.precoLucroDesejado), false, ICONS.target, 'accent', 'lucro desejado: '+money(adv.lucroDesejado))
+        : kpiCard('Preço necessário p/ esse lucro', '—', true, ICONS.alert, 'critical', 'meta impossível com os custos percentuais atuais')) +
+      (adv.precoRoiDesejado!=null
+        ? kpiCard('Preço necessário p/ esse ROI', money(adv.precoRoiDesejado), false, ICONS.target, 'accent', 'ROI desejado: '+pct(adv.roiDesejado))
+        : kpiCard('Preço necessário p/ esse ROI', '—', true, ICONS.alert, 'critical', 'meta impossível com os custos percentuais atuais'));
+    card.appendChild(res);
+    return card;
+  }
+
+  // ---- Desconto máximo ----
+  function renderDiscountCard(s, r, adv){
+    var card = document.createElement('section'); card.className='card';
+    card.innerHTML = '<div class="card-head"><div><h2>Desconto máximo</h2><div class="sub">Até quanto dá pra abaixar o preço sem passar do limite escolhido.</div></div></div>';
+    var modeField = document.createElement('div'); modeField.className='field';
+    var lbl = document.createElement('label'); lbl.textContent='Limite'; modeField.appendChild(lbl);
+    var seg = document.createElement('div'); seg.className='seg-toggle';
+    [['Não ter prejuízo','zerar'],['Manter meta de MC','meta']].forEach(function(pair){
+      var b=document.createElement('button'); b.type='button'; b.textContent=pair[0];
+      if((s.discountMode||'zerar')===pair[1]) b.className='on good';
+      b.addEventListener('click', function(){ s.discountMode=pair[1]; renderActiveTab(); });
+      seg.appendChild(b);
+    });
+    modeField.appendChild(seg);
+    card.appendChild(modeField);
+    var kpiRow = document.createElement('div'); kpiRow.className='kpi-row kpi-row-3'; kpiRow.style.margin='16px 0 0';
+    kpiRow.innerHTML =
+      kpiCard('Desconto máximo', pct(adv.descontoMaxPct), false, ICONS.percent, 'accent', money(adv.descontoMaxRS)+' de desconto') +
+      kpiCard('Menor preço recomendado', money(adv.menorPrecoRecomendado), false, ICONS.scale, 'accent', 'sobre venda atual de '+money(r.venda)) +
+      kpiCard('Preço atual', money(r.venda), false, ICONS.wallet, 'accent', '—');
+    card.appendChild(kpiRow);
+    return card;
+  }
+
+  // ---- Simulador de promoção ----
+  function renderPromoSimulator(s, calcFn){
+    var card = document.createElement('section'); card.className='card';
+    card.innerHTML = '<div class="card-head"><div><h2>Simulador de promoção</h2><div class="sub">Compare o preço atual com um preço promocional, sem alterar sua venda cadastrada.</div></div></div>';
+    var fg = document.createElement('div'); fg.className='field-grid';
+    fg.appendChild(field({label:'Preço promocional', prefix:'R$', value:s.promoPrice||0, step:'0.01', onInput:function(v){ s.promoPrice=v; }}));
+    card.appendChild(fg);
+
+    var promoPrice = Number(s.promoPrice)||0;
+    if(promoPrice>0){
+      var rAtual = calcFn();
+      var rPromo = calcFn(promoPrice);
+      var advAtual = advancedMetrics(rAtual, s);
+      var advPromo = advancedMetrics(rPromo, s);
+      var wrap = document.createElement('div'); wrap.className='table-scroll'; wrap.style.marginTop='14px';
+      var rows = [
+        ['Lucro', money(rAtual.mc), money(rPromo.mc), rPromo.mc>=rAtual.mc],
+        ['MC', pct(rAtual.mcPct), pct(rPromo.mcPct), rPromo.mcPct>=rAtual.mcPct],
+        ['ROI', pct(rAtual.roi), pct(rPromo.roi), rPromo.roi>=rAtual.roi],
+        ['Ads máximo (antes de zerar)', money(Math.max(0,rAtual.mcSemAds)), money(Math.max(0,rPromo.mcSemAds)), rPromo.mcSemAds>=rAtual.mcSemAds],
+        ['ROAS de equilíbrio', advAtual.roasEquilibrio!=null?num(advAtual.roasEquilibrio):'—', advPromo.roasEquilibrio!=null?num(advPromo.roasEquilibrio):'—', (advPromo.roasEquilibrio||Infinity)<=(advAtual.roasEquilibrio||Infinity)]
+      ];
+      var table = document.createElement('table'); table.className='compare-table';
+      table.innerHTML = '<thead><tr><th>Indicador</th><th>Atual ('+money(rAtual.venda)+')</th><th>Promoção ('+money(rPromo.venda)+')</th></tr></thead>'+
+        '<tbody>'+rows.map(function(row){ return '<tr><td>'+row[0]+'</td><td>'+row[1]+'</td><td class="'+(row[3]?'better':'worse')+'">'+row[2]+'</td></tr>'; }).join('')+'</tbody>';
+      wrap.appendChild(table);
+      card.appendChild(wrap);
+      if(rPromo.mc<0){
+        var warn = document.createElement('div'); warn.style.marginTop='10px';
+        warn.innerHTML = '<div class="alert-banner critical" style="margin-bottom:0;">'+svgIcon(ICONS.alert)+'<span>Nesse preço promocional a venda dá prejuízo de '+money(Math.abs(rPromo.mc))+'.</span></div>';
+        card.appendChild(warn);
+      }
+    }
+    return card;
+  }
+
+  // ---- Comparador de até 3 preços ----
+  function renderPriceComparator3(s, calcFn){
+    var card = document.createElement('section'); card.className='card';
+    card.innerHTML = '<div class="card-head"><div><h2>Comparador de preços</h2><div class="sub">Teste até 3 preços de venda lado a lado.</div></div></div>';
+    if(!s.cmp || s.cmp.length!==3){ var seed=Number(s.valorVenda)||0; s.cmp = [seed, seed, seed]; }
+    var fg = document.createElement('div'); fg.className='field-grid cols-3';
+    s.cmp.forEach(function(v, i){
+      fg.appendChild(field({label:'Preço '+(i+1), prefix:'R$', value:v, step:'0.01', onInput:function(val){ s.cmp[i]=val; }}));
+    });
+    card.appendChild(fg);
+
+    var results = s.cmp.map(function(v){
+      var rr = calcFn(Number(v)||0);
+      var aa = advancedMetrics(rr, s);
+      return {r:rr, adv:aa};
+    });
+    var bestIdx = -1, bestScore = -Infinity;
+    results.forEach(function(res, i){
+      if(res.r.venda>0 && res.r.mcPct>bestScore){ bestScore=res.r.mcPct; bestIdx=i; }
+    });
+
+    var wrap = document.createElement('div'); wrap.className='table-scroll'; wrap.style.marginTop='14px';
+    var rowsDef = [
+      {k:'Taxas (marketplace)', get:function(x){ return money(x.r.taxaLiquida!=null ? x.r.taxaLiquida : x.r.tarifaRS); }},
+      {k:'Custos totais', get:function(x){ return money(x.r.custoTotal); }},
+      {k:'Lucro (MC)', get:function(x){ return money(x.r.mc); }},
+      {k:'MC %', get:function(x){ return pct(x.r.mcPct); }},
+      {k:'ROI', get:function(x){ return pct(x.r.roi); }},
+      {k:'Custo máximo de Ads', get:function(x){ return money(Math.max(0,x.r.mcSemAds)); }},
+      {k:'ACOS máximo', get:function(x){ return pct(x.adv.acosMax); }},
+      {k:'ROAS de equilíbrio', get:function(x){ return x.adv.roasEquilibrio!=null?num(x.adv.roasEquilibrio):'—'; }},
+      {k:'ROAS p/ margem desejada', get:function(x){ return x.adv.roasNecessario!=null?num(x.adv.roasNecessario):'—'; }}
+    ];
+    var thead = '<thead><tr><th>Indicador</th>'+results.map(function(res,i){
+      return '<th'+(i===bestIdx?' class="best-col"':'')+'>'+money(res.r.venda)+(i===bestIdx?' ★':'')+'</th>';
+    }).join('')+'</tr></thead>';
+    var tbody = '<tbody>'+rowsDef.map(function(row){
+      return '<tr><td>'+row.k+'</td>'+results.map(function(res,i){
+        return '<td'+(i===bestIdx?' class="best-col"':'')+'>'+row.get(res)+'</td>';
+      }).join('')+'</tr>';
+    }).join('')+'</tbody>';
+    var table = document.createElement('table'); table.className='compare-table';
+    table.innerHTML = thead+tbody;
+    wrap.appendChild(table);
+    card.appendChild(wrap);
+    if(bestIdx>=0){
+      var note = document.createElement('div'); note.className='note';
+      note.textContent = '★ melhor equilíbrio entre margem e rentabilidade entre os 3 preços testados.';
+      card.appendChild(note);
+    }
+    return card;
   }
 
   function rankList(rows){
@@ -653,6 +1027,7 @@
     // stores 0..1 internally, displays as 0..100
     var wrap = document.createElement('div'); wrap.className='field'+(opts.colSpan===2?' span-2':'');
     var lbl = document.createElement('label'); lbl.textContent = opts.label; wrap.appendChild(lbl);
+    if(opts.infoTitle){ lbl.appendChild(infoIcon(opts.infoTitle, opts.infoText)); }
     var iw = document.createElement('div'); iw.className='input-wrap';
     var inp = document.createElement('input'); inp.type='text'; inp.inputMode='decimal'; inp.className='has-suffix';
     inp.value = formatNumForInput(Math.round(opts.value*1000)/10);
@@ -721,6 +1096,7 @@
     fg.appendChild(field({label:'Custo para enviar', prefix:'R$', value:s.custoEnvio, step:'0.01', onInput:function(v){ s.custoEnvio=v; }}));
     fg.appendChild(field({label:'Custo do produto', prefix:'R$', value:s.custoProduto, step:'0.01', onInput:function(v){ s.custoProduto=v; }}));
     fg.appendChild(percentField({label:'Ads / publicidade', value:s.adsPct, onInput:function(v){ s.adsPct=v; }}));
+    fg.appendChild(percentField({label:'Comissão de afiliado', value:s.affiliatePct||0, onInput:function(v){ s.affiliatePct=v; }}));
     fg.appendChild(field({label:'Outros custos variáveis', prefix:'R$', value:s.outrosVariaveis, step:'0.01', onInput:function(v){ s.outrosVariaveis=v; }}));
     left.appendChild(fg);
 
@@ -756,6 +1132,7 @@
       {name:'Envio', value:r.custoEnvio},
       {name:'Produto', value:r.custoProduto},
       {name:'Ads', value:r.adsRS},
+      {name:'Comissão afiliado', value:r.affiliateRS},
       {name:'Outros', value:r.outrosVariaveis},
       {name:'Rateio fixo', value:r.rateioFixo}
     ]);
@@ -778,6 +1155,15 @@
     bottom.appendChild(chartWrap);
     root.appendChild(bottom);
     wireProjectionChart(chartWrap, chartData);
+
+    // ---- Novos módulos: saúde, ads/ROAS, metas de preço, desconto, promoção, comparador ----
+    var adv = advancedMetrics(r, s);
+    root.appendChild(renderHealthCard(r, adv));
+    root.appendChild(renderAdsRoasCard(s, r, adv));
+    root.appendChild(renderPriceGoalsCard(s, r, adv));
+    root.appendChild(renderDiscountCard(s, r, adv));
+    root.appendChild(renderPromoSimulator(s, calcShopee));
+    root.appendChild(renderPriceComparator3(s, calcShopee));
   }
 
   // ======================================================================
@@ -820,6 +1206,7 @@
     fg.appendChild(percentField({label:'Imposto', value:m.impostoPct, onInput:function(v){ m.impostoPct=v; }}));
     fg.appendChild(percentField({label:'Tarifa ML', value:m.tarifaPct, onInput:function(v){ m.tarifaPct=v; }}));
     fg.appendChild(percentField({label:'Ads / publicidade', value:m.adsPct, onInput:function(v){ m.adsPct=v; }}));
+    fg.appendChild(percentField({label:'Comissão de afiliado', value:m.affiliatePct||0, onInput:function(v){ m.affiliatePct=v; }}));
     fg.appendChild(field({label:'Outros custos variáveis', prefix:'R$', value:m.outrosVariaveis, step:'0.01', onInput:function(v){ m.outrosVariaveis=v; }}));
     left.appendChild(fg);
 
@@ -888,6 +1275,7 @@
       {name:'Envio ML', value:r.custoEnvio},
       {name:'Imposto', value:r.impostoRS},
       {name:'Ads', value:r.adsRS},
+      {name:'Comissão afiliado', value:r.affiliateRS},
       {name:'Produto', value:r.custoProduto},
       {name:'Outros', value:r.outrosVariaveis},
       {name:'Rateio fixo', value:r.rateioFixo}
@@ -910,6 +1298,15 @@
     bottom.appendChild(chartWrap);
     root.appendChild(bottom);
     wireProjectionChart(chartWrap, chartData);
+
+    // ---- Novos módulos: saúde, ads/ROAS, metas de preço, desconto, promoção, comparador ----
+    var advML = advancedMetrics(r, m);
+    root.appendChild(renderHealthCard(r, advML));
+    root.appendChild(renderAdsRoasCard(m, r, advML));
+    root.appendChild(renderPriceGoalsCard(m, r, advML));
+    root.appendChild(renderDiscountCard(m, r, advML));
+    root.appendChild(renderPromoSimulator(m, calcML));
+    root.appendChild(renderPriceComparator3(m, calcML));
   }
 
   // ======================================================================
