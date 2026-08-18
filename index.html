@@ -29,6 +29,8 @@
     --warning-soft:rgba(245,184,61,.14);
     --shopee-accent:#ff7a3d;
     --ml-accent:#ffd23f;
+    --shein-accent:#ff2d78;
+    --tiktok-accent:#25f4ee;
     --radius-lg:18px;
     --radius-md:12px;
     --radius-sm:8px;
@@ -94,6 +96,8 @@
   .nav-tab.active .dot{ background:#fff; }
   .nav-tab[data-tab="shopee"] .dot{ background:var(--shopee-accent); }
   .nav-tab[data-tab="ml"] .dot{ background:var(--ml-accent); }
+  .nav-tab[data-tab="shein"] .dot{ background:var(--shein-accent); }
+  .nav-tab[data-tab="tiktok"] .dot{ background:var(--tiktok-accent); }
   .nav-tab.active[data-tab="shopee"] .dot, .nav-tab.active[data-tab="ml"] .dot{ background:#fff; }
 
   /* ---------- KPI row ---------- */
@@ -245,12 +249,20 @@
   /* ---------- Comparativo ---------- */
   .compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
   @media (max-width: 900px){ .compare-grid{ grid-template-columns:1fr; } }
+  .compare-grid.cols-3{ grid-template-columns:1fr 1fr 1fr; }
+  @media (max-width: 1080px){ .compare-grid.cols-3{ grid-template-columns:1fr 1fr; } }
+  @media (max-width: 640px){ .compare-grid.cols-3{ grid-template-columns:1fr; } }
+  .compare-grid.cols-4{ grid-template-columns:repeat(4,1fr); }
+  @media (max-width: 1200px){ .compare-grid.cols-4{ grid-template-columns:1fr 1fr; } }
+  @media (max-width: 640px){ .compare-grid.cols-4{ grid-template-columns:1fr; } }
   .compare-card{ background:var(--surface-1); border:1px solid var(--border); border-radius:var(--radius-lg); padding:20px 22px; box-shadow:var(--shadow-card); position:relative; }
   .compare-card.winner{ border-color:rgba(32,212,122,.4); box-shadow:0 0 0 1px rgba(32,212,122,.25), var(--shadow-card); }
   .compare-head{ display:flex; align-items:center; gap:10px; margin-bottom:16px; }
   .compare-mark{ width:30px; height:30px; border-radius:9px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:12px; color:#1a1006; }
   .compare-mark.shopee{ background:var(--shopee-accent); }
   .compare-mark.ml{ background:var(--ml-accent); }
+  .compare-mark.shein{ background:var(--shein-accent); color:#fff; }
+  .compare-mark.tiktok{ background:var(--tiktok-accent); color:#0a0b0f; }
   .compare-title{ font-size:14.5px; font-weight:700; }
   .winner-tag{ margin-left:auto; background:var(--good-soft); color:var(--good); font-size:10.5px; font-weight:700; padding:4px 10px; border-radius:999px; }
   .compare-metric{ display:flex; align-items:baseline; justify-content:space-between; padding:10px 0; border-bottom:1px solid var(--border); }
@@ -298,6 +310,7 @@
   .health-grid .rk{ display:flex; align-items:center; }
 
   .compare-table td.better{ color:var(--good); font-weight:700; }
+  .compare-table tr.best-row td{ background:rgba(32,212,122,.07); color:var(--good); font-weight:700; }
   .compare-table td.worse{ color:var(--critical); font-weight:700; }
   .compare-table th.best-col, .compare-table td.best-col{ background:rgba(32,212,122,.07); color:var(--good); }
   .compare-table thead th.best-col{ color:var(--good); }
@@ -469,7 +482,9 @@
         ],
         safetyMarginPct: 0,
         vendasMesShopee: 1000,
-        vendasMesML: 1000
+        vendasMesML: 1000,
+        vendasMesShein: 1000,
+        vendasMesTiktok: 1000
       },
       shopee: {
         sku:'', valorVenda:0, impostoPct:0, custoEnvio:0, custoProduto:0,
@@ -481,6 +496,20 @@
         sku:'', tipoAnuncio:'Clássico', valorVenda:0, custoProduto:0, impostoPct:0,
         tarifaPct:0.12, adsPct:0, outrosVariaveis:0, pesoReal:0.15, compr:30, larg:20, alt:5, freteAutomatico:true,
         affiliatePct:0, adsMode:'pct', roas:0,
+        margemDesejadaPosAds:0, lucroDesejadoRS:0, roiDesejadoPct:0, discountMode:'zerar',
+        promoPrice:0, cmp:null, simVendas:100, metaLucroMensal:0
+      },
+      shein: {
+        sku:'', valorVenda:0, custoProduto:0, comissaoPct:0.16, impostoPct:0, custoEnvio:0,
+        adsPct:0, outrosVariaveis:0, affiliatePct:0, adsMode:'pct', roas:0,
+        margemDesejadaPosAds:0, lucroDesejadoRS:0, roiDesejadoPct:0, discountMode:'zerar',
+        promoPrice:0, cmp:null, simVendas:100, metaLucroMensal:0
+      },
+      tiktok: {
+        sku:'', valorVenda:0, custoProduto:0, comissaoPct:0.06, taxaFixaPorItem:4.00, impostoPct:0, custoEnvio:0,
+        adsPct:0, outrosVariaveis:0,
+        affiliateOn:false, affiliatePct:0.10, affiliateSalesSharePct:0, compareUseBlended:false,
+        adsMode:'pct', roas:0,
         margemDesejadaPosAds:0, lucroDesejadoRS:0, roiDesejadoPct:0, discountMode:'zerar',
         promoPrice:0, cmp:null, simVendas:100, metaLucroMensal:0
       }
@@ -518,17 +547,32 @@
     showToast('<strong>Dados apagados.</strong> A calculadora voltou aos valores padrão.');
   }
 
+  // Compatibilidade com dados salvos antes do SHEIN/TikTok existirem: preenche
+  // o que faltar com os valores padrão, sem tocar em nada que já esteja salvo.
+  function ensureSheinDefaults(st){
+    if(!st) return st;
+    var d = defaultState();
+    if(!st.shein) st.shein = d.shein;
+    if(!st.tiktok) st.tiktok = d.tiktok;
+    if(!st.fixedCosts) st.fixedCosts = d.fixedCosts;
+    else {
+      if(st.fixedCosts.vendasMesShein==null) st.fixedCosts.vendasMesShein = d.fixedCosts.vendasMesShein;
+      if(st.fixedCosts.vendasMesTiktok==null) st.fixedCosts.vendasMesTiktok = d.fixedCosts.vendasMesTiktok;
+    }
+    return st;
+  }
+
   var state = null;
   function loadInitialState(){
     // Prioridade: 1) autosave deste navegador (mais recente) — 2) dados
     // embutidos no arquivo .html (de um "Salvar meus dados" anterior, útil
     // ao abrir em outro computador/navegador) — 3) padrão de fábrica.
     var auto = loadAutoSavedState();
-    if(auto) return auto;
+    if(auto) return ensureSheinDefaults(auto);
     var seedEl = document.getElementById('app-data');
     var raw = (seedEl.textContent || '').trim();
     if(raw && raw !== 'SEED_PLACEHOLDER'){
-      try{ var parsed = JSON.parse(raw); if(parsed && parsed.shopee && parsed.ml) return parsed; }
+      try{ var parsed = JSON.parse(raw); if(parsed && parsed.shopee && parsed.ml) return ensureSheinDefaults(parsed); }
       catch(e){ console.warn('Falha ao ler dados salvos, usando padrão.', e); }
     }
     return defaultState();
@@ -706,6 +750,158 @@
   }
 
   // ======================================================================
+  // CÁLCULO SHEIN
+  // Comissão percentual simples e editável (padrão 16%) — sem faixas como a
+  // Shopee e sem tabela de frete por peso como o Mercado Livre. Fora isso, a
+  // forma do resultado é idêntica à de calcShopee()/calcML(), o que é o que
+  // permite reaproveitar renderAdsRoasCard, renderPriceGoalsCard,
+  // renderDiscountCard, renderPromoSimulator, renderPriceComparator3,
+  // advancedMetrics e toda a Projeção sem nenhuma alteração nelas.
+  // ======================================================================
+  function calcShein(vendaOverride){
+    var s = state.shein;
+    var venda = vendaOverride!=null ? Number(vendaOverride)||0 : Number(s.valorVenda)||0;
+    var comissaoPct = Number(s.comissaoPct)||0;
+    var comissaoRS = venda*comissaoPct;
+    var impostoRS = venda*(Number(s.impostoPct)||0);
+    var adsMode = s.adsMode || 'pct';
+    var roasIn = Number(s.roas)||0;
+    var adsPctEfetivo = adsMode==='roas' ? (roasIn>0 ? 1/roasIn : 0) : (Number(s.adsPct)||0);
+    var adsRS = venda*adsPctEfetivo;
+    var affiliatePct = Number(s.affiliatePct)||0;
+    var affiliateRS = venda*affiliatePct;
+    var custoEnvio = Number(s.custoEnvio)||0;
+    var custoProduto = Number(s.custoProduto)||0;
+    var outrosVariaveis = Number(s.outrosVariaveis)||0;
+    var rateioFixo = rateioPorVenda(state.fixedCosts.vendasMesShein);
+    var custoTotal = comissaoRS+impostoRS+adsRS+affiliateRS+custoEnvio+custoProduto+outrosVariaveis+rateioFixo;
+    var mc = venda - custoTotal;
+    var mcPct = venda>0 ? mc/venda : 0;
+    var roi = custoTotal>0 ? mc/custoTotal : 0;
+    var percentRate = comissaoPct + (Number(s.impostoPct)||0) + adsPctEfetivo + affiliatePct;
+    var denom = 1 - percentRate;
+    var fixedPart = custoEnvio+custoProduto+outrosVariaveis+rateioFixo;
+    var precoMinZerar = denom>0.0001 ? fixedPart/denom : 0;
+    var denomMeta = denom - state.config.metaMCPct;
+    var precoMetaMC = denomMeta>0.0001 ? fixedPart/denomMeta : 0;
+    var mcSemAds = mc + adsRS;
+    return {
+      venda:venda, comissaoPct:comissaoPct, comissaoRS:comissaoRS, taxaLiquida:comissaoRS,
+      impostoRS:impostoRS, adsRS:adsRS, adsPctEfetivo:adsPctEfetivo, affiliateRS:affiliateRS, affiliatePct:affiliatePct,
+      custoEnvio:custoEnvio, custoProduto:custoProduto, outrosVariaveis:outrosVariaveis,
+      rateioFixo:rateioFixo, custoTotal:custoTotal, mc:mc, mcPct:mcPct, roi:roi,
+      precoMinZerar:precoMinZerar, precoMetaMC:precoMetaMC,
+      fixedPart:fixedPart, percentRate:percentRate, mcSemAds:mcSemAds
+    };
+  }
+
+  // ======================================================================
+  // CÁLCULO TIKTOK SHOP
+  // Duas taxas de plataforma SEPARADAS (comissão % + taxa fixa por item —
+  // nunca somadas escondidas uma na outra) e uma comissão de afiliado que
+  // pode ser ligada/desligada. forceAffiliate permite calcular os cenários
+  // "orgânico" e "com afiliado" a partir da MESMA função, sem duplicar a
+  // fórmula — quando omitido, usa o estado atual do interruptor (s.affiliateOn).
+  // ======================================================================
+  function calcTiktok(vendaOverride, forceAffiliate){
+    var s = state.tiktok;
+    var venda = vendaOverride!=null ? Number(vendaOverride)||0 : Number(s.valorVenda)||0;
+    var comissaoPct = Number(s.comissaoPct)||0;
+    var comissaoRS = venda*comissaoPct;
+    var taxaFixaRS = Number(s.taxaFixaPorItem)||0;
+    var impostoRS = venda*(Number(s.impostoPct)||0);
+    var adsMode = s.adsMode || 'pct';
+    var roasIn = Number(s.roas)||0;
+    var adsPctEfetivo = adsMode==='roas' ? (roasIn>0 ? 1/roasIn : 0) : (Number(s.adsPct)||0);
+    var adsRS = venda*adsPctEfetivo;
+    var affiliatePct = Number(s.affiliatePct)||0;
+    var useAffiliate = (typeof forceAffiliate === 'boolean') ? forceAffiliate : !!s.affiliateOn;
+    var affiliateRS = useAffiliate ? venda*affiliatePct : 0;
+    var custoEnvio = Number(s.custoEnvio)||0;
+    var custoProduto = Number(s.custoProduto)||0;
+    var outrosVariaveis = Number(s.outrosVariaveis)||0;
+    var rateioFixo = rateioPorVenda(state.fixedCosts.vendasMesTiktok);
+    var custoTotal = comissaoRS+taxaFixaRS+impostoRS+adsRS+affiliateRS+custoEnvio+custoProduto+outrosVariaveis+rateioFixo;
+    var mc = venda - custoTotal;
+    var mcPct = venda>0 ? mc/venda : 0;
+    var roi = custoTotal>0 ? mc/custoTotal : 0;
+    var percentRate = comissaoPct + (Number(s.impostoPct)||0) + adsPctEfetivo + (useAffiliate?affiliatePct:0);
+    var denom = 1 - percentRate;
+    var fixedPart = taxaFixaRS+custoEnvio+custoProduto+outrosVariaveis+rateioFixo;
+    var precoMinZerar = denom>0.0001 ? fixedPart/denom : 0;
+    var denomMeta = denom - state.config.metaMCPct;
+    var precoMetaMC = denomMeta>0.0001 ? fixedPart/denomMeta : 0;
+    var mcSemAds = mc + adsRS;
+    return {
+      venda:venda, comissaoPct:comissaoPct, comissaoRS:comissaoRS, taxaLiquida:comissaoRS,
+      taxaFixaRS:taxaFixaRS, impostoRS:impostoRS, adsRS:adsRS, adsPctEfetivo:adsPctEfetivo,
+      affiliateRS:affiliateRS, affiliatePct:affiliatePct, useAffiliate:useAffiliate,
+      custoEnvio:custoEnvio, custoProduto:custoProduto, outrosVariaveis:outrosVariaveis,
+      rateioFixo:rateioFixo, custoTotal:custoTotal, mc:mc, mcPct:mcPct, roi:roi,
+      precoMinZerar:precoMinZerar, precoMetaMC:precoMetaMC,
+      fixedPart:fixedPart, percentRate:percentRate, mcSemAds:mcSemAds
+    };
+  }
+
+  // Analisa o impacto do afiliado: lucro sem/com afiliado, comissão máxima
+  // sustentável (antes de zerar e antes de furar a meta de MC), e quanto de
+  // "margem segura" ainda resta na comissão atualmente configurada.
+  function tiktokAffiliateAnalysis(){
+    var s = state.tiktok;
+    var r0 = calcTiktok(null, false);
+    var rAff = calcTiktok(null, true);
+    var venda = r0.venda;
+    var vendaValida = venda > 0.004;
+    var maxAffiliateRS = Math.max(0, r0.mc);
+    var maxAffiliatePct = vendaValida ? maxAffiliateRS/venda : 0;
+    var metaMC = state.config.metaMCPct;
+    var maxAffiliateRSForTarget = Math.max(0, r0.mc - venda*metaMC);
+    var maxAffiliatePctForTarget = vendaValida ? maxAffiliateRSForTarget/venda : 0;
+    var currentAffiliatePct = Number(s.affiliatePct)||0;
+    var safeMarginPts = maxAffiliatePct - currentAffiliatePct;
+    var overLimit = vendaValida && currentAffiliatePct > maxAffiliatePct + 0.0001;
+    return {
+      r0:r0, rAff:rAff, vendaValida:vendaValida,
+      maxAffiliatePct:maxAffiliatePct, maxAffiliatePctForTarget:maxAffiliatePctForTarget,
+      currentAffiliatePct:currentAffiliatePct, safeMarginPts:safeMarginPts, overLimit:overLimit,
+      diff: rAff.mc - r0.mc, marginImpactPts: rAff.mcPct - r0.mcPct
+    };
+  }
+
+  // Projeção "misturada" (orgânico + afiliado, ponderada pelo % de vendas via
+  // afiliado). Devolve o MESMO formato usado por projectionMetrics() —
+  // inclusive o campo "mcUnit" — para poder alimentar sem alterações os
+  // cards de projeção já existentes (renderProjectionOverviewCard etc.).
+  // Com affiliateSalesSharePct = 0 (padrão), o resultado é idêntico ao de
+  // projectionMetrics(r0): a mistura "colapsa" pro caso 100% orgânico.
+  function tiktokBlendedProjection(){
+    var s = state.tiktok;
+    var share = Math.max(0, Math.min(1, Number(s.affiliateSalesSharePct)||0));
+    var r0 = calcTiktok(null, false), rAff = calcTiktok(null, true);
+    var mcUnitOrganic = r0.mc + r0.rateioFixo;
+    var mcUnitAffiliate = rAff.mc + rAff.rateioFixo;
+    var mcUnitBlended = mcUnitOrganic*(1-share) + mcUnitAffiliate*share;
+    var custosFixosMensais = fixedCostsMonthlyEffective();
+    var hasFixedCosts = custosFixosMensais > 0.004;
+    var breakEvenQtd = mcUnitBlended > 0.004 ? Math.ceil(custosFixosMensais/mcUnitBlended) : null;
+    var volumes = PROJECTION_VOLUMES.map(function(v){
+      var vAff = Math.round(v*share);
+      var vOrg = v - vAff;
+      var mcAntesFixo = mcUnitOrganic*vOrg + mcUnitAffiliate*vAff;
+      return {
+        vendas:v, vendasOrganicas:vOrg, vendasAfiliadas:vAff, faturamento:r0.venda*v,
+        mcAntesFixo:mcAntesFixo, lucroOperacional: mcAntesFixo - custosFixosMensais,
+        comissaoAfiliadoTotal: vAff*rAff.affiliateRS
+      };
+    });
+    return {
+      mcUnit:mcUnitBlended, mcUnitOrganic:mcUnitOrganic, mcUnitAffiliate:mcUnitAffiliate, mcUnitBlended:mcUnitBlended,
+      custosFixosMensais:custosFixosMensais, hasFixedCosts:hasFixedCosts, breakEvenQtd:breakEvenQtd,
+      volumes:volumes, share:share
+    };
+  }
+
+  // ======================================================================
   // COMPONENTES REUTILIZÁVEIS
   // ======================================================================
   function alertBanner(mc, mcPct, vendaValida){
@@ -868,10 +1064,11 @@
       card.appendChild(hint);
     }
 
-    var kpiRow = document.createElement('div'); kpiRow.className='kpi-row'; kpiRow.style.gridTemplateColumns='repeat(2,1fr)'; kpiRow.style.margin='16px 0 0';
+    var kpiRow = document.createElement('div'); kpiRow.className='kpi-row kpi-row-3'; kpiRow.style.margin='16px 0 0';
     kpiRow.innerHTML =
       kpiCard('ACOS atual', pct(adv.acosAtual), false, ICONS.percent, 'accent', 'custo de Ads: '+money(adv.custoAdsAtual)) +
-      kpiCard('ROAS atual', adv.roasAtual!=null ? num(adv.roasAtual) : '—', false, ICONS.trend, 'accent', adv.roasAtual!=null ? 'a cada R$1 em ads, retornam '+num(adv.roasAtual) : 'sem investimento em ads no momento');
+      kpiCard('ROAS atual', adv.roasAtual!=null ? num(adv.roasAtual) : '—', false, ICONS.trend, 'accent', adv.roasAtual!=null ? 'a cada R$1 em ads, retornam '+num(adv.roasAtual) : 'sem investimento em ads no momento') +
+      kpiCard('Máximo Ads por venda', vendaValida ? money(Math.max(0,r.mcSemAds)) : '—', false, ICONS.scale, 'accent', vendaValida ? 'antes de zerar a margem' : 'preencha o valor de venda');
     card.appendChild(kpiRow);
 
     var kpiRow2 = document.createElement('div'); kpiRow2.className='kpi-row'; kpiRow2.style.gridTemplateColumns='repeat(2,1fr)'; kpiRow2.style.marginTop='16px';
@@ -885,6 +1082,12 @@
         kpiCard('Lucro após Ads', money(0), false, ICONS.wallet, 'accent', 'preencha o valor de venda');
     }
     card.appendChild(kpiRow2);
+
+    if(vendaValida){
+      var beforeAfter = document.createElement('div'); beforeAfter.className='readout-list';
+      beforeAfter.innerHTML = readoutRow('Lucro antes de Ads', money(r.mcSemAds)) + readoutRow('Lucro após Ads', money(r.mc));
+      card.appendChild(beforeAfter);
+    }
 
     var goalWrap = document.createElement('div'); goalWrap.style.cssText='margin-top:16px; padding-top:14px; border-top:1px solid var(--border);';
     var fgGoal = document.createElement('div'); fgGoal.className='field-grid';
@@ -1072,7 +1275,7 @@
   }
 
   // Volumes padrão usados na Projeção de Lucro por Vendas (item 7 do pedido).
-  var PROJECTION_VOLUMES = [50, 100, 250, 500, 1000, 2000, 3000, 5000, 7500, 10000];
+  var PROJECTION_VOLUMES = [50, 100, 300, 500, 1000, 2000, 3000, 5000, 7500, 10000];
   // Volumes "principais" destacados visualmente nos cards (item 12).
   var PROJECTION_HIGHLIGHT = [100, 500, 1000, 5000, 10000];
 
@@ -1396,6 +1599,27 @@
   }
 
   // ======================================================================
+  // RESET (item 15): "Limpar cálculo" (só a aba atual) é separado de
+  // "Limpar dados" (tudo — já existia, com confirm()). Não altera config
+  // nem custos fixos nem a outra aba.
+  // ======================================================================
+  function resetTabCalculation(tabKey, tabLabel){
+    if(!confirm('Limpar os valores desta calculadora ('+tabLabel+')? Os custos fixos e as demais configurações não serão afetados.')) return;
+    var fresh = defaultState();
+    state[tabKey] = fresh[tabKey];
+    renderActiveTab();
+    showToast('<strong>Cálculo limpo.</strong> Os valores de '+tabLabel+' voltaram ao padrão — custos fixos e demais configurações continuam salvos.');
+  }
+  function resetCalcButton(tabKey, tabLabel){
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'ghost';
+    btn.innerHTML = svgIcon('<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>') + 'Limpar cálculo';
+    btn.title = 'Limpa só os valores desta calculadora ('+tabLabel+'), sem mexer em custos fixos ou configurações';
+    btn.addEventListener('click', function(){ resetTabCalculation(tabKey, tabLabel); });
+    return btn;
+  }
+
+  // ======================================================================
   // VIEW: SHOPEE
   // ======================================================================
   function renderShopee(root){
@@ -1429,7 +1653,10 @@
 
     // Left: entradas
     var left = document.createElement('section'); left.className='card';
-    left.innerHTML = '<div class="card-head"><div><h2>Entradas — Shopee</h2><div class="sub">Preencha os dados do produto e da venda.</div></div></div>';
+    var leftHead = document.createElement('div'); leftHead.className='card-head';
+    leftHead.innerHTML = '<div><h2>Entradas — Shopee</h2><div class="sub">Preencha os dados do produto e da venda.</div></div>';
+    leftHead.appendChild(resetCalcButton('shopee', 'Shopee'));
+    left.appendChild(leftHead);
     var fg = document.createElement('div'); fg.className='field-grid';
     fg.appendChild(field({label:'Produto / SKU', type:'text', value:s.sku, colSpan:2, onInput:function(v){ s.sku=v; }}));
     fg.appendChild(field({label:'Valor de venda', prefix:'R$', value:s.valorVenda, step:'0.01', onInput:function(v){ s.valorVenda=v; }}));
@@ -1553,7 +1780,10 @@
     var grid = document.createElement('div'); grid.className='grid-2col';
 
     var left = document.createElement('section'); left.className='card';
-    left.innerHTML = '<div class="card-head"><div><h2>Entradas — Mercado Livre</h2><div class="sub">Preencha os dados do produto, da venda e do envio.</div></div></div>';
+    var leftHead = document.createElement('div'); leftHead.className='card-head';
+    leftHead.innerHTML = '<div><h2>Entradas — Mercado Livre</h2><div class="sub">Preencha os dados do produto, da venda e do envio.</div></div>';
+    leftHead.appendChild(resetCalcButton('ml', 'Mercado Livre'));
+    left.appendChild(leftHead);
     var fg = document.createElement('div'); fg.className='field-grid';
     fg.appendChild(field({label:'Produto / SKU', type:'text', value:m.sku, colSpan:2, onInput:function(v){ m.sku=v; }}));
 
@@ -1685,19 +1915,392 @@
   }
 
   // ======================================================================
+  // VIEW: SHEIN
+  // Estrutura igual à da Shopee/ML (mesmos grupos, mesmos cards reutilizados
+  // de Publicidade/Precificação/Projeção). Só a "Entradas — SHEIN" é própria,
+  // porque os campos são diferentes (comissão percentual editável, sem tabela
+  // de frete nem faixas por valor de venda).
+  // ======================================================================
+  function renderShein(root){
+    var r = calcShein();
+    var s = state.shein;
+    var vendaValida = r.venda > 0.004;
+    var adv = advancedMetrics(r, s);
+    var proj = projectionMetrics(r);
+
+    // ---- RESULTADO ----
+    var resultGroup = sectionGroup('Resultado', 'Lucro, MC, ROI e saúde da venda.', false);
+    if(vendaValida){
+      var kpiRow = document.createElement('div'); kpiRow.className='kpi-row';
+      kpiRow.innerHTML =
+        kpiCard('MC / lucro por venda', money(r.mc), r.mc<0, ICONS.wallet, r.mc<0?'critical':'accent', 'sobre venda de '+money(r.venda)) +
+        kpiCard('MC %', pct(r.mcPct), r.mcPct<state.config.metaMCPct, ICONS.percent, r.mcPct<state.config.metaMCPct?'warning':'good', 'meta configurada: '+pct(state.config.metaMCPct)) +
+        kpiCard('ROI', pct(r.roi), false, ICONS.trend, 'accent', 'retorno sobre custo total da venda') +
+        kpiCard('Custo total da venda', money(r.custoTotal), false, ICONS.box, 'accent', 'comissão SHEIN + imposto + envio + produto');
+      resultGroup._body.appendChild(kpiRow);
+      resultGroup._body.appendChild(metaMCBar('shein'));
+      resultGroup._body.appendChild(renderHealthCard(r, adv));
+    } else {
+      resultGroup._body.appendChild(renderNeutralHero());
+      resultGroup._body.appendChild(metaMCBar('shein'));
+    }
+    root.appendChild(resultGroup);
+
+    // ---- DADOS DA VENDA ----
+    var dadosGroup = sectionGroup('Dados da venda', 'Preço, custo, imposto, envio, comissão etc.', false);
+    var grid = document.createElement('div'); grid.className='grid-2col';
+
+    var left = document.createElement('section'); left.className='card';
+    var leftHead = document.createElement('div'); leftHead.className='card-head';
+    leftHead.innerHTML = '<div><h2>Entradas — SHEIN</h2><div class="sub">Preencha os dados do produto e da venda.</div></div>';
+    leftHead.appendChild(resetCalcButton('shein', 'SHEIN'));
+    left.appendChild(leftHead);
+    var fg = document.createElement('div'); fg.className='field-grid';
+    fg.appendChild(field({label:'Produto / SKU', type:'text', value:s.sku, colSpan:2, onInput:function(v){ s.sku=v; }}));
+    fg.appendChild(field({label:'Valor de venda', prefix:'R$', value:s.valorVenda, step:'0.01', onInput:function(v){ s.valorVenda=v; }}));
+    fg.appendChild(field({label:'Custo do produto', prefix:'R$', value:s.custoProduto, step:'0.01', onInput:function(v){ s.custoProduto=v; }}));
+    fg.appendChild(percentField({label:'Comissão SHEIN', value:s.comissaoPct, onInput:function(v){ s.comissaoPct=v; }}));
+    fg.appendChild(percentField({label:'Imposto', value:s.impostoPct, onInput:function(v){ s.impostoPct=v; }}));
+    fg.appendChild(field({label:'Envio / fulfillment', prefix:'R$', value:s.custoEnvio, step:'0.01', onInput:function(v){ s.custoEnvio=v; }}));
+    fg.appendChild(percentField({label:'Ads / publicidade', value:s.adsPct, onInput:function(v){ s.adsPct=v; }}));
+    fg.appendChild(field({label:'Outros custos variáveis', prefix:'R$', value:s.outrosVariaveis, step:'0.01', onInput:function(v){ s.outrosVariaveis=v; }}));
+    left.appendChild(fg);
+
+    var commissionNote = document.createElement('p'); commissionNote.className='note';
+    commissionNote.textContent = 'Comissão padrão da SHEIN: 16%. Esse campo é editável, caso sua categoria, acordo com a SHEIN ou a política vigente use uma taxa diferente.';
+    left.appendChild(commissionNote);
+
+    var readout = document.createElement('div'); readout.className='readout-list';
+    readout.innerHTML =
+      readoutRow('Comissão SHEIN (seu custo)', money(r.comissaoRS)) +
+      readoutRow('Rateio de custo fixo/venda', money(r.rateioFixo));
+    left.appendChild(readout);
+    grid.appendChild(left);
+
+    // Right: composição + alerta
+    var right = document.createElement('section'); right.className='card';
+    right.innerHTML = '<div class="card-head"><div><h2>Composição do custo</h2><div class="sub">O que consome a margem nesta venda.</div></div></div>';
+    right.innerHTML += alertBanner(r.mc, r.mcPct, vendaValida);
+    var rankWrap = document.createElement('div'); rankWrap.className='rank-list';
+    rankWrap.innerHTML = rankList([
+      {name:'Comissão SHEIN', value:r.comissaoRS},
+      {name:'Imposto', value:r.impostoRS},
+      {name:'Envio/fulfillment', value:r.custoEnvio},
+      {name:'Produto', value:r.custoProduto},
+      {name:'Ads', value:r.adsRS},
+      {name:'Outros', value:r.outrosVariaveis},
+      {name:'Rateio fixo', value:r.rateioFixo}
+    ]);
+    right.appendChild(rankWrap);
+    wireRankList(rankWrap);
+    grid.appendChild(right);
+    dadosGroup._body.appendChild(grid);
+    root.appendChild(dadosGroup);
+
+    // ---- PUBLICIDADE ----
+    var pubGroup = sectionGroup('Publicidade', 'ROAS, ACOS e metas de anúncios.', true);
+    pubGroup._body.appendChild(renderAdsRoasCard(s, r, adv, vendaValida));
+    root.appendChild(pubGroup);
+
+    // ---- PRECIFICAÇÃO ----
+    var precoGroup = sectionGroup('Precificação', 'Preço mínimo, preço para margem desejada, desconto máximo etc.', true);
+    var precoCard = document.createElement('section'); precoCard.className='card';
+    precoCard.innerHTML = '<div class="card-head"><div><h2>Preço mínimo &amp; meta de MC</h2><div class="sub">Referência rápida de precificação com a comissão SHEIN configurada acima.</div></div></div>';
+    var simGrid = document.createElement('div'); simGrid.className='kpi-row'; simGrid.style.gridTemplateColumns='1fr 1fr';
+    simGrid.innerHTML =
+      kpiCard('Preço mínimo p/ zerar margem', money(r.precoMinZerar), false, ICONS.scale, 'accent', 'estimativa com a comissão atual') +
+      kpiCard('Preço p/ bater a meta de MC', money(r.precoMetaMC), false, ICONS.target, 'accent', 'meta atual: '+pct(state.config.metaMCPct));
+    precoCard.appendChild(simGrid);
+    precoGroup._body.appendChild(precoCard);
+    precoGroup._body.appendChild(renderPriceGoalsCard(s, r, adv));
+    precoGroup._body.appendChild(renderDiscountCard(s, r, adv));
+    precoGroup._body.appendChild(renderPromoSimulator(s, calcShein));
+    precoGroup._body.appendChild(renderPriceComparator3(s, calcShein));
+    root.appendChild(precoGroup);
+
+    // ---- PROJEÇÃO ----
+    var projGroup = sectionGroup('Projeção', '50 até 10.000 vendas, ponto de equilíbrio e meta de lucro.', true);
+    projGroup._body.appendChild(renderProjectionOverviewCard(proj, vendaValida));
+    projGroup._body.appendChild(renderProjectionChartCard(proj, vendaValida));
+    projGroup._body.appendChild(renderCustomSimCard(s, r, proj, vendaValida));
+    projGroup._body.appendChild(renderProfitGoalCard(s, r, proj, vendaValida));
+    root.appendChild(projGroup);
+  }
+
+  // ======================================================================
+  // VIEW: TIKTOK SHOP
+  // Estrutura igual à Shopee/SHEIN, mais 3 blocos próprios do TikTok:
+  // "Cenários" (orgânico/afiliado/ads/afiliado+ads), "Afiliados" (comissão
+  // máxima + simulador) e o mix de afiliado dentro da Projeção. Tudo o mais
+  // (Ads/ROAS, metas de preço, desconto, promoção, comparador de preços,
+  // cards de projeção) é reaproveitado sem alteração.
+  // ======================================================================
+  function renderTiktok(root){
+    var aa = tiktokAffiliateAnalysis();
+    var r0 = aa.r0, rAff = aa.rAff;
+    var s = state.tiktok;
+    var vendaValida = aa.vendaValida;
+    var r = calcTiktok(null);
+    var adv = advancedMetrics(r, s);
+    var adv0 = advancedMetrics(r0, s);
+    var advAff = advancedMetrics(rAff, s);
+    var proj = tiktokBlendedProjection();
+
+    // ---- RESULTADO ----
+    var resultGroup = sectionGroup('Resultado', 'Lucro, MC, ROI e saúde da venda (considerando o interruptor de afiliado abaixo).', false);
+    if(vendaValida){
+      var kpiRow = document.createElement('div'); kpiRow.className='kpi-row';
+      kpiRow.innerHTML =
+        kpiCard('MC / lucro por venda', money(r.mc), r.mc<0, ICONS.wallet, r.mc<0?'critical':'accent', r.useAffiliate?'com comissão de afiliado':'venda orgânica') +
+        kpiCard('MC %', pct(r.mcPct), r.mcPct<state.config.metaMCPct, ICONS.percent, r.mcPct<state.config.metaMCPct?'warning':'good', 'meta configurada: '+pct(state.config.metaMCPct)) +
+        kpiCard('ROI', pct(r.roi), false, ICONS.trend, 'accent', 'retorno sobre custo total da venda') +
+        kpiCard('Custo total da venda', money(r.custoTotal), false, ICONS.box, 'accent', 'comissão + taxa fixa + imposto + envio + produto'+(r.useAffiliate?' + afiliado':''));
+      resultGroup._body.appendChild(kpiRow);
+      resultGroup._body.appendChild(metaMCBar('tiktok'));
+      resultGroup._body.appendChild(renderHealthCard(r, adv));
+    } else {
+      resultGroup._body.appendChild(renderNeutralHero());
+      resultGroup._body.appendChild(metaMCBar('tiktok'));
+    }
+    root.appendChild(resultGroup);
+
+    // ---- DADOS DA VENDA ----
+    var dadosGroup = sectionGroup('Dados da venda', 'Preço, custo, comissão, taxa fixa, imposto, envio e afiliado.', false);
+    var grid = document.createElement('div'); grid.className='grid-2col';
+
+    var left = document.createElement('section'); left.className='card';
+    var leftHead = document.createElement('div'); leftHead.className='card-head';
+    leftHead.innerHTML = '<div><h2>Entradas — TikTok Shop</h2><div class="sub">Preencha os dados do produto e da venda.</div></div>';
+    leftHead.appendChild(resetCalcButton('tiktok', 'TikTok Shop'));
+    left.appendChild(leftHead);
+
+    var fg = document.createElement('div'); fg.className='field-grid';
+    fg.appendChild(field({label:'Produto / SKU', type:'text', value:s.sku, colSpan:2, onInput:function(v){ s.sku=v; }}));
+    fg.appendChild(field({label:'Valor de venda', prefix:'R$', value:s.valorVenda, step:'0.01', onInput:function(v){ s.valorVenda=v; }}));
+    fg.appendChild(field({label:'Custo do produto', prefix:'R$', value:s.custoProduto, step:'0.01', onInput:function(v){ s.custoProduto=v; }}));
+    fg.appendChild(percentField({label:'Comissão TikTok Shop', value:s.comissaoPct, onInput:function(v){ s.comissaoPct=v; }}));
+    fg.appendChild(field({label:'Taxa fixa por item', prefix:'R$', value:s.taxaFixaPorItem, step:'0.01', onInput:function(v){ s.taxaFixaPorItem=v; }}));
+    fg.appendChild(percentField({label:'Imposto', value:s.impostoPct, onInput:function(v){ s.impostoPct=v; }}));
+    fg.appendChild(field({label:'Envio / logística', prefix:'R$', value:s.custoEnvio, step:'0.01', onInput:function(v){ s.custoEnvio=v; }}));
+    fg.appendChild(percentField({label:'Ads / publicidade', value:s.adsPct, onInput:function(v){ s.adsPct=v; }}));
+    fg.appendChild(field({label:'Outros custos variáveis', prefix:'R$', value:s.outrosVariaveis, step:'0.01', onInput:function(v){ s.outrosVariaveis=v; }}));
+    left.appendChild(fg);
+
+    var feeNote = document.createElement('p'); feeNote.className='note';
+    feeNote.textContent = 'As taxas da TikTok Shop podem variar conforme a estrutura de taxas vigente, categoria, promoções ou condições da conta. Confira o Seller Center se necessário.';
+    left.appendChild(feeNote);
+
+    // Afiliado — bem visível, dentro da própria entrada principal
+    var affWrap = document.createElement('div'); affWrap.style.cssText='margin-top:18px; padding-top:14px; border-top:1px solid var(--border);';
+    var affHead = document.createElement('div'); affHead.className='card-head'; affHead.style.marginBottom='12px';
+    affHead.innerHTML = '<div><h2 style="font-size:13px;">Afiliado</h2><div class="sub">Comissão paga a criadores de conteúdo quando a venda vem de afiliado.</div></div>';
+    affWrap.appendChild(affHead);
+
+    var affFg = document.createElement('div'); affFg.className='field-grid';
+    var affToggleField = document.createElement('div'); affToggleField.className='field';
+    var affToggleLbl = document.createElement('label'); affToggleLbl.textContent='Venda gerada por afiliado'; affToggleField.appendChild(affToggleLbl);
+    var affSeg = document.createElement('div'); affSeg.className='seg-toggle';
+    [['OFF',false],['ON',true]].forEach(function(pair){
+      var b=document.createElement('button'); b.type='button'; b.textContent=pair[0];
+      if(!!s.affiliateOn===pair[1]) b.className='on good';
+      b.addEventListener('click', function(){ s.affiliateOn=pair[1]; renderActiveTab(); });
+      affSeg.appendChild(b);
+    });
+    affToggleField.appendChild(affSeg);
+    affFg.appendChild(affToggleField);
+    affFg.appendChild(percentField({label:'Comissão de afiliado', value:s.affiliatePct, onInput:function(v){ s.affiliatePct=v; }}));
+    affWrap.appendChild(affFg);
+
+    var affCostLine = document.createElement('div'); affCostLine.className='readout-list';
+    affCostLine.innerHTML = readoutRow('Custo do afiliado nesta venda', vendaValida ? money(r0.venda*(Number(s.affiliatePct)||0)) : '—');
+    affWrap.appendChild(affCostLine);
+    left.appendChild(affWrap);
+    grid.appendChild(left);
+
+    // Right: composição + alerta
+    var right = document.createElement('section'); right.className='card';
+    right.innerHTML = '<div class="card-head"><div><h2>Composição do custo</h2><div class="sub">O que consome a margem nesta venda (cenário atual: '+(r.useAffiliate?'com afiliado':'orgânico')+').</div></div></div>';
+    right.innerHTML += alertBanner(r.mc, r.mcPct, vendaValida);
+    var rankRows = [
+      {name:'Comissão TikTok', value:r.comissaoRS},
+      {name:'Taxa fixa TikTok', value:r.taxaFixaRS},
+      {name:'Imposto', value:r.impostoRS},
+      {name:'Envio/logística', value:r.custoEnvio},
+      {name:'Produto', value:r.custoProduto},
+      {name:'Ads', value:r.adsRS}
+    ];
+    if(r.useAffiliate) rankRows.push({name:'Comissão afiliado', value:r.affiliateRS});
+    rankRows.push({name:'Outros', value:r.outrosVariaveis});
+    rankRows.push({name:'Rateio fixo', value:r.rateioFixo});
+    var rankWrap = document.createElement('div'); rankWrap.className='rank-list';
+    rankWrap.innerHTML = rankList(rankRows);
+    right.appendChild(rankWrap);
+    wireRankList(rankWrap);
+    grid.appendChild(right);
+    dadosGroup._body.appendChild(grid);
+    root.appendChild(dadosGroup);
+
+    // ---- CENÁRIOS ----
+    var cenGroup = sectionGroup('Cenários', 'Orgânico, via afiliado, com Ads e afiliado+Ads lado a lado.', true);
+    if(vendaValida){
+      var scenCard = document.createElement('section'); scenCard.className='card';
+      scenCard.innerHTML = '<div class="card-head"><div><h2>Lucro por cenário</h2><div class="sub">Mesmo produto, quatro combinações possíveis de venda.</div></div></div>';
+      var scenRow = document.createElement('div'); scenRow.className='kpi-row';
+      var profitOrganic = r0.mcSemAds, profitAds = r0.mc, profitAffiliate = rAff.mcSemAds, profitAffAds = rAff.mc;
+      scenRow.innerHTML =
+        kpiCard('Orgânico', money(profitOrganic), profitOrganic<0, ICONS.wallet, profitOrganic<0?'critical':'good', 'sem afiliado, sem Ads') +
+        kpiCard('Afiliado', money(profitAffiliate), profitAffiliate<0, ICONS.wallet, profitAffiliate<0?'critical':'accent', pct(Number(s.affiliatePct)||0)+' de comissão, sem Ads') +
+        kpiCard('Ads (sem afiliado)', money(profitAds), profitAds<0, ICONS.percent, profitAds<0?'critical':'accent', pct(r0.adsPctEfetivo)+' de Ads') +
+        kpiCard('Afiliado + Ads', money(profitAffAds), profitAffAds<0, ICONS.percent, profitAffAds<0?'critical':'warning', 'os dois custos juntos');
+      scenCard.appendChild(scenRow);
+      cenGroup._body.appendChild(scenCard);
+
+      var scenGrid = document.createElement('div'); scenGrid.className='compare-grid';
+      scenGrid.appendChild(compareCard('Venda Orgânica', 'tiktok', r0, adv0, false));
+      scenGrid.appendChild(compareCard('Venda via Afiliado', 'tiktok', rAff, advAff, false));
+      cenGroup._body.appendChild(scenGrid);
+
+      var diffCard = document.createElement('section'); diffCard.className='card';
+      diffCard.innerHTML = '<div class="card-head"><div><h2>Impacto do afiliado</h2><div class="sub">Quanto a comissão de afiliado tira da sua margem, nesta venda.</div></div></div>';
+      var diffReadout = document.createElement('div'); diffReadout.className='readout-list';
+      diffReadout.innerHTML =
+        readoutRow('Lucro sem afiliado', money(r0.mcSemAds)) +
+        readoutRow('Lucro com afiliado ('+pct(Number(s.affiliatePct)||0)+')', money(rAff.mcSemAds)) +
+        readoutRow('Diferença', money(rAff.mcSemAds-r0.mcSemAds)) +
+        readoutRow('Impacto na MC', (r0.venda>0.004 ? pct((rAff.mcSemAds-r0.mcSemAds)/r0.venda) : '—')+' (pontos percentuais)');
+      diffCard.appendChild(diffReadout);
+      cenGroup._body.appendChild(diffCard);
+    } else {
+      cenGroup._body.appendChild(renderNeutralHero());
+    }
+    root.appendChild(cenGroup);
+
+    // ---- AFILIADOS: LIMITES E SIMULADOR ----
+    var affGroup = sectionGroup('Afiliados', 'Comissão máxima sustentável e simulador de cenários de comissão.', true);
+    if(vendaValida){
+      var limitsCard = document.createElement('section'); limitsCard.className='card';
+      limitsCard.innerHTML = '<div class="card-head"><div><h2>Comissão máxima de afiliado</h2><div class="sub">Até quanto dá pra oferecer a criadores sem perder dinheiro (ou sem furar sua meta de MC).</div></div></div>';
+      var limitsRow = document.createElement('div'); limitsRow.className='kpi-row'; limitsRow.style.gridTemplateColumns='1fr 1fr';
+      limitsRow.innerHTML =
+        kpiCard('Comissão máxima antes do prejuízo', pct(aa.maxAffiliatePct), false, ICONS.scale, 'accent', 'lucro vai a zero nesse ponto') +
+        kpiCard('Comissão máxima p/ manter a meta de MC', pct(aa.maxAffiliatePctForTarget), false, ICONS.target, 'accent', 'meta atual: '+pct(state.config.metaMCPct));
+      limitsCard.appendChild(limitsRow);
+
+      var limitsNote = document.createElement('div'); limitsNote.style.marginTop='14px';
+      if(aa.overLimit){
+        limitsNote.innerHTML = '<div class="alert-banner critical" style="margin-bottom:0;">'+svgIcon(ICONS.alert)+'<span>A comissão configurada ('+pct(aa.currentAffiliatePct)+') está acima do limite de equilíbrio ('+pct(aa.maxAffiliatePct)+') — a venda via afiliado dá prejuízo.</span></div>';
+      } else {
+        limitsNote.className='readout-list';
+        limitsNote.innerHTML = readoutRow('Comissão configurada agora', pct(aa.currentAffiliatePct)) + readoutRow('Margem segura restante', pct(Math.max(0,aa.safeMarginPts))+' p.p.');
+      }
+      limitsCard.appendChild(limitsNote);
+      affGroup._body.appendChild(limitsCard);
+
+      var simCard = document.createElement('section'); simCard.className='card';
+      simCard.innerHTML = '<div class="card-head"><div><h2>Simulador de comissão de afiliado</h2><div class="sub">Como o lucro muda em diferentes percentuais — sua comissão atual aparece destacada.</div></div></div>';
+      var simPcts = [0, 0.05, 0.08, 0.10, 0.12, 0.15, 0.20, 0.25];
+      var currentPct = Number(s.affiliatePct)||0;
+      var roundedCurrent = Math.round(currentPct*10000)/10000;
+      if(simPcts.indexOf(roundedCurrent) === -1) simPcts.push(currentPct);
+      simPcts.sort(function(a,b){ return a-b; });
+      var simRowsHtml = simPcts.map(function(p){
+        var affRS = r0.venda*p;
+        var profit = r0.mc - affRS;
+        var mcPctSim = r0.venda>0 ? profit/r0.venda : 0;
+        var custoTotalSim = r0.custoTotal + affRS;
+        var roiSim = custoTotalSim>0 ? profit/custoTotalSim : 0;
+        var isCurrent = Math.abs(p-currentPct) < 0.0001;
+        return '<tr'+(isCurrent?' class="best-row"':'')+'><td>'+pct(p)+(isCurrent?' ★':'')+'</td><td style="text-align:right">'+money(affRS)+'</td><td style="text-align:right">'+money(profit)+'</td><td style="text-align:right">'+pct(mcPctSim)+'</td><td style="text-align:right">'+pct(roiSim)+'</td></tr>';
+      }).join('');
+      var simTableWrap = document.createElement('div'); simTableWrap.className='table-scroll';
+      simTableWrap.innerHTML = '<table class="compare-table"><thead><tr><th>Comissão</th><th>Custo afiliado</th><th>Lucro por venda</th><th>MC %</th><th>ROI</th></tr></thead><tbody>'+simRowsHtml+'</tbody></table>';
+      simCard.appendChild(simTableWrap);
+      var simNote = document.createElement('p'); simNote.className='note';
+      simNote.textContent = '★ percentual configurado agora no campo "Comissão de afiliado".';
+      simCard.appendChild(simNote);
+      affGroup._body.appendChild(simCard);
+    } else {
+      affGroup._body.appendChild(renderNeutralHero());
+    }
+    root.appendChild(affGroup);
+
+    // ---- PUBLICIDADE ----
+    var pubGroup = sectionGroup('Publicidade', 'ROAS, ACOS e metas de anúncios — considerando também o afiliado.', true);
+    pubGroup._body.appendChild(renderAdsRoasCard(s, r, adv, vendaValida));
+    if(vendaValida){
+      var affAdsCard = document.createElement('section'); affAdsCard.className='card';
+      affAdsCard.innerHTML = '<div class="card-head"><div><h2>Ads considerando o afiliado</h2><div class="sub">A comissão de afiliado reduz o espaço disponível pra investir em anúncios.</div></div></div>';
+      var affAdsReadout = document.createElement('div'); affAdsReadout.className='readout-list';
+      affAdsReadout.innerHTML =
+        readoutRow('ROAS de equilíbrio sem afiliado', adv0.roasEquilibrio!=null?num(adv0.roasEquilibrio):'—') +
+        readoutRow('ROAS de equilíbrio com afiliado', advAff.roasEquilibrio!=null?num(advAff.roasEquilibrio):'—') +
+        readoutRow('Ads máximo por venda sem afiliado', money(Math.max(0,r0.mcSemAds))) +
+        readoutRow('Ads máximo por venda com afiliado', money(Math.max(0,rAff.mcSemAds)));
+      affAdsCard.appendChild(affAdsReadout);
+      pubGroup._body.appendChild(affAdsCard);
+    }
+    root.appendChild(pubGroup);
+
+    // ---- PRECIFICAÇÃO ----
+    var precoGroup = sectionGroup('Precificação', 'Preço mínimo, preço para margem desejada, desconto máximo etc.', true);
+    var precoCard = document.createElement('section'); precoCard.className='card';
+    precoCard.innerHTML = '<div class="card-head"><div><h2>Preço mínimo &amp; meta de MC</h2><div class="sub">Referência rápida de precificação com as taxas TikTok'+(r.useAffiliate?' e a comissão de afiliado':'')+' configuradas.</div></div></div>';
+    var simGrid = document.createElement('div'); simGrid.className='kpi-row'; simGrid.style.gridTemplateColumns='1fr 1fr';
+    simGrid.innerHTML =
+      kpiCard('Preço mínimo p/ zerar margem', money(r.precoMinZerar), false, ICONS.scale, 'accent', 'estimativa com as taxas atuais') +
+      kpiCard('Preço p/ bater a meta de MC', money(r.precoMetaMC), false, ICONS.target, 'accent', 'meta atual: '+pct(state.config.metaMCPct));
+    precoCard.appendChild(simGrid);
+    precoGroup._body.appendChild(precoCard);
+    precoGroup._body.appendChild(renderPriceGoalsCard(s, r, adv));
+    precoGroup._body.appendChild(renderDiscountCard(s, r, adv));
+    precoGroup._body.appendChild(renderPromoSimulator(s, calcTiktok));
+    precoGroup._body.appendChild(renderPriceComparator3(s, calcTiktok));
+    root.appendChild(precoGroup);
+
+    // ---- PROJEÇÃO ----
+    var projGroup = sectionGroup('Projeção', '50 até 10.000 vendas, mix de afiliados, ponto de equilíbrio e meta de lucro.', true);
+    var shareCard = document.createElement('section'); shareCard.className='card';
+    shareCard.innerHTML = '<div class="card-head"><div><h2>Mix de vendas via afiliado</h2><div class="sub">Define quanto da projeção considera vendas via afiliado — o resto é orgânico. Com 0%, a projeção fica igual à de uma venda 100% orgânica.</div></div></div>';
+    var shareFg = document.createElement('div'); shareFg.className='field-grid'; shareFg.style.gridTemplateColumns='1fr';
+    shareFg.appendChild(percentField({label:'% das vendas via afiliado', value:s.affiliateSalesSharePct, onInput:function(v){ s.affiliateSalesSharePct=v; }}));
+    shareCard.appendChild(shareFg);
+    if(vendaValida){
+      var atRefVol = proj.volumes.filter(function(v){ return v.vendas===COMPARATIVO_REF_VOLUME; })[0];
+      if(atRefVol){
+        var shareReadout = document.createElement('div'); shareReadout.className='readout-list';
+        shareReadout.innerHTML =
+          readoutRow('Em '+intFmt(COMPARATIVO_REF_VOLUME)+' vendas/mês: orgânicas', intFmt(atRefVol.vendasOrganicas)) +
+          readoutRow('Em '+intFmt(COMPARATIVO_REF_VOLUME)+' vendas/mês: via afiliado', intFmt(atRefVol.vendasAfiliadas)) +
+          readoutRow('Comissões de afiliado pagas no mês', moneyThousands(atRefVol.comissaoAfiliadoTotal));
+        shareCard.appendChild(shareReadout);
+      }
+    }
+    projGroup._body.appendChild(shareCard);
+    projGroup._body.appendChild(renderProjectionOverviewCard(proj, vendaValida));
+    projGroup._body.appendChild(renderProjectionChartCard(proj, vendaValida));
+    projGroup._body.appendChild(renderCustomSimCard(s, r, proj, vendaValida));
+    projGroup._body.appendChild(renderProfitGoalCard(s, r, proj, vendaValida));
+    root.appendChild(projGroup);
+  }
+
+  // ======================================================================
   // VIEW: CUSTOS FIXOS
   // ======================================================================
   function renderCustosFixos(root){
     var total = fixedCostsTotal();
     var rateioS = rateioPorVenda(state.fixedCosts.vendasMesShopee);
     var rateioM = rateioPorVenda(state.fixedCosts.vendasMesML);
+    var rateioSh = rateioPorVenda(state.fixedCosts.vendasMesShein);
+    var rateioTt = rateioPorVenda(state.fixedCosts.vendasMesTiktok);
 
     var kpiRow = document.createElement('div'); kpiRow.className='kpi-row';
     kpiRow.innerHTML =
       kpiCard('Total fixo mensal (ativos)', money(total), false, ICONS.wallet, 'accent', state.fixedCosts.items.filter(function(i){return i.active;}).length+' itens ativos') +
       kpiCard('Rateio por venda · Shopee', money(rateioS), false, ICONS.box, 'accent', 'com '+num(state.fixedCosts.vendasMesShopee)+' vendas/mês') +
       kpiCard('Rateio por venda · Mercado Livre', money(rateioM), false, ICONS.box, 'accent', 'com '+num(state.fixedCosts.vendasMesML)+' vendas/mês') +
-      kpiCard('Margem de segurança', pct(state.fixedCosts.safetyMarginPct), false, ICONS.scale, 'accent', 'somada ao rateio dos dois canais');
+      kpiCard('Rateio por venda · SHEIN', money(rateioSh), false, ICONS.box, 'accent', 'com '+num(state.fixedCosts.vendasMesShein)+' vendas/mês') +
+      kpiCard('Rateio por venda · TikTok Shop', money(rateioTt), false, ICONS.box, 'accent', 'com '+num(state.fixedCosts.vendasMesTiktok)+' vendas/mês') +
+      kpiCard('Margem de segurança', pct(state.fixedCosts.safetyMarginPct), false, ICONS.scale, 'accent', 'somada ao rateio dos quatro canais');
     root.appendChild(kpiRow);
 
     var grid = document.createElement('div'); grid.className='grid-2col';
@@ -1736,10 +2339,12 @@
     fg.appendChild(percentField({label:'Margem de segurança', value:state.fixedCosts.safetyMarginPct, onInput:function(v){ state.fixedCosts.safetyMarginPct=v; }}));
     fg.appendChild(field({label:'Vendas/mês previstas — Shopee', value:state.fixedCosts.vendasMesShopee, step:'1', onInput:function(v){ state.fixedCosts.vendasMesShopee=v; }}));
     fg.appendChild(field({label:'Vendas/mês previstas — Mercado Livre', value:state.fixedCosts.vendasMesML, step:'1', onInput:function(v){ state.fixedCosts.vendasMesML=v; }}));
+    fg.appendChild(field({label:'Vendas/mês previstas — SHEIN', value:state.fixedCosts.vendasMesShein, step:'1', onInput:function(v){ state.fixedCosts.vendasMesShein=v; }}));
+    fg.appendChild(field({label:'Vendas/mês previstas — TikTok Shop', value:state.fixedCosts.vendasMesTiktok, step:'1', onInput:function(v){ state.fixedCosts.vendasMesTiktok=v; }}));
     fg.appendChild(percentField({label:'Meta de MC % (usada nos alertas)', value:state.config.metaMCPct, onInput:function(v){ state.config.metaMCPct=v; }}));
     right.appendChild(fg);
     var noteP = document.createElement('p'); noteP.className='note';
-    noteP.textContent = 'O rateio de cada canal entra automaticamente no cálculo de custo total das abas Shopee e Mercado Livre. Ajuste as vendas/mês previstas conforme o volume real de cada canal.';
+    noteP.textContent = 'O rateio de cada canal entra automaticamente no cálculo de custo total das abas Shopee, Mercado Livre, SHEIN e TikTok Shop. Ajuste as vendas/mês previstas conforme o volume real de cada canal.';
     right.appendChild(noteP);
     grid.appendChild(right);
     root.appendChild(grid);
@@ -1747,44 +2352,118 @@
 
   // ======================================================================
   // VIEW: COMPARATIVO
+  // Generalizado para N canais (Shopee, Mercado Livre e agora SHEIN) em vez
+  // de comparar só dois — a lógica por canal (calc/adv/proj) é a mesma de
+  // antes, só passou a rodar dentro de um loop.
   // ======================================================================
+  var COMPARATIVO_REF_VOLUME = 1000;
+  function compareChannels(){
+    var tiktokBlended = !!state.tiktok.compareUseBlended;
+    var tiktokR = calcTiktok(null, tiktokBlended);
+    var tiktokLabel = 'TikTok Shop (' + (tiktokBlended ? 'c/ afiliado' : 'orgânico') + ')';
+    return [
+      { key:'shopee', label:'Shopee', calc:calcShopee, ps:state.shopee },
+      { key:'ml', label:'Mercado Livre', calc:calcML, ps:state.ml },
+      { key:'shein', label:'SHEIN', calc:calcShein, ps:state.shein },
+      { key:'tiktok', label:tiktokLabel, calc:function(){ return tiktokR; }, ps:state.tiktok }
+    ].map(function(ch){
+      var r = ch.calc();
+      var adv = advancedMetrics(r, ch.ps);
+      var proj = projectionMetrics(r);
+      return { key:ch.key, label:ch.label, r:r, adv:adv, proj:proj };
+    });
+  }
+
   function renderComparativo(root){
-    var rs = calcShopee(), rm = calcML();
-    var shopeeWins = rs.mc >= rm.mc;
-    var diff = Math.abs(rs.mc - rm.mc);
+    var tiktokModeCard = document.createElement('section'); tiktokModeCard.className='card';
+    tiktokModeCard.innerHTML = '<div class="card-head"><div><h2>TikTok Shop nesta comparação</h2><div class="sub">Escolha se o TikTok entra com venda orgânica ou já considerando a comissão de afiliado.</div></div></div>';
+    var tiktokModeSeg = document.createElement('div'); tiktokModeSeg.className='seg-toggle';
+    [['TikTok Orgânico', false],['TikTok com Afiliado', true]].forEach(function(pair){
+      var b=document.createElement('button'); b.type='button'; b.textContent=pair[0];
+      if(!!state.tiktok.compareUseBlended===pair[1]) b.className='on good';
+      b.addEventListener('click', function(){ state.tiktok.compareUseBlended=pair[1]; renderActiveTab(); });
+      tiktokModeSeg.appendChild(b);
+    });
+    tiktokModeCard.appendChild(tiktokModeSeg);
+    root.appendChild(tiktokModeCard);
 
-    var recBanner = document.createElement('div'); recBanner.className='recommend-banner';
-    var recText = shopeeWins
-      ? 'Com os valores atuais, <strong>Shopee</strong> deixa '+money(diff)+' a mais de margem por venda do que o Mercado Livre.'
-      : '<strong>Mercado Livre</strong> deixa '+money(diff)+' a mais de margem por venda do que a Shopee, com os valores atuais.';
-    recBanner.innerHTML = '<div class="r-icon">'+svgIcon(ICONS.arrowsCompare)+'</div><div class="r-text">'+recText+' Os valores vêm do que está preenchido em cada calculadora — ajuste as abas Shopee e Mercado Livre para simular outros cenários.</div>';
-    root.appendChild(recBanner);
+    var channels = compareChannels();
+    var valid = channels.filter(function(c){ return c.r.venda > 0.004; });
 
-    var cgrid = document.createElement('div'); cgrid.className='compare-grid';
-    cgrid.appendChild(compareCard('Shopee', 'shopee', rs, shopeeWins));
-    cgrid.appendChild(compareCard('Mercado Livre', 'ml', rm, !shopeeWins));
+    if(valid.length < 2){
+      var note = document.createElement('div'); note.className='alert-banner neutral';
+      note.innerHTML = svgIcon(ICONS.box)+'<span>Preencha o valor de venda em pelo menos duas abas (Shopee, Mercado Livre, SHEIN ou TikTok Shop) para comparar.</span>';
+      root.appendChild(note);
+    } else {
+      var best = valid.reduce(function(a,b){ return b.r.mc>a.r.mc ? b : a; });
+      var others = valid.filter(function(c){ return c.key!==best.key; });
+
+      var recBanner = document.createElement('div'); recBanner.className='recommend-banner';
+      var diffLines = others.map(function(o){
+        return '<strong>'+best.label+'</strong> deixa '+money(best.r.mc-o.r.mc)+' a mais de margem por venda do que '+o.label+'.';
+      }).join(' ');
+      recBanner.innerHTML = '<div class="r-icon">'+svgIcon(ICONS.arrowsCompare)+'</div><div class="r-text">'+
+        'MELHOR MARKETPLACE PARA ESSE PRODUTO: <strong>'+best.label+'</strong> — '+money(best.r.mc)+' de lucro por venda. '+diffLines+
+        ' Os valores vêm do que está preenchido em cada calculadora — ajuste as abas Shopee, Mercado Livre, SHEIN e TikTok Shop para simular outros cenários.</div>';
+      root.appendChild(recBanner);
+
+      // Diferença projetada por mês (item 14/9): usa a mesma projeção de lucro operacional
+      // já calculada na aba Projeção de cada canal (MC unitária × volume − custos fixos),
+      // no volume de referência definido em COMPARATIVO_REF_VOLUME.
+      var monthly = valid.map(function(c){
+        var volEntry = c.proj.volumes.filter(function(v){ return v.vendas===COMPARATIVO_REF_VOLUME; })[0];
+        return { label:c.label, key:c.key, lucroMensal: volEntry ? volEntry.lucroOperacional : 0 };
+      });
+      var bestMonthly = monthly.reduce(function(a,b){ return b.lucroMensal>a.lucroMensal ? b : a; });
+      var monthlyBanner = document.createElement('div'); monthlyBanner.className='recommend-banner';
+      var monthlyText = monthly.map(function(m){ return m.label+' '+moneyThousands(m.lucroMensal); }).join(' · ');
+      monthlyBanner.innerHTML = '<div class="r-icon">'+svgIcon(ICONS.trend)+'</div><div class="r-text">'+
+        'Na projeção de <strong>'+intFmt(COMPARATIVO_REF_VOLUME)+' vendas/mês</strong>: '+monthlyText+'. '+
+        '<strong>'+bestMonthly.label+'</strong> sairia à frente (lucro operacional, já descontando custos fixos).</div>';
+      root.appendChild(monthlyBanner);
+    }
+
+    var cgrid = document.createElement('div'); cgrid.className='compare-grid cols-4';
+    var bestKey = valid.length ? valid.reduce(function(a,b){ return b.r.mc>a.r.mc ? b : a; }).key : null;
+    channels.forEach(function(c){
+      cgrid.appendChild(compareCard(c.label, c.key, c.r, c.adv, c.r.venda>0.004 && c.key===bestKey));
+    });
     root.appendChild(cgrid);
 
     var chartCard = document.createElement('section'); chartCard.className='card';
     chartCard.innerHTML = '<div class="card-head"><div><h2>MC por venda — lado a lado</h2><div class="sub">Comparação direta da margem de contribuição em reais.</div></div></div>';
     var rankWrap = document.createElement('div'); rankWrap.className='rank-list';
-    rankWrap.innerHTML = rankList([ {name:'Shopee', value:rs.mc}, {name:'Mercado Livre', value:rm.mc} ]);
+    rankWrap.innerHTML = rankList(channels.map(function(c){ return {name:c.label, value:c.r.mc}; }));
     chartCard.appendChild(rankWrap);
     root.appendChild(chartCard);
     wireRankList(rankWrap);
   }
 
-  function compareCard(title, key, r, winner){
+  function marketplaceFee(key, r){
+    return key==='ml' ? r.tarifaRS : r.comissaoRS;
+  }
+
+  function compareCard(title, key, r, adv, winner){
     var el = document.createElement('section'); el.className='compare-card'+(winner?' winner':'');
     var head = document.createElement('div'); head.className='compare-head';
     head.innerHTML = '<div class="compare-mark '+key+'">'+title.slice(0,2).toUpperCase()+'</div><div class="compare-title">'+title+'</div>'+(winner?'<span class="winner-tag">Maior margem</span>':'');
     el.appendChild(head);
     var metrics = [
       ['Valor de venda', money(r.venda), false],
-      ['MC / lucro por venda', money(r.mc), r.mc<0],
+      ['Comissão/tarifa do marketplace', money(marketplaceFee(key, r)), false],
+      ['Taxa fixa por item', r.taxaFixaRS!=null ? money(r.taxaFixaRS) : '—', false],
+      ['Imposto', money(r.impostoRS), false],
+      ['Custo do produto', money(r.custoProduto), false],
+      ['Frete/envio', money(r.custoEnvio), false],
+      ['Custo de Ads', money(r.adsRS), false],
+      ['Comissão de afiliado', r.affiliateRS!=null ? (r.useAffiliate ? money(r.affiliateRS) : 'desativada') : '—', false],
+      ['Custo total da venda', money(r.custoTotal), false],
+      ['Lucro antes de Ads', money(r.mcSemAds), r.mcSemAds<0],
+      ['MC / lucro após Ads', money(r.mc), r.mc<0],
       ['MC %', pct(r.mcPct), false],
       ['ROI', pct(r.roi), false],
-      ['Custo total da venda', money(r.custoTotal), false]
+      ['Break-even ACOS', pct(adv.acosMax), false],
+      ['Break-even ROAS', adv.roasEquilibrio!=null?num(adv.roasEquilibrio):'—', false]
     ];
     metrics.forEach(function(m){
       var row = document.createElement('div'); row.className='compare-metric';
@@ -1792,6 +2471,97 @@
       el.appendChild(row);
     });
     return el;
+  }
+
+  // ======================================================================
+  // VIEW: DASHBOARD (item 10) — resumo executivo dos dois canais lado a lado,
+  // reaproveitando os mesmos cálculos já usados nas abas Shopee/ML/Projeção
+  // (nenhuma fórmula nova é criada aqui, só reorganizada visualmente).
+  // ======================================================================
+  function dashboardChannelCard(title, key, r, adv, proj, tabState){
+    var card = document.createElement('section'); card.className='card';
+    var head = document.createElement('div'); head.className='card-head';
+    head.innerHTML = '<div class="compare-head" style="margin-bottom:0;"><div class="compare-mark '+key+'">'+title.slice(0,2).toUpperCase()+'</div><div class="compare-title">'+title+'</div></div>';
+    card.appendChild(head);
+
+    var vendaValida = r.venda > 0.004;
+    if(!vendaValida){
+      var p = document.createElement('p'); p.className='note'; p.style.margin='0';
+      p.textContent = 'Preencha o valor de venda na aba '+title+' para ver o resumo aqui.';
+      card.appendChild(p);
+      return card;
+    }
+
+    var feesTotal = marketplaceFee(key, r);
+    var grid = document.createElement('div'); grid.className='kpi-row'; grid.style.gridTemplateColumns='repeat(3,1fr)';
+    grid.innerHTML =
+      kpiCard('Preço de venda', money(r.venda), false, ICONS.wallet, 'accent', '—') +
+      kpiCard('Lucro por venda', money(r.mc), r.mc<0, ICONS.wallet, r.mc<0?'critical':'good', pct(r.mcPct)+' de MC') +
+      kpiCard('ROI', pct(r.roi), false, ICONS.trend, 'accent', '—') +
+      kpiCard('Tarifa/comissão do marketplace', money(feesTotal), false, ICONS.box, 'accent', '—') +
+      kpiCard('Custo do produto', money(r.custoProduto), false, ICONS.box, 'accent', '—') +
+      kpiCard('Frete', money(r.custoEnvio), false, ICONS.box, 'accent', '—') +
+      kpiCard('Imposto', money(r.impostoRS), false, ICONS.box, 'accent', '—') +
+      kpiCard('Custo de Ads', money(r.adsRS), false, ICONS.percent, 'accent', pct(r.adsPctEfetivo)+' da venda') +
+      kpiCard('Lucro antes de Ads', money(r.mcSemAds), r.mcSemAds<0, ICONS.wallet, r.mcSemAds<0?'critical':'accent', '—') +
+      kpiCard('Lucro após Ads', money(r.mc), r.mc<0, ICONS.wallet, r.mc<0?'critical':'good', '—');
+    card.appendChild(grid);
+
+    var readout = document.createElement('div'); readout.className='readout-list';
+    readout.innerHTML =
+      readoutRow('Break-even ACOS', pct(adv.acosMax)) +
+      readoutRow('Break-even ROAS', adv.roasEquilibrio!=null?num(adv.roasEquilibrio):'—') +
+      readoutRow('Custos fixos mensais', moneyThousands(proj.custosFixosMensais)) +
+      readoutRow('Unidades p/ break-even', proj.breakEvenQtd!=null?intFmt(proj.breakEvenQtd)+' vendas/mês':'—');
+
+    var metaLucro = Number(tabState.metaLucroMensal)||0;
+    if(metaLucro>0 && proj.mcUnit>0.004){
+      var vendasNecessarias = Math.ceil((metaLucro + proj.custosFixosMensais)/proj.mcUnit);
+      readout.innerHTML +=
+        readoutRow('Meta de lucro mensal', moneyThousands(metaLucro)) +
+        readoutRow('Vendas necessárias p/ meta', 'aprox. '+intFmt(vendasNecessarias));
+    } else {
+      readout.innerHTML += readoutRow('Meta de lucro mensal', 'não definida (aba Projeção)');
+    }
+
+    var volEntry = proj.volumes.filter(function(v){ return v.vendas===COMPARATIVO_REF_VOLUME; })[0];
+    if(volEntry){
+      readout.innerHTML += readoutRow('Projeção a '+intFmt(COMPARATIVO_REF_VOLUME)+' vendas/mês', moneyThousands(volEntry.lucroOperacional));
+    }
+
+    // TikTok Shop tem afiliado — item 29 pede esses números extras no dashboard.
+    if(key==='tiktok'){
+      var aa = tiktokAffiliateAnalysis();
+      readout.innerHTML +=
+        readoutRow('Taxa fixa por item', money(r.taxaFixaRS||0)) +
+        readoutRow('Comissão de afiliado configurada', pct(aa.currentAffiliatePct)) +
+        readoutRow('Custo do afiliado nesta venda', money(aa.r0.venda*aa.currentAffiliatePct)) +
+        readoutRow('Lucro sem afiliado', money(aa.r0.mcSemAds)) +
+        readoutRow('Lucro com afiliado', money(aa.rAff.mcSemAds)) +
+        readoutRow('Comissão máxima de afiliado', pct(aa.maxAffiliatePct)) +
+        readoutRow('% de vendas via afiliado (mix)', pct(Number(tabState.affiliateSalesSharePct)||0));
+      if(volEntry && volEntry.comissaoAfiliadoTotal!=null){
+        readout.innerHTML += readoutRow('Comissões de afiliado no mês', moneyThousands(volEntry.comissaoAfiliadoTotal));
+      }
+    }
+
+    card.appendChild(readout);
+    return card;
+  }
+
+  function renderDashboard(root){
+    var channels = compareChannels();
+
+    var intro = document.createElement('div'); intro.className='recommend-banner';
+    intro.innerHTML = '<div class="r-icon">'+svgIcon(ICONS.box)+'</div><div class="r-text">Resumo executivo com os principais indicadores dos quatro canais, lado a lado. Os valores vêm do que já está preenchido nas abas Shopee, Mercado Livre, SHEIN, TikTok Shop e Custos fixos — não precisa preencher nada aqui.</div>';
+    root.appendChild(intro);
+
+    var grid = document.createElement('div'); grid.className='compare-grid cols-4';
+    channels.forEach(function(c){
+      var tabState = c.key==='shopee' ? state.shopee : (c.key==='ml' ? state.ml : (c.key==='shein' ? state.shein : state.tiktok));
+      grid.appendChild(dashboardChannelCard(c.label, c.key, c.r, c.adv, c.proj, tabState));
+    });
+    root.appendChild(grid);
   }
 
   // ======================================================================
@@ -1812,8 +2582,11 @@
   var TABS = [
     { id:'shopee', label:'Shopee' },
     { id:'ml', label:'Mercado Livre' },
+    { id:'shein', label:'SHEIN' },
+    { id:'tiktok', label:'TikTok Shop' },
     { id:'comparativo', label:'Comparativo' },
-    { id:'custos', label:'Custos fixos' }
+    { id:'custos', label:'Custos fixos' },
+    { id:'dashboard', label:'Dashboard' }
   ];
 
   function renderNav(){
@@ -1835,7 +2608,10 @@
     root.innerHTML = '';
     if(state.activeTab==='shopee') renderShopee(root);
     else if(state.activeTab==='ml') renderML(root);
+    else if(state.activeTab==='shein') renderShein(root);
+    else if(state.activeTab==='tiktok') renderTiktok(root);
     else if(state.activeTab==='comparativo') renderComparativo(root);
+    else if(state.activeTab==='dashboard') renderDashboard(root);
     else renderCustosFixos(root);
   }
 
@@ -1919,7 +2695,7 @@
       try{
         var parsed = JSON.parse(reader.result);
         if(!parsed.shopee || !parsed.ml) throw new Error('Arquivo inválido.');
-        state = parsed;
+        state = ensureSheinDefaults(parsed);
         lastSavedSnapshot = JSON.stringify(state);
         renderActiveTab();
         alert('Dados importados com sucesso.');
