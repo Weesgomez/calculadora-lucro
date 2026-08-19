@@ -447,6 +447,17 @@
     return band;
   }
 
+  // ---- TikTok Shop: faixas de taxa de venda (comissão da plataforma + tarifa fixa por item) ----
+  var TIKTOK_BANDS = [
+    { min:0,  comissaoPct:0.10, fixo:4, label:'Abaixo de R$50,00' },
+    { min:50, comissaoPct:0.06, fixo:6, label:'A partir de R$50,00' }
+  ];
+  function tiktokBand(venda){
+    var band = TIKTOK_BANDS[0];
+    for(var i=0;i<TIKTOK_BANDS.length;i++){ if(venda >= TIKTOK_BANDS[i].min) band = TIKTOK_BANDS[i]; }
+    return band;
+  }
+
   // ---- Mercado Livre: tabela de frete por peso faturável x faixa de preço (aba "Tabela Frete ML") ----
   var FREIGHT_TABLE = [{"max": 0.3, "label": "Até 0,3 kg", "cols": [5.65, 6.55, 7.75, 12.35, 14.35, 16.45, 18.45, 20.95]}, {"max": 0.5, "label": "0,3 a 0,5 kg", "cols": [5.95, 6.65, 7.85, 13.25, 15.45, 17.65, 19.85, 22.55]}, {"max": 1, "label": "0,5 a 1 kg", "cols": [6.05, 6.75, 7.95, 13.85, 16.15, 18.45, 20.75, 23.65]}, {"max": 1.5, "label": "1 a 1,5 kg", "cols": [6.15, 6.85, 8.05, 14.15, 16.45, 18.85, 21.15, 24.65]}, {"max": 2, "label": "1,5 a 2 kg", "cols": [6.25, 6.95, 8.15, 14.45, 16.85, 19.25, 21.65, 24.65]}, {"max": 3, "label": "2 a 3 kg", "cols": [6.35, 7.95, 8.55, 15.75, 18.35, 21.05, 23.65, 26.25]}, {"max": 4, "label": "3 a 4 kg", "cols": [6.45, 8.15, 8.95, 17.05, 19.85, 22.65, 25.55, 28.35]}, {"max": 5, "label": "4 a 5 kg", "cols": [6.55, 8.35, 9.75, 18.45, 21.55, 24.65, 27.75, 30.75]}, {"max": 6, "label": "5 a 6 kg", "cols": [6.65, 8.55, 9.95, 25.45, 28.55, 32.65, 35.75, 39.75]}, {"max": 7, "label": "6 a 7 kg", "cols": [6.75, 8.75, 10.15, 27.05, 31.05, 36.05, 40.05, 44.05]}, {"max": 8, "label": "7 a 8 kg", "cols": [6.85, 8.95, 10.35, 28.85, 33.65, 38.45, 43.25, 48.05]}, {"max": 9, "label": "8 a 9 kg", "cols": [6.95, 9.15, 10.55, 29.65, 34.55, 39.55, 44.45, 49.35]}, {"max": 11, "label": "9 a 11 kg", "cols": [7.05, 9.55, 10.95, 41.25, 48.05, 54.95, 61.75, 68.65]}, {"max": 13, "label": "11 a 13 kg", "cols": [7.15, 9.95, 11.35, 42.15, 49.25, 56.25, 63.25, 70.25]}, {"max": 15, "label": "13 a 15 kg", "cols": [7.25, 10.15, 11.55, 45.05, 52.45, 59.95, 67.45, 74.95]}, {"max": 17, "label": "15 a 17 kg", "cols": [7.35, 10.35, 11.75, 48.55, 56.05, 63.55, 70.75, 78.65]}, {"max": 20, "label": "17 a 20 kg", "cols": [7.45, 10.55, 11.95, 54.75, 63.85, 72.95, 82.05, 91.15]}, {"max": 25, "label": "20 a 25 kg", "cols": [7.65, 10.95, 12.15, 64.05, 75.05, 84.75, 95.35, 105.95]}, {"max": 30, "label": "25 a 30 kg", "cols": [7.75, 11.15, 12.35, 65.95, 75.45, 85.55, 96.25, 106.95]}, {"max": 40, "label": "30 a 40 kg", "cols": [7.85, 11.35, 12.55, 67.75, 78.95, 88.95, 99.15, 107.05]}, {"max": 50, "label": "40 a 50 kg", "cols": [7.95, 11.55, 12.75, 70.25, 81.05, 92.05, 102.55, 110.75]}, {"max": 60, "label": "50 a 60 kg", "cols": [8.05, 11.75, 12.95, 74.95, 86.45, 98.15, 109.35, 118.15]}, {"max": 70, "label": "60 a 70 kg", "cols": [8.15, 11.95, 13.15, 80.25, 92.95, 105.05, 117.15, 126.55]}, {"max": 80, "label": "70 a 80 kg", "cols": [8.25, 12.15, 13.35, 83.95, 97.05, 109.85, 122.45, 132.25]}, {"max": 90, "label": "80 a 90 kg", "cols": [8.35, 12.35, 13.55, 93.25, 107.45, 122.05, 136.05, 146.95]}, {"max": 100, "label": "90 a 100 kg", "cols": [8.45, 12.55, 13.75, 106.55, 123.95, 139.55, 155.55, 167.95]}, {"max": 125, "label": "100 a 125 kg", "cols": [8.55, 12.75, 13.95, 119.25, 138.05, 156.05, 173.95, 187.95]}, {"max": 150, "label": "125 a 150 kg", "cols": [8.65, 12.75, 14.15, 126.55, 146.15, 165.65, 184.65, 199.45]}, {"max": 9999, "label": "Mais de 150 kg", "cols": [8.75, 12.75, 14.35, 166.15, 192.45, 217.55, 242.55, 261.95]}];
   var PRICE_BAND_LABELS = ['R$ 0–18,99','R$ 19–48,99','R$ 49–78,99','R$ 79–99,99','R$ 100–119,99','R$ 120–149,99','R$ 150–199,99','R$ 200+'];
@@ -506,7 +517,7 @@
         promoPrice:0, cmp:null, simVendas:100, metaLucroMensal:0
       },
       tiktok: {
-        sku:'', valorVenda:0, custoProduto:0, comissaoPct:0.06, taxaFixaPorItem:4.00, impostoPct:0, custoEnvio:0,
+        sku:'', valorVenda:0, custoProduto:0, comissaoPct:0.06, taxaFixaPorItem:4.00, comissaoAutoPorFaixa:true, impostoPct:0, custoEnvio:0,
         adsPct:0, outrosVariaveis:0,
         affiliateOn:false, affiliatePct:0.10, affiliateSalesSharePct:0, compareUseBlended:false,
         adsMode:'pct', roas:0,
@@ -554,6 +565,7 @@
     var d = defaultState();
     if(!st.shein) st.shein = d.shein;
     if(!st.tiktok) st.tiktok = d.tiktok;
+    else if(st.tiktok.comissaoAutoPorFaixa==null) st.tiktok.comissaoAutoPorFaixa = true;
     if(!st.fixedCosts) st.fixedCosts = d.fixedCosts;
     else {
       if(st.fixedCosts.vendasMesShein==null) st.fixedCosts.vendasMesShein = d.fixedCosts.vendasMesShein;
@@ -806,9 +818,11 @@
   function calcTiktok(vendaOverride, forceAffiliate){
     var s = state.tiktok;
     var venda = vendaOverride!=null ? Number(vendaOverride)||0 : Number(s.valorVenda)||0;
-    var comissaoPct = Number(s.comissaoPct)||0;
+    var band = tiktokBand(venda);
+    var autoPorFaixa = !!s.comissaoAutoPorFaixa;
+    var comissaoPct = autoPorFaixa ? band.comissaoPct : (Number(s.comissaoPct)||0);
     var comissaoRS = venda*comissaoPct;
-    var taxaFixaRS = Number(s.taxaFixaPorItem)||0;
+    var taxaFixaRS = autoPorFaixa ? band.fixo : (Number(s.taxaFixaPorItem)||0);
     var impostoRS = venda*(Number(s.impostoPct)||0);
     var adsMode = s.adsMode || 'pct';
     var roasIn = Number(s.roas)||0;
@@ -833,7 +847,7 @@
     var precoMetaMC = denomMeta>0.0001 ? fixedPart/denomMeta : 0;
     var mcSemAds = mc + adsRS;
     return {
-      venda:venda, comissaoPct:comissaoPct, comissaoRS:comissaoRS, taxaLiquida:comissaoRS,
+      venda:venda, band:band, autoPorFaixa:autoPorFaixa, comissaoPct:comissaoPct, comissaoRS:comissaoRS, taxaLiquida:comissaoRS,
       taxaFixaRS:taxaFixaRS, impostoRS:impostoRS, adsRS:adsRS, adsPctEfetivo:adsPctEfetivo,
       affiliateRS:affiliateRS, affiliatePct:affiliatePct, useAffiliate:useAffiliate,
       custoEnvio:custoEnvio, custoProduto:custoProduto, outrosVariaveis:outrosVariaveis,
@@ -2078,8 +2092,32 @@
     fg.appendChild(field({label:'Produto / SKU', type:'text', value:s.sku, colSpan:2, onInput:function(v){ s.sku=v; }}));
     fg.appendChild(field({label:'Valor de venda', prefix:'R$', value:s.valorVenda, step:'0.01', onInput:function(v){ s.valorVenda=v; }}));
     fg.appendChild(field({label:'Custo do produto', prefix:'R$', value:s.custoProduto, step:'0.01', onInput:function(v){ s.custoProduto=v; }}));
-    fg.appendChild(percentField({label:'Comissão TikTok Shop', value:s.comissaoPct, onInput:function(v){ s.comissaoPct=v; }}));
-    fg.appendChild(field({label:'Taxa fixa por item', prefix:'R$', value:s.taxaFixaPorItem, step:'0.01', onInput:function(v){ s.taxaFixaPorItem=v; }}));
+
+    var feeAutoField = document.createElement('div'); feeAutoField.className='field span-2';
+    var feeAutoLbl = document.createElement('label'); feeAutoLbl.textContent='Taxa de vendas automática (por faixa de preço)'; feeAutoField.appendChild(feeAutoLbl);
+    var feeAutoSeg = document.createElement('div'); feeAutoSeg.className='seg-toggle';
+    [['Sim',true],['Não',false]].forEach(function(pair){
+      var b=document.createElement('button'); b.type='button'; b.textContent=pair[0];
+      if(!!s.comissaoAutoPorFaixa===pair[1]) b.className='on good';
+      b.addEventListener('click', function(){ s.comissaoAutoPorFaixa=pair[1]; renderActiveTab(); });
+      feeAutoSeg.appendChild(b);
+    });
+    feeAutoField.appendChild(feeAutoSeg);
+    fg.appendChild(feeAutoField);
+
+    if(s.comissaoAutoPorFaixa){
+      var bandField = document.createElement('div'); bandField.className='field span-2';
+      var bandLbl = document.createElement('label'); bandLbl.textContent='Faixa aplicada'; bandField.appendChild(bandLbl);
+      var bandBox = document.createElement('div');
+      bandBox.style.cssText = 'padding:9px 12px; border-radius:9px; border:1px solid var(--border-strong); background:var(--surface-2); font-weight:700; font-size:13px;';
+      bandBox.textContent = r.band.label+' — comissão '+pct(r.band.comissaoPct)+' + '+money(r.band.fixo)+' fixo por item';
+      bandField.appendChild(bandBox);
+      fg.appendChild(bandField);
+    } else {
+      fg.appendChild(percentField({label:'Comissão TikTok Shop', value:s.comissaoPct, onInput:function(v){ s.comissaoPct=v; }}));
+      fg.appendChild(field({label:'Taxa fixa por item', prefix:'R$', value:s.taxaFixaPorItem, step:'0.01', onInput:function(v){ s.taxaFixaPorItem=v; }}));
+    }
+
     fg.appendChild(percentField({label:'Imposto', value:s.impostoPct, onInput:function(v){ s.impostoPct=v; }}));
     fg.appendChild(field({label:'Envio / logística', prefix:'R$', value:s.custoEnvio, step:'0.01', onInput:function(v){ s.custoEnvio=v; }}));
     fg.appendChild(percentField({label:'Ads / publicidade', value:s.adsPct, onInput:function(v){ s.adsPct=v; }}));
@@ -2087,7 +2125,9 @@
     left.appendChild(fg);
 
     var feeNote = document.createElement('p'); feeNote.className='note';
-    feeNote.textContent = 'As taxas da TikTok Shop podem variar conforme a estrutura de taxas vigente, categoria, promoções ou condições da conta. Confira o Seller Center se necessário.';
+    feeNote.textContent = s.comissaoAutoPorFaixa
+      ? 'Padrão TikTok Shop: abaixo de R$50,00 → 10% + R$4,00 fixo; a partir de R$50,00 → 6% + R$6,00 fixo. Desligue a taxa automática acima se sua categoria, acordo com a plataforma ou promoção usar valores diferentes.'
+      : 'As taxas da TikTok Shop podem variar conforme a estrutura de taxas vigente, categoria, promoções ou condições da conta. Confira o Seller Center se necessário.';
     left.appendChild(feeNote);
 
     // Afiliado — bem visível, dentro da própria entrada principal
