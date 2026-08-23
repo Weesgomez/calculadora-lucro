@@ -47,7 +47,6 @@
   .icon{width:16px; height:16px; stroke:currentColor; fill:none; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; display:block;}
   .icon.filled{fill:currentColor; stroke:none;}
   a, button{ font-family:inherit; }
-
   /* ---------- Topbar ---------- */
   .topbar{
     position:sticky; top:0; z-index:30; backdrop-filter:blur(14px) saturate(140%);
@@ -64,7 +63,6 @@
   .brand-text h1{font-size:15.5px; font-weight:650; margin:0; letter-spacing:.01em;}
   .brand-text p{margin:1px 0 0; font-size:11.5px; color:var(--text-muted);}
   .toolbar{display:flex; gap:8px; flex-wrap:wrap;}
-
   button{
     cursor:pointer; border-radius:10px; border:1px solid var(--border-strong);
     background:var(--surface-2); color:var(--text-secondary); padding:9px 14px; font-size:12.5px; font-weight:600;
@@ -80,9 +78,7 @@
   button.primary:hover{ filter:brightness(1.08); }
   button.ghost{ background:transparent; border-color:var(--border); }
   input[type=file]{ display:none; }
-
   main{max-width:1280px; margin:0 auto; padding:22px 28px 70px;}
-
   /* ---------- Top-level nav ---------- */
   .nav-row{display:flex; align-items:center; gap:8px; margin-bottom:22px; flex-wrap:wrap;}
   .nav-tab{
@@ -98,8 +94,8 @@
   .nav-tab[data-tab="ml"] .dot{ background:var(--ml-accent); }
   .nav-tab[data-tab="shein"] .dot{ background:var(--shein-accent); }
   .nav-tab[data-tab="tiktok"] .dot{ background:var(--tiktok-accent); }
+  .nav-tab[data-tab="pesquisa"] .dot{ background:var(--shopee-accent); }
   .nav-tab.active[data-tab="shopee"] .dot, .nav-tab.active[data-tab="ml"] .dot{ background:#fff; }
-
   /* ---------- KPI row ---------- */
   .kpi-row{display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; margin-bottom:16px;}
   .kpi-card{
@@ -116,19 +112,16 @@
   .kpi-value{font-size:25px; font-weight:700; letter-spacing:-.01em; line-height:1.1;}
   .kpi-value.neg{ color:var(--critical); }
   .kpi-sub{margin-top:8px; font-size:12px; color:var(--text-muted);}
-
   /* KPI rows rendered with an explicit column count (2 or 3 cards) get their own
      classes instead of an inline style, so they can still collapse on narrow
      screens — an inline style would otherwise beat any @media rule below. */
   .kpi-row-3{ grid-template-columns:repeat(3,1fr); }
   @media (max-width: 640px){ .kpi-row-3{ grid-template-columns:repeat(2,1fr); } }
   @media (max-width: 420px){ .kpi-row-3{ grid-template-columns:1fr; } }
-
   /* ---------- Cards / grid ---------- */
   .grid-2col{display:grid; grid-template-columns:1.35fr 1fr; gap:16px; align-items:start; margin-bottom:16px;}
   @media (max-width: 980px){ .grid-2col{grid-template-columns:1fr;} .kpi-row{grid-template-columns:repeat(2,1fr);} }
   @media (max-width: 420px){ .kpi-row{grid-template-columns:1fr;} }
-
   .card{
     background:var(--surface-1); border:1px solid var(--border); border-radius:var(--radius-lg);
     padding:20px 22px; box-shadow:var(--shadow-card);
@@ -137,7 +130,6 @@
   .card-head{display:flex; align-items:flex-start; justify-content:space-between; gap:12px; margin-bottom:16px;}
   .card-head h2{font-size:14.5px; margin:0; font-weight:650; letter-spacing:.005em;}
   .card-head .sub{color:var(--text-muted); font-size:11.5px; margin-top:3px;}
-
   /* ---------- Form fields ---------- */
   .field-grid{ display:grid; grid-template-columns:1fr 1fr; gap:14px 16px; }
   .field-grid.cols-3{ grid-template-columns:1fr 1fr 1fr; }
@@ -164,18 +156,15 @@
     background-repeat:no-repeat; background-position:right 10px center; padding-right:30px;
   }
   .field select:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
-
   .seg-toggle{display:inline-flex; border:1px solid var(--border-strong); border-radius:9px; overflow:hidden; width:100%;}
   .seg-toggle button{ flex:1; justify-content:center; border:none; border-radius:0; background:var(--surface-2); color:var(--text-muted); padding:9px 10px; font-size:12px; }
   .seg-toggle button.on{ background:var(--accent-soft); color:var(--accent-2); }
   .seg-toggle button.on.good{ background:var(--good-soft); color:var(--good); }
   .seg-toggle button + button{ border-left:1px solid var(--border-strong); }
-
   .readout-list{ display:flex; flex-direction:column; gap:0; margin-top:14px; border-top:1px solid var(--border); }
   .readout-row{ display:flex; align-items:center; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--border); font-size:12.5px; }
   .readout-row .rk{ color:var(--text-muted); }
   .readout-row .rv{ color:var(--text-primary); font-weight:650; font-variant-numeric:tabular-nums; text-align:right; }
-
   /* ---------- Ranking bars (cost composition) ---------- */
   .rank-list{ display:flex; flex-direction:column; gap:13px; }
   .rank-row{ display:grid; grid-template-columns:118px 1fr 82px; align-items:center; gap:10px; }
@@ -183,7 +172,6 @@
   .rank-track{ height:11px; border-radius:999px; background:var(--surface-2); border:1px solid var(--border); overflow:hidden; }
   .rank-fill{ height:100%; border-radius:999px; background:linear-gradient(90deg, #1f5aa8, var(--accent) 60%, var(--accent-2)); box-shadow:0 0 12px -2px var(--accent-glow); transition:width .5s cubic-bezier(.2,.8,.2,1); }
   .rank-value{ font-size:12px; font-weight:700; color:var(--text-primary); text-align:right; font-variant-numeric:tabular-nums; }
-
   /* ---------- Alert banner ---------- */
   .alert-banner{ display:flex; align-items:center; gap:10px; padding:13px 16px; border-radius:var(--radius-md); font-size:12.5px; font-weight:650; margin-bottom:16px; border:1px solid; }
   .alert-banner.critical{ background:var(--critical-soft); color:var(--critical); border-color:rgba(239,74,94,.35); }
@@ -191,7 +179,6 @@
   .alert-banner.good{ background:var(--good-soft); color:var(--good); border-color:rgba(32,212,122,.35); }
   .alert-banner.neutral{ background:var(--surface-2); color:var(--text-secondary); border-color:var(--border-strong); font-weight:600; }
   .alert-banner svg{ flex:none; }
-
   /* ---------- Chart ---------- */
   .chart-wrap{ position:relative; }
   .chart-wrap svg{ display:block; width:100%; height:auto; overflow:visible; }
@@ -207,7 +194,6 @@
   .breakeven-line{ stroke:var(--warning); stroke-width:1.5; stroke-dasharray:4 3; }
   .breakeven-label{ fill:var(--warning); font-weight:700; }
   .crosshair-line{ stroke:var(--border-strong); stroke-width:1; stroke-dasharray:3 3; }
-
   .chart-tooltip{
     position:fixed; z-index:999; pointer-events:none; background:rgba(20,22,28,.96); border:1px solid var(--border-strong);
     border-radius:9px; padding:8px 11px; font-size:11.5px; color:var(--text-secondary); box-shadow:0 12px 28px -10px rgba(0,0,0,.6);
@@ -216,7 +202,6 @@
   .chart-tooltip .tt-title{ color:var(--text-muted); font-size:10.5px; text-transform:uppercase; letter-spacing:.05em; margin-bottom:3px; }
   .chart-tooltip .tt-value{ color:var(--text-primary); font-weight:700; font-size:13px; font-variant-numeric:tabular-nums; }
   .chart-tooltip[hidden]{ display:none; }
-
   /* ---------- Tables ---------- */
   .table-scroll{ overflow-x:auto; border-radius:var(--radius-md); border:1px solid var(--border); }
   table{width:100%; border-collapse:collapse; font-size:12.6px; min-width:480px;}
@@ -227,7 +212,6 @@
   tbody tr:hover{ background:rgba(255,255,255,.02); }
   tbody td:first-child{ color:var(--text-muted); }
   .cellval{ color:var(--text-primary); font-weight:600; }
-
   /* ---------- Cost list (custos fixos) ---------- */
   .cost-list{ display:flex; flex-direction:column; gap:10px; }
   .cost-row{ display:grid; grid-template-columns:1fr 150px 148px; align-items:center; gap:12px; padding:10px 12px; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-md); }
@@ -237,7 +221,6 @@
   .cost-toggle button{ padding:6px 10px; font-size:11px; border:none; border-radius:0; background:transparent; color:var(--text-muted); }
   .cost-toggle button.on{ background:var(--good-soft); color:var(--good); }
   .cost-toggle button + button{ border-left:1px solid var(--border-strong); }
-
   /* ---------- Details / reference tables ---------- */
   details.ref-table{ margin-top:16px; border-top:1px solid var(--border); padding-top:14px; }
   details.ref-table summary{ cursor:pointer; font-size:12.5px; font-weight:650; color:var(--accent-2); list-style:none; display:flex; align-items:center; gap:6px; }
@@ -245,7 +228,6 @@
   details.ref-table summary .chev{ transition:transform .15s; }
   details.ref-table[open] summary .chev{ transform:rotate(90deg); }
   details.ref-table .table-scroll{ margin-top:12px; max-height:320px; overflow-y:auto; }
-
   /* ---------- Comparativo ---------- */
   .compare-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
   @media (max-width: 900px){ .compare-grid{ grid-template-columns:1fr; } }
@@ -270,23 +252,19 @@
   .compare-metric .cm-label{ font-size:12px; color:var(--text-muted); }
   .compare-metric .cm-value{ font-size:16px; font-weight:700; font-variant-numeric:tabular-nums; }
   .compare-metric .cm-value.neg{ color:var(--critical); }
-
   .recommend-banner{ display:flex; align-items:center; gap:12px; padding:16px 18px; border-radius:var(--radius-lg); background:linear-gradient(155deg, rgba(57,135,229,.14), rgba(57,135,229,.04)); border:1px solid rgba(57,135,229,.3); margin-bottom:16px; }
   .recommend-banner .r-icon{ width:38px; height:38px; border-radius:11px; background:var(--accent-soft); color:var(--accent-2); display:flex; align-items:center; justify-content:center; flex:none; }
   .recommend-banner .r-text{ font-size:13px; color:var(--text-secondary); line-height:1.5; }
   .recommend-banner .r-text strong{ color:var(--text-primary); }
-
   footer.hint{ color:var(--text-muted); font-size:11.5px; text-align:center; margin-top:26px; line-height:1.6; max-width:680px; margin-left:auto; margin-right:auto; }
   footer.hint svg{ width:13px; height:13px; vertical-align:-2px; margin-right:4px; }
   .empty{ color:var(--text-muted); font-size:12.5px; padding:14px 0; text-align:center; }
   .note{ font-size:11px; color:var(--text-muted); margin-top:10px; line-height:1.5; }
-
   .meta-mc-bar{ display:flex; align-items:center; gap:12px; background:var(--surface-1); border:1px solid var(--border); border-radius:var(--radius-md); padding:12px 16px; margin-bottom:18px; flex-wrap:wrap; }
   .meta-mc-bar .mc-bar-icon{ width:32px; height:32px; border-radius:9px; background:var(--accent-soft); color:var(--accent-2); display:flex; align-items:center; justify-content:center; flex:none; }
   .meta-mc-bar .mc-bar-icon svg{ width:16px; height:16px; }
   .meta-mc-bar .mc-bar-label{ font-size:12.5px; font-weight:650; color:var(--text-primary); white-space:nowrap; }
   .meta-mc-bar .mc-bar-field .input-wrap{ width:88px; }
-
   /* ---------- Ads/ROAS, metas de preço, desconto, promoção, comparador, saúde ---------- */
   .info-ic{
     display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px;
@@ -294,7 +272,6 @@
     cursor:help; margin-left:5px; vertical-align:1px; line-height:1; user-select:none;
   }
   .info-ic:hover{ background:var(--accent-soft); color:var(--accent-2); }
-
   .health-card{ padding:22px; border:1px solid var(--border); }
   .health-card.health-good{ border-color:rgba(32,212,122,.35); box-shadow:0 0 0 1px rgba(32,212,122,.2), var(--shadow-card); }
   .health-card.health-warn{ border-color:rgba(245,184,61,.35); box-shadow:0 0 0 1px rgba(245,184,61,.2), var(--shadow-card); }
@@ -308,29 +285,24 @@
   .health-msg{ font-size:12.5px; color:var(--text-secondary); margin:6px 0 14px; line-height:1.5; }
   .health-grid{ margin-top:4px; border-top:1px solid var(--border); }
   .health-grid .rk{ display:flex; align-items:center; }
-
   .compare-table td.better{ color:var(--good); font-weight:700; }
   .compare-table tr.best-row td{ background:rgba(32,212,122,.07); color:var(--good); font-weight:700; }
   .compare-table td.worse{ color:var(--critical); font-weight:700; }
   .compare-table th.best-col, .compare-table td.best-col{ background:rgba(32,212,122,.07); color:var(--good); }
   .compare-table thead th.best-col{ color:var(--good); }
-
   .meta-mc-bar .mc-bar-hint{ font-size:11.5px; color:var(--text-muted); margin-left:auto; text-align:right; max-width:360px; line-height:1.5; }
   @media (max-width: 720px){ .meta-mc-bar .mc-bar-hint{ margin-left:0; max-width:none; width:100%; } }
-
   .save-hint{ display:flex; align-items:flex-start; gap:10px; padding:12px 14px; border-radius:var(--radius-md); background:var(--accent-soft); border:1px solid rgba(57,135,229,.28); margin-top:14px; }
   .save-hint .sh-icon{ width:26px; height:26px; border-radius:8px; background:rgba(57,135,229,.18); color:var(--accent-2); display:flex; align-items:center; justify-content:center; flex:none; }
   .save-hint .sh-icon svg{ width:14px; height:14px; }
   .save-hint .sh-text{ font-size:11.5px; color:var(--text-secondary); line-height:1.55; }
   .save-hint .sh-text strong{ color:var(--text-primary); }
-
   .toast{ position:fixed; left:50%; bottom:26px; transform:translateX(-50%) translateY(12px); background:var(--surface-2); border:1px solid var(--border-strong); box-shadow:var(--shadow-card); border-radius:var(--radius-md); padding:14px 18px; max-width:420px; display:flex; align-items:flex-start; gap:10px; z-index:60; opacity:0; transition:opacity .18s ease, transform .18s ease; pointer-events:none; }
   .toast.show{ opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto; }
   .toast .t-icon{ width:26px; height:26px; border-radius:8px; background:var(--good-soft); color:var(--good); display:flex; align-items:center; justify-content:center; flex:none; }
   .toast .t-icon svg{ width:14px; height:14px; }
   .toast .t-text{ font-size:12px; color:var(--text-secondary); line-height:1.55; }
   .toast .t-text strong{ color:var(--text-primary); }
-
   /* ---------- Seções recolhíveis (item 14: hierarquia visual) ---------- */
   .section-group{ margin-bottom:22px; }
   .section-header-plain{ display:flex; align-items:baseline; gap:10px; margin-bottom:12px; flex-wrap:wrap; }
@@ -345,7 +317,6 @@
   .sg-chev{ transition:transform .15s; color:var(--text-muted); flex:none; }
   .section-details[open] .sg-chev{ transform:rotate(90deg); }
   .section-body > .card:first-child{ margin-top:0; }
-
   /* ---------- Estado inicial neutro ---------- */
   .hero-empty{ text-align:center; padding:44px 24px; }
   .hero-empty-icon{ width:52px; height:52px; border-radius:14px; background:var(--accent-soft); color:var(--accent-2);
@@ -353,7 +324,6 @@
   .hero-empty-icon svg{ width:24px; height:24px; }
   .hero-empty h2{ margin:0 0 8px; font-size:17px; font-weight:700; }
   .hero-empty p{ margin:0; color:var(--text-muted); font-size:13px; max-width:420px; margin-left:auto; margin-right:auto; line-height:1.6; }
-
   /* ---------- Projeção por volume ---------- */
   .breakeven-banner{ display:flex; align-items:flex-start; gap:12px; padding:14px 16px; border-radius:var(--radius-md);
     background:var(--warning-soft); border:1px solid rgba(245,184,61,.35); }
@@ -373,10 +343,40 @@
   .proj-cell-value{ font-size:15px; font-weight:700; font-variant-numeric:tabular-nums; }
   .proj-cell.neg .proj-cell-value{ color:var(--critical); }
   .proj-cell-sub{ font-size:10.5px; color:var(--text-muted); margin-top:3px; }
+  /* ---------- Pesquisa de mercado (Shopee) ---------- */
+  .steps-list{ margin:0 0 16px; padding-left:20px; display:flex; flex-direction:column; gap:8px; font-size:12.5px; color:var(--text-secondary); line-height:1.55; }
+  .steps-list li{ padding-left:2px; }
+  .steps-list strong{ color:var(--text-primary); }
+  .code-block{ position:relative; background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius-md); padding:14px 16px; margin-bottom:4px; }
+  .code-block pre{ margin:0; max-height:220px; overflow:auto; white-space:pre-wrap; word-break:break-word; }
+  .code-block code{ font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:11px; color:var(--text-secondary); line-height:1.6; }
+  .code-block button{ margin-top:12px; }
+  textarea{
+    width:100%; padding:10px 12px; border-radius:9px; border:1px solid var(--border-strong);
+    background:var(--surface-2); color:var(--text-primary); font:inherit; font-size:12.5px; font-weight:500;
+    resize:vertical; transition:border-color .15s, box-shadow .15s;
+  }
+  textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); background:var(--surface-1); }
+  .research-add-row{ display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; }
+  .research-name{ display:inline-flex; align-items:center; gap:6px; max-width:260px; }
+  .research-link{ color:var(--text-muted); display:inline-flex; flex:none; }
+  .research-link:hover{ color:var(--accent-2); }
+  .research-link svg{ width:13px; height:13px; }
+  .research-remove{ padding:6px 8px; }
+  .research-view{ padding:6px 8px; }
+  .research-actions{ display:inline-flex; gap:6px; }
+  .research-view-name{ cursor:pointer; }
+  .research-view-name:hover{ color:var(--accent-2); }
+  .field input[type=date]{
+    width:100%; padding:9px 12px; border-radius:9px; border:1px solid var(--border-strong);
+    background:var(--surface-2); color:var(--text-primary); font:inherit; font-size:13px; font-weight:600;
+    transition:border-color .15s, box-shadow .15s; color-scheme:dark;
+  }
+  .field input[type=date]:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); background:var(--surface-1); }
+  .research-filter-row{ display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
 </style>
 </head>
 <body>
-
 <header class="topbar">
   <div class="brand">
     <div class="brand-mark">
@@ -407,32 +407,26 @@
     </button>
   </div>
 </header>
-
 <main>
   <div class="nav-row" id="nav-row"><div class="nav-tab" data-tab="shopee"><span class="dot"></span>Shopee</div><div class="nav-tab active" data-tab="ml"><span class="dot"></span>Mercado Livre</div><div class="nav-tab" data-tab="comparativo"><span class="dot"></span>Comparativo</div><div class="nav-tab" data-tab="custos"><span class="dot"></span>Custos fixos</div></div>
   <div id="view-root"><div class="kpi-row"><div class="kpi-card"><div class="kpi-top"><span class="kpi-label">MC / lucro por venda</span><span class="kpi-icon critical"><svg class="icon" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="13" rx="2.5"></rect><path d="M16.5 12.3h2.6"></path><path d="M3 10h18"></path></svg></span></div><div class="kpi-value neg">-R$ 6,45</div><div class="kpi-sub">sobre venda de R$ 0,00</div></div><div class="kpi-card"><div class="kpi-top"><span class="kpi-label">MC %</span><span class="kpi-icon warning"><svg class="icon" viewBox="0 0 24 24"><circle cx="7" cy="7" r="2.2"></circle><circle cx="17" cy="17" r="2.2"></circle><path d="M18 6L6 18"></path></svg></span></div><div class="kpi-value neg">0,0%</div><div class="kpi-sub">meta configurada: 20,0%</div></div><div class="kpi-card"><div class="kpi-top"><span class="kpi-label">ROI</span><span class="kpi-icon accent"><svg class="icon" viewBox="0 0 24 24"><path d="M4 16.5l5.3-5.3 3.6 3.6L20.5 6.3"></path><path d="M15 6.3h5.5v5.5"></path></svg></span></div><div class="kpi-value">-100,0%</div><div class="kpi-sub">retorno sobre custo total da venda</div></div><div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Custo total da venda</span><span class="kpi-icon accent"><svg class="icon" viewBox="0 0 24 24"><path d="M3.5 8.5 12 4l8.5 4.5L12 13z"></path><path d="M3.5 8.5V16l8.5 4.5"></path><path d="M20.5 8.5V16L12 20.5"></path><path d="M12 13v7.5"></path></svg></span></div><div class="kpi-value">R$ 6,45</div><div class="kpi-sub">tarifa + envio + imposto + produto</div></div></div><div class="meta-mc-bar"><div class="mc-bar-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="4"></circle><circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none"></circle></svg></div><div class="mc-bar-label">Meta de MC</div><div class="mc-bar-field"><div class="input-wrap"><input type="text" inputmode="decimal" class="has-suffix" data-fid="meta-mc-ml"><span class="suffix">%</span></div></div><div class="mc-bar-hint">Define quando os alertas mostram "acima" ou "abaixo" da meta, e o preço sugerido para bater a meta.</div></div><div class="grid-2col"><section class="card"><div class="card-head"><div><h2>Entradas — Mercado Livre</h2><div class="sub">Preencha os dados do produto, da venda e do envio.</div></div></div><div class="field-grid"><div class="field span-2"><label>Produto / SKU</label><div class="input-wrap"><input type="text" data-fid="Produto / SKU"></div></div><div class="field"><label>Tipo de anúncio</label><select><option value="Clássico">Clássico</option><option value="Premium">Premium</option></select></div><div class="field"><label>Valor de venda</label><div class="input-wrap"><span class="prefix">R$</span><input type="text" inputmode="decimal" class="has-prefix" data-fid="Valor de venda"></div></div><div class="field"><label>Custo do produto</label><div class="input-wrap"><span class="prefix">R$</span><input type="text" inputmode="decimal" class="has-prefix" data-fid="Custo do produto"></div></div><div class="field"><label>Imposto</label><div class="input-wrap"><input type="text" inputmode="decimal" class="has-suffix" data-fid="Imposto"><span class="suffix">%</span></div></div><div class="field"><label>Tarifa ML</label><div class="input-wrap"><input type="text" inputmode="decimal" class="has-suffix" data-fid="Tarifa ML"><span class="suffix">%</span></div></div><div class="field"><label>Ads / publicidade</label><div class="input-wrap"><input type="text" inputmode="decimal" class="has-suffix" data-fid="Ads / publicidade"><span class="suffix">%</span></div></div><div class="field"><label>Outros custos variáveis</label><div class="input-wrap"><span class="prefix">R$</span><input type="text" inputmode="decimal" class="has-prefix" data-fid="Outros custos variáveis"></div></div></div><div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--border);"><div class="card-head" style="margin-bottom:12px;"><div><h2 style="font-size:13px;">Logística</h2><div class="sub">Dimensões e peso para calcular o frete pela tabela do ML.</div></div></div></div><div class="field-grid cols-3"><div class="field"><label>Peso real</label><div class="input-wrap"><input type="text" inputmode="decimal" class="has-suffix" data-fid="Peso real"><span class="suffix">kg</span></div></div><div class="field"><label>Comprimento</label><div class="input-wrap"><input type="text" inputmode="decimal" class="has-suffix" data-fid="Comprimento"><span class="suffix">cm</span></div></div><div class="field"><label>Largura</label><div class="input-wrap"><input type="text" inputmode="decimal" class="has-suffix" data-fid="Largura"><span class="suffix">cm</span></div></div></div><div class="field-grid cols-3" style="margin-top: 14px;"><div class="field"><label>Altura</label><div class="input-wrap"><input type="text" inputmode="decimal" class="has-suffix" data-fid="Altura"><span class="suffix">cm</span></div></div><div class="field" style="grid-column: span 2;"><label>Frete automático (tabela ML)</label><div class="seg-toggle"><button type="button" class="on good">Sim</button><button type="button">Não</button></div></div></div><div class="save-hint"><div class="sh-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2.5"></rect><path d="M8 4v4h6V4"></path><path d="M8 20v-6h8v6"></path></svg></div><div class="sh-text">Preencheu peso e medidas? Clique em <strong>Salvar meus dados</strong> no topo da página para não precisar digitar tudo de novo na próxima vez — o arquivo baixado já abre com esses valores preenchidos.</div></div><div class="readout-list"><div class="readout-row"><span class="rk">Peso cubado</span><span class="rv">0,5 kg</span></div><div class="readout-row"><span class="rk">Peso faturável</span><span class="rv">0,5 kg</span></div><div class="readout-row"><span class="rk">Faixa de peso</span><span class="rv">0,3 a 0,5 kg</span></div><div class="readout-row"><span class="rk">Faixa de preço</span><span class="rv">R$ 0–18,99</span></div><div class="readout-row"><span class="rk">Custo de envio calculado</span><span class="rv">R$ 5,95</span></div><div class="readout-row"><span class="rk">Rateio de custo fixo/venda</span><span class="rv">R$ 0,00</span></div></div><details class="ref-table"><summary><svg class="icon" viewBox="0 0 24 24"><path class="chev" d="M9 6l6 6-6 6"></path></svg> Ver tabela de frete completa (peso × faixa de preço)</summary><div class="table-scroll"><table><thead><tr><th>Peso</th><th>R$ 0–18,99</th><th>R$ 19–48,99</th><th>R$ 49–78,99</th><th>R$ 79–99,99</th><th>R$ 100–119,99</th><th>R$ 120–149,99</th><th>R$ 150–199,99</th><th>R$ 200+</th></tr></thead><tbody><tr><td>Até 0,3 kg</td><td>R$ 5,65</td><td>R$ 6,55</td><td>R$ 7,75</td><td>R$ 12,35</td><td>R$ 14,35</td><td>R$ 16,45</td><td>R$ 18,45</td><td>R$ 20,95</td></tr><tr style="background:rgba(57,135,229,.08)"><td>0,3 a 0,5 kg</td><td style="color:var(--accent-2);font-weight:700;">R$ 5,95</td><td>R$ 6,65</td><td>R$ 7,85</td><td>R$ 13,25</td><td>R$ 15,45</td><td>R$ 17,65</td><td>R$ 19,85</td><td>R$ 22,55</td></tr><tr><td>0,5 a 1 kg</td><td>R$ 6,05</td><td>R$ 6,75</td><td>R$ 7,95</td><td>R$ 13,85</td><td>R$ 16,15</td><td>R$ 18,45</td><td>R$ 20,75</td><td>R$ 23,65</td></tr><tr><td>1 a 1,5 kg</td><td>R$ 6,15</td><td>R$ 6,85</td><td>R$ 8,05</td><td>R$ 14,15</td><td>R$ 16,45</td><td>R$ 18,85</td><td>R$ 21,15</td><td>R$ 24,65</td></tr><tr><td>1,5 a 2 kg</td><td>R$ 6,25</td><td>R$ 6,95</td><td>R$ 8,15</td><td>R$ 14,45</td><td>R$ 16,85</td><td>R$ 19,25</td><td>R$ 21,65</td><td>R$ 24,65</td></tr><tr><td>2 a 3 kg</td><td>R$ 6,35</td><td>R$ 7,95</td><td>R$ 8,55</td><td>R$ 15,75</td><td>R$ 18,35</td><td>R$ 21,05</td><td>R$ 23,65</td><td>R$ 26,25</td></tr><tr><td>3 a 4 kg</td><td>R$ 6,45</td><td>R$ 8,15</td><td>R$ 8,95</td><td>R$ 17,05</td><td>R$ 19,85</td><td>R$ 22,65</td><td>R$ 25,55</td><td>R$ 28,35</td></tr><tr><td>4 a 5 kg</td><td>R$ 6,55</td><td>R$ 8,35</td><td>R$ 9,75</td><td>R$ 18,45</td><td>R$ 21,55</td><td>R$ 24,65</td><td>R$ 27,75</td><td>R$ 30,75</td></tr><tr><td>5 a 6 kg</td><td>R$ 6,65</td><td>R$ 8,55</td><td>R$ 9,95</td><td>R$ 25,45</td><td>R$ 28,55</td><td>R$ 32,65</td><td>R$ 35,75</td><td>R$ 39,75</td></tr><tr><td>6 a 7 kg</td><td>R$ 6,75</td><td>R$ 8,75</td><td>R$ 10,15</td><td>R$ 27,05</td><td>R$ 31,05</td><td>R$ 36,05</td><td>R$ 40,05</td><td>R$ 44,05</td></tr><tr><td>7 a 8 kg</td><td>R$ 6,85</td><td>R$ 8,95</td><td>R$ 10,35</td><td>R$ 28,85</td><td>R$ 33,65</td><td>R$ 38,45</td><td>R$ 43,25</td><td>R$ 48,05</td></tr><tr><td>8 a 9 kg</td><td>R$ 6,95</td><td>R$ 9,15</td><td>R$ 10,55</td><td>R$ 29,65</td><td>R$ 34,55</td><td>R$ 39,55</td><td>R$ 44,45</td><td>R$ 49,35</td></tr><tr><td>9 a 11 kg</td><td>R$ 7,05</td><td>R$ 9,55</td><td>R$ 10,95</td><td>R$ 41,25</td><td>R$ 48,05</td><td>R$ 54,95</td><td>R$ 61,75</td><td>R$ 68,65</td></tr><tr><td>11 a 13 kg</td><td>R$ 7,15</td><td>R$ 9,95</td><td>R$ 11,35</td><td>R$ 42,15</td><td>R$ 49,25</td><td>R$ 56,25</td><td>R$ 63,25</td><td>R$ 70,25</td></tr><tr><td>13 a 15 kg</td><td>R$ 7,25</td><td>R$ 10,15</td><td>R$ 11,55</td><td>R$ 45,05</td><td>R$ 52,45</td><td>R$ 59,95</td><td>R$ 67,45</td><td>R$ 74,95</td></tr><tr><td>15 a 17 kg</td><td>R$ 7,35</td><td>R$ 10,35</td><td>R$ 11,75</td><td>R$ 48,55</td><td>R$ 56,05</td><td>R$ 63,55</td><td>R$ 70,75</td><td>R$ 78,65</td></tr><tr><td>17 a 20 kg</td><td>R$ 7,45</td><td>R$ 10,55</td><td>R$ 11,95</td><td>R$ 54,75</td><td>R$ 63,85</td><td>R$ 72,95</td><td>R$ 82,05</td><td>R$ 91,15</td></tr><tr><td>20 a 25 kg</td><td>R$ 7,65</td><td>R$ 10,95</td><td>R$ 12,15</td><td>R$ 64,05</td><td>R$ 75,05</td><td>R$ 84,75</td><td>R$ 95,35</td><td>R$ 105,95</td></tr><tr><td>25 a 30 kg</td><td>R$ 7,75</td><td>R$ 11,15</td><td>R$ 12,35</td><td>R$ 65,95</td><td>R$ 75,45</td><td>R$ 85,55</td><td>R$ 96,25</td><td>R$ 106,95</td></tr><tr><td>30 a 40 kg</td><td>R$ 7,85</td><td>R$ 11,35</td><td>R$ 12,55</td><td>R$ 67,75</td><td>R$ 78,95</td><td>R$ 88,95</td><td>R$ 99,15</td><td>R$ 107,05</td></tr><tr><td>40 a 50 kg</td><td>R$ 7,95</td><td>R$ 11,55</td><td>R$ 12,75</td><td>R$ 70,25</td><td>R$ 81,05</td><td>R$ 92,05</td><td>R$ 102,55</td><td>R$ 110,75</td></tr><tr><td>50 a 60 kg</td><td>R$ 8,05</td><td>R$ 11,75</td><td>R$ 12,95</td><td>R$ 74,95</td><td>R$ 86,45</td><td>R$ 98,15</td><td>R$ 109,35</td><td>R$ 118,15</td></tr><tr><td>60 a 70 kg</td><td>R$ 8,15</td><td>R$ 11,95</td><td>R$ 13,15</td><td>R$ 80,25</td><td>R$ 92,95</td><td>R$ 105,05</td><td>R$ 117,15</td><td>R$ 126,55</td></tr><tr><td>70 a 80 kg</td><td>R$ 8,25</td><td>R$ 12,15</td><td>R$ 13,35</td><td>R$ 83,95</td><td>R$ 97,05</td><td>R$ 109,85</td><td>R$ 122,45</td><td>R$ 132,25</td></tr><tr><td>80 a 90 kg</td><td>R$ 8,35</td><td>R$ 12,35</td><td>R$ 13,55</td><td>R$ 93,25</td><td>R$ 107,45</td><td>R$ 122,05</td><td>R$ 136,05</td><td>R$ 146,95</td></tr><tr><td>90 a 100 kg</td><td>R$ 8,45</td><td>R$ 12,55</td><td>R$ 13,75</td><td>R$ 106,55</td><td>R$ 123,95</td><td>R$ 139,55</td><td>R$ 155,55</td><td>R$ 167,95</td></tr><tr><td>100 a 125 kg</td><td>R$ 8,55</td><td>R$ 12,75</td><td>R$ 13,95</td><td>R$ 119,25</td><td>R$ 138,05</td><td>R$ 156,05</td><td>R$ 173,95</td><td>R$ 187,95</td></tr><tr><td>125 a 150 kg</td><td>R$ 8,65</td><td>R$ 12,75</td><td>R$ 14,15</td><td>R$ 126,55</td><td>R$ 146,15</td><td>R$ 165,65</td><td>R$ 184,65</td><td>R$ 199,45</td></tr><tr><td>Mais de 150 kg</td><td>R$ 8,75</td><td>R$ 12,75</td><td>R$ 14,35</td><td>R$ 166,15</td><td>R$ 192,45</td><td>R$ 217,55</td><td>R$ 242,55</td><td>R$ 261,95</td></tr></tbody></table></div></details></section><section class="card"><div class="card-head"><div><h2>Composição do custo</h2><div class="sub">O que consome a margem nesta venda.</div></div></div><div class="alert-banner critical"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 7.5v5.5"></path><circle cx="12" cy="16.3" r="0.75" fill="currentColor" stroke="none"></circle></svg><span>PREJUÍZO — revise preço, comissão, frete, ads ou custo do produto.</span></div><div class="rank-list"><div class="rank-row" data-name="Envio ML" data-value="5.95"><div class="rank-name">Envio ML</div><div class="rank-track"><div class="rank-fill" data-w="100" style="width: 100%;"></div></div><div class="rank-value">R$ 5,95</div></div><div class="rank-row" data-name="Outros" data-value="0.5"><div class="rank-name">Outros</div><div class="rank-track"><div class="rank-fill" data-w="8.403361344537814" style="width: 8.40336%;"></div></div><div class="rank-value">R$ 0,50</div></div><div class="rank-row" data-name="Tarifa ML" data-value="0"><div class="rank-name">Tarifa ML</div><div class="rank-track"><div class="rank-fill" data-w="2" style="width: 2%;"></div></div><div class="rank-value">R$ 0,00</div></div><div class="rank-row" data-name="Imposto" data-value="0"><div class="rank-name">Imposto</div><div class="rank-track"><div class="rank-fill" data-w="2" style="width: 2%;"></div></div><div class="rank-value">R$ 0,00</div></div><div class="rank-row" data-name="Ads" data-value="0"><div class="rank-name">Ads</div><div class="rank-track"><div class="rank-fill" data-w="2" style="width: 2%;"></div></div><div class="rank-value">R$ 0,00</div></div><div class="rank-row" data-name="Produto" data-value="0"><div class="rank-name">Produto</div><div class="rank-track"><div class="rank-fill" data-w="2" style="width: 2%;"></div></div><div class="rank-value">R$ 0,00</div></div><div class="rank-row" data-name="Rateio fixo" data-value="0"><div class="rank-name">Rateio fixo</div><div class="rank-track"><div class="rank-fill" data-w="2" style="width: 2%;"></div></div><div class="rank-value">R$ 0,00</div></div></div></section></div><section class="card"><div class="card-head"><div><h2>Simulador de preço &amp; projeção</h2><div class="sub">Quanto cobrar para não ter prejuízo, e quanto lucro escalar por volume.</div></div></div><div class="kpi-row" style="grid-template-columns: 1fr 1fr; margin-bottom: 18px;"><div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Preço mínimo p/ zerar margem</span><span class="kpi-icon accent"><svg class="icon" viewBox="0 0 24 24"><path d="M12 3v3"></path><path d="M5 9h14"></path><path d="M7 9l-3.5 7a3.5 3.5 0 0 0 7 0Z"></path><path d="M17 9l-3.5 7a3.5 3.5 0 0 0 7 0Z"></path><path d="M9 21h6"></path></svg></span></div><div class="kpi-value">R$ 7,33</div><div class="kpi-sub">estimativa — o frete muda ao cruzar faixa de preço</div></div><div class="kpi-card"><div class="kpi-top"><span class="kpi-label">Preço p/ bater a meta de MC</span><span class="kpi-icon accent"><svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"></circle><circle cx="12" cy="12" r="4"></circle><circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none"></circle></svg></span></div><div class="kpi-value">R$ 9,49</div><div class="kpi-sub">meta atual: 20,0%</div></div></div><div class="chart-wrap"><svg viewBox="0 0 760 200" preserveAspectRatio="none" role="img" aria-label="Projeção de lucro por volume de vendas"><defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="var(--accent-2)" stop-opacity="0.28"></stop><stop offset="100%" stop-color="var(--accent-2)" stop-opacity="0"></stop></linearGradient></defs><line class="gridline" x1="54" y1="172" x2="744" y2="172"></line><text class="axis-label" x="46" y="175" text-anchor="end">-R$ 7,6K</text><line class="gridline" x1="54" y1="120" x2="744" y2="120"></line><text class="axis-label" x="46" y="123" text-anchor="end">-R$ 5,1K</text><line class="gridline" x1="54" y1="68" x2="744" y2="68"></line><text class="axis-label" x="46" y="71" text-anchor="end">-R$ 2,5K</text><line class="gridline" x1="54" y1="16" x2="744" y2="16"></line><text class="axis-label" x="46" y="19" text-anchor="end">R$ 0,00</text><path class="chart-area" d="M54,16 L54,29.22033898305085 L284,55.66101694915254 L514,82.10169491525423 L744,148.20338983050848 L744,16 Z"></path><polyline class="chart-line" points="54,29.22033898305085 284,55.66101694915254 514,82.10169491525423 744,148.20338983050848"></polyline><circle class="chart-point" data-i="0" cx="54" cy="29.22033898305085" r="4.5"></circle><circle class="chart-point" data-i="1" cx="284" cy="55.66101694915254" r="4.5"></circle><circle class="chart-point" data-i="2" cx="514" cy="82.10169491525423" r="4.5"></circle><circle class="chart-point" data-i="3" cx="744" cy="148.20338983050848" r="4.5"></circle><text class="axis-label" x="54" y="192" text-anchor="middle">100 vendas</text><text class="axis-label" x="284" y="192" text-anchor="middle">300 vendas</text><text class="axis-label" x="514" y="192" text-anchor="middle">500 vendas</text><text class="axis-label" x="744" y="192" text-anchor="middle">1000 vendas</text><line class="crosshair-line" id="crosshair" x1="0" y1="16" x2="0" y2="172" style="opacity:0"></line><rect id="hit-overlay" x="54" y="16" width="690" height="156" fill="transparent"></rect></svg></div></section></div>
-
   <footer class="hint">
     <svg class="icon" viewBox="0 0 24 24" style="display:inline-block;"><circle cx="12" cy="12" r="9"></circle><path d="M12 8v5"></path><circle cx="12" cy="16" r="0.6" fill="currentColor" stroke="none"></circle></svg>
     Os dados (preços, custos, peso e medidas) ficam só nesta página enquanto você usa o app. Clique em <strong style="color:var(--text-secondary)">Salvar meus dados</strong> sempre que terminar de preencher — baixa um .html já com tudo preenchido. Da próxima vez, abra esse arquivo salvo (em vez do original) e as informações já estarão lá.
   </footer>
 </main>
-
 <div class="chart-tooltip" id="tooltip" style="left: 964px; top: 232px;" hidden=""><div class="tt-title">Outros</div><div class="tt-value">R$ 0,50</div></div>
 <div class="toast" id="toast" hidden="">
   <div class="t-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"></path></svg></div>
   <div class="t-text" id="toast-text"></div>
 </div>
-
 <script id="app-data" type="application/json">{"activeTab":"shopee","config":{"tarifaClassico":0.12,"tarifaPremium":0.17,"fatorCubagem":6000,"metaMCPct":0.2},"fixedCosts":{"items":[{"id":"aluguel","name":"Aluguel","value":0,"active":true},{"id":"energia","name":"Energia","value":0,"active":true},{"id":"internet","name":"Internet / Telefone","value":0,"active":true},{"id":"folha","name":"Folha / Salários","value":0,"active":true},{"id":"contab","name":"Contabilidade","value":0,"active":true},{"id":"sistemas","name":"Sistemas / ERP","value":0,"active":true},{"id":"embalagens","name":"Embalagens / estrutura fixa","value":0,"active":true},{"id":"prolabore","name":"Pró-labore","value":0,"active":true},{"id":"outros1","name":"Outros 1","value":0,"active":true},{"id":"outros2","name":"Outros 2","value":0,"active":true},{"id":"outros3","name":"Outros 3","value":0,"active":true}],"safetyMarginPct":0,"vendasMesShopee":1000,"vendasMesML":1000},"shopee":{"sku":"","valorVenda":0,"impostoPct":0,"custoEnvio":0,"custoProduto":0,"adsPct":0,"outrosVariaveis":0,"affiliatePct":0,"adsMode":"pct","roas":0,"margemDesejadaPosAds":0,"lucroDesejadoRS":0,"roiDesejadoPct":0,"discountMode":"zerar","promoPrice":0,"cmp":null,"simVendas":100,"metaLucroMensal":0},"ml":{"sku":"","tipoAnuncio":"Clássico","valorVenda":0,"custoProduto":0,"impostoPct":0,"tarifaPct":0.12,"adsPct":0,"outrosVariaveis":0,"pesoReal":0.15,"compr":30,"larg":20,"alt":5,"freteAutomatico":true,"affiliatePct":0,"adsMode":"pct","roas":0,"margemDesejadaPosAds":0,"lucroDesejadoRS":0,"roiDesejadoPct":0,"discountMode":"zerar","promoPrice":0,"cmp":null,"simVendas":100,"metaLucroMensal":0}}</script>
 <script>
 (function(){
   "use strict";
-
   // ======================================================================
   // DADOS DE REFERÊNCIA (extraídos das planilhas originais)
   // ======================================================================
-
   // ---- Shopee: faixas de comissão (aba "Regras") ----
   var SHOPEE_BANDS = [
     { min:0,   comissaoPct:0.20, fixo:4,  pixPct:0.00, label:'Até R$79,99' },
@@ -446,7 +440,6 @@
     for(var i=0;i<SHOPEE_BANDS.length;i++){ if(venda >= SHOPEE_BANDS[i].min) band = SHOPEE_BANDS[i]; }
     return band;
   }
-
   // ---- TikTok Shop: faixas de taxa de venda (comissão da plataforma + tarifa fixa por item) ----
   var TIKTOK_BANDS = [
     { min:0,  comissaoPct:0.10, fixo:4, label:'Abaixo de R$50,00' },
@@ -457,7 +450,6 @@
     for(var i=0;i<TIKTOK_BANDS.length;i++){ if(venda >= TIKTOK_BANDS[i].min) band = TIKTOK_BANDS[i]; }
     return band;
   }
-
   // ---- Mercado Livre: tabela de frete por peso faturável x faixa de preço (aba "Tabela Frete ML") ----
   var FREIGHT_TABLE = [{"max": 0.3, "label": "Até 0,3 kg", "cols": [5.65, 6.55, 7.75, 12.35, 14.35, 16.45, 18.45, 20.95]}, {"max": 0.5, "label": "0,3 a 0,5 kg", "cols": [5.95, 6.65, 7.85, 13.25, 15.45, 17.65, 19.85, 22.55]}, {"max": 1, "label": "0,5 a 1 kg", "cols": [6.05, 6.75, 7.95, 13.85, 16.15, 18.45, 20.75, 23.65]}, {"max": 1.5, "label": "1 a 1,5 kg", "cols": [6.15, 6.85, 8.05, 14.15, 16.45, 18.85, 21.15, 24.65]}, {"max": 2, "label": "1,5 a 2 kg", "cols": [6.25, 6.95, 8.15, 14.45, 16.85, 19.25, 21.65, 24.65]}, {"max": 3, "label": "2 a 3 kg", "cols": [6.35, 7.95, 8.55, 15.75, 18.35, 21.05, 23.65, 26.25]}, {"max": 4, "label": "3 a 4 kg", "cols": [6.45, 8.15, 8.95, 17.05, 19.85, 22.65, 25.55, 28.35]}, {"max": 5, "label": "4 a 5 kg", "cols": [6.55, 8.35, 9.75, 18.45, 21.55, 24.65, 27.75, 30.75]}, {"max": 6, "label": "5 a 6 kg", "cols": [6.65, 8.55, 9.95, 25.45, 28.55, 32.65, 35.75, 39.75]}, {"max": 7, "label": "6 a 7 kg", "cols": [6.75, 8.75, 10.15, 27.05, 31.05, 36.05, 40.05, 44.05]}, {"max": 8, "label": "7 a 8 kg", "cols": [6.85, 8.95, 10.35, 28.85, 33.65, 38.45, 43.25, 48.05]}, {"max": 9, "label": "8 a 9 kg", "cols": [6.95, 9.15, 10.55, 29.65, 34.55, 39.55, 44.45, 49.35]}, {"max": 11, "label": "9 a 11 kg", "cols": [7.05, 9.55, 10.95, 41.25, 48.05, 54.95, 61.75, 68.65]}, {"max": 13, "label": "11 a 13 kg", "cols": [7.15, 9.95, 11.35, 42.15, 49.25, 56.25, 63.25, 70.25]}, {"max": 15, "label": "13 a 15 kg", "cols": [7.25, 10.15, 11.55, 45.05, 52.45, 59.95, 67.45, 74.95]}, {"max": 17, "label": "15 a 17 kg", "cols": [7.35, 10.35, 11.75, 48.55, 56.05, 63.55, 70.75, 78.65]}, {"max": 20, "label": "17 a 20 kg", "cols": [7.45, 10.55, 11.95, 54.75, 63.85, 72.95, 82.05, 91.15]}, {"max": 25, "label": "20 a 25 kg", "cols": [7.65, 10.95, 12.15, 64.05, 75.05, 84.75, 95.35, 105.95]}, {"max": 30, "label": "25 a 30 kg", "cols": [7.75, 11.15, 12.35, 65.95, 75.45, 85.55, 96.25, 106.95]}, {"max": 40, "label": "30 a 40 kg", "cols": [7.85, 11.35, 12.55, 67.75, 78.95, 88.95, 99.15, 107.05]}, {"max": 50, "label": "40 a 50 kg", "cols": [7.95, 11.55, 12.75, 70.25, 81.05, 92.05, 102.55, 110.75]}, {"max": 60, "label": "50 a 60 kg", "cols": [8.05, 11.75, 12.95, 74.95, 86.45, 98.15, 109.35, 118.15]}, {"max": 70, "label": "60 a 70 kg", "cols": [8.15, 11.95, 13.15, 80.25, 92.95, 105.05, 117.15, 126.55]}, {"max": 80, "label": "70 a 80 kg", "cols": [8.25, 12.15, 13.35, 83.95, 97.05, 109.85, 122.45, 132.25]}, {"max": 90, "label": "80 a 90 kg", "cols": [8.35, 12.35, 13.55, 93.25, 107.45, 122.05, 136.05, 146.95]}, {"max": 100, "label": "90 a 100 kg", "cols": [8.45, 12.55, 13.75, 106.55, 123.95, 139.55, 155.55, 167.95]}, {"max": 125, "label": "100 a 125 kg", "cols": [8.55, 12.75, 13.95, 119.25, 138.05, 156.05, 173.95, 187.95]}, {"max": 150, "label": "125 a 150 kg", "cols": [8.65, 12.75, 14.15, 126.55, 146.15, 165.65, 184.65, 199.45]}, {"max": 9999, "label": "Mais de 150 kg", "cols": [8.75, 12.75, 14.35, 166.15, 192.45, 217.55, 242.55, 261.95]}];
   var PRICE_BAND_LABELS = ['R$ 0–18,99','R$ 19–48,99','R$ 49–78,99','R$ 79–99,99','R$ 100–119,99','R$ 120–149,99','R$ 150–199,99','R$ 200+'];
@@ -469,7 +461,6 @@
     for(var i=0;i<FREIGHT_TABLE.length;i++){ if(pesoFaturavel <= FREIGHT_TABLE[i].max) return FREIGHT_TABLE[i]; }
     return FREIGHT_TABLE[FREIGHT_TABLE.length-1];
   }
-
   // ======================================================================
   // ESTADO
   // ======================================================================
@@ -523,10 +514,14 @@
         adsMode:'pct', roas:0,
         margemDesejadaPosAds:0, lucroDesejadoRS:0, roiDesejadoPct:0, discountMode:'zerar',
         promoPrice:0, cmp:null, simVendas:100, metaLucroMensal:0
+      },
+      pesquisa: {
+        shopee: [],
+        selectedId: null,
+        filtro: { preset:'30d', from:null, to:null }
       }
     };
   }
-
   // ======================================================================
   // SALVAMENTO AUTOMÁTICO (localStorage)
   // Cada alteração de campo re-renderiza a tela (renderActiveTab), e é nesse
@@ -557,7 +552,6 @@
     renderActiveTab();
     showToast('<strong>Dados apagados.</strong> A calculadora voltou aos valores padrão.');
   }
-
   // Compatibilidade com dados salvos antes do SHEIN/TikTok existirem: preenche
   // o que faltar com os valores padrão, sem tocar em nada que já esteja salvo.
   function ensureSheinDefaults(st){
@@ -571,9 +565,14 @@
       if(st.fixedCosts.vendasMesShein==null) st.fixedCosts.vendasMesShein = d.fixedCosts.vendasMesShein;
       if(st.fixedCosts.vendasMesTiktok==null) st.fixedCosts.vendasMesTiktok = d.fixedCosts.vendasMesTiktok;
     }
+    if(!st.pesquisa || !Array.isArray(st.pesquisa.shopee)) st.pesquisa = d.pesquisa;
+    else {
+      if(st.pesquisa.selectedId===undefined) st.pesquisa.selectedId = null;
+      if(!st.pesquisa.filtro) st.pesquisa.filtro = { preset:'30d', from:null, to:null };
+      st.pesquisa.shopee = st.pesquisa.shopee.map(migratePesquisaItem);
+    }
     return st;
   }
-
   var state = null;
   function loadInitialState(){
     // Prioridade: 1) autosave deste navegador (mais recente) — 2) dados
@@ -590,7 +589,6 @@
     return defaultState();
   }
   state = loadInitialState();
-
   // ======================================================================
   // HELPERS
   // ======================================================================
@@ -637,9 +635,14 @@
     check: '<circle cx="12" cy="12" r="9"/><path d="M8 12.3l2.7 2.7L16.2 9"/>',
     scale: '<path d="M12 3v3"/><path d="M5 9h14"/><path d="M7 9l-3.5 7a3.5 3.5 0 0 0 7 0Z"/><path d="M17 9l-3.5 7a3.5 3.5 0 0 0 7 0Z"/><path d="M9 21h6"/>',
     target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.8" fill="currentColor" stroke="none"/>',
-    arrowsCompare: '<path d="M7 8l-4 4 4 4"/><path d="M3 12h11"/><path d="M17 4l4 4-4 4"/><path d="M21 8H10"/>'
+    arrowsCompare: '<path d="M7 8l-4 4 4 4"/><path d="M3 12h11"/><path d="M17 4l4 4-4 4"/><path d="M21 8H10"/>',
+    search: '<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+    link: '<path d="M9.5 14.5l5-5"/><path d="M13 6.5l1-1a3.5 3.5 0 0 1 5 5l-1 1"/><path d="M11 17.5l-1 1a3.5 3.5 0 0 1-5-5l1-1"/>',
+    copy: '<rect x="8.5" y="8.5" width="12" height="12" rx="2"/><path d="M15.5 8.5V6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8.5a2 2 0 0 0 2 2h2.5"/>',
+    trash: '<path d="M4.5 7h15"/><path d="M9 7V5a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 5v2"/><path d="M6.5 7l1 12.5A2 2 0 0 0 9.5 21.5h5a2 2 0 0 0 2-2L17.5 7"/><path d="M10.2 11v6"/><path d="M13.8 11v6"/>',
+    eye: '<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>',
+    arrowLeft: '<path d="M19 12H5"/><path d="M11 18l-6-6 6-6"/>'
   };
-
   var tooltipEl = document.getElementById('tooltip');
   function showTooltip(x, y, title, value){
     tooltipEl.innerHTML = '<div class="tt-title"></div><div class="tt-value"></div>';
@@ -648,7 +651,6 @@
     tooltipEl.style.left = x+'px'; tooltipEl.style.top = y+'px'; tooltipEl.hidden = false;
   }
   function hideTooltip(){ tooltipEl.hidden = true; }
-
   // ======================================================================
   // CUSTOS FIXOS
   // ======================================================================
@@ -671,7 +673,6 @@
   function fixedCostsMonthlyEffective(){
     return fixedCostsTotal() * (1 + (Number(state.fixedCosts.safetyMarginPct)||0));
   }
-
   // ======================================================================
   // CÁLCULO SHOPEE
   // ======================================================================
@@ -717,7 +718,6 @@
       fixedPart:fixedPart, percentRate:percentRate, mcSemAds:mcSemAds
     };
   }
-
   // ======================================================================
   // CÁLCULO MERCADO LIVRE
   // ======================================================================
@@ -760,7 +760,6 @@
       fixedPart:fixedPart, percentRate:percentRate, mcSemAds:mcSemAds
     };
   }
-
   // ======================================================================
   // CÁLCULO SHEIN
   // Comissão percentual simples e editável (padrão 16%) — sem faixas como a
@@ -806,7 +805,6 @@
       fixedPart:fixedPart, percentRate:percentRate, mcSemAds:mcSemAds
     };
   }
-
   // ======================================================================
   // CÁLCULO TIKTOK SHOP
   // Duas taxas de plataforma SEPARADAS (comissão % + taxa fixa por item —
@@ -856,7 +854,6 @@
       fixedPart:fixedPart, percentRate:percentRate, mcSemAds:mcSemAds
     };
   }
-
   // Analisa o impacto do afiliado: lucro sem/com afiliado, comissão máxima
   // sustentável (antes de zerar e antes de furar a meta de MC), e quanto de
   // "margem segura" ainda resta na comissão atualmente configurada.
@@ -881,7 +878,6 @@
       diff: rAff.mc - r0.mc, marginImpactPts: rAff.mcPct - r0.mcPct
     };
   }
-
   // Projeção "misturada" (orgânico + afiliado, ponderada pelo % de vendas via
   // afiliado). Devolve o MESMO formato usado por projectionMetrics() —
   // inclusive o campo "mcUnit" — para poder alimentar sem alterações os
@@ -914,7 +910,6 @@
       volumes:volumes, share:share
     };
   }
-
   // ======================================================================
   // COMPONENTES REUTILIZÁVEIS
   // ======================================================================
@@ -926,7 +921,6 @@
     else { cls='good'; icon=ICONS.check; text='Rentabilidade acima da meta de MC ('+pct(state.config.metaMCPct)+').'; }
     return '<div class="alert-banner '+cls+'">'+svgIcon(icon)+'<span>'+text+'</span></div>';
   }
-
   // ======================================================================
   // MÉTRICAS AVANÇADAS: ROAS/ACOS, metas de preço, desconto máximo, saúde
   // Recebe o resultado de calcShopee()/calcML() (r) e o objeto de estado da
@@ -936,24 +930,20 @@
   // ======================================================================
   function advancedMetrics(r, ps){
     var out = {};
-
     // Preço para lucro desejado (R$): venda*(1-percentRate) - fixedPart = lucroDesejado
     var denomLucro = 1 - r.percentRate;
     var lucroDesejado = Number(ps.lucroDesejadoRS)||0;
     out.lucroDesejado = lucroDesejado;
     out.precoLucroDesejado = denomLucro>0.0001 ? (r.fixedPart+lucroDesejado)/denomLucro : null;
-
     // Preço para ROI desejado (%): (venda-custoTotal)/custoTotal = roiDesejado
     var roiDesejado = Number(ps.roiDesejadoPct)||0;
     out.roiDesejado = roiDesejado;
     var denomRoi = 1 - r.percentRate*(1+roiDesejado);
     out.precoRoiDesejado = denomRoi>0.0001 ? (r.fixedPart*(1+roiDesejado))/denomRoi : null;
-
     // ROAS / ACOS (frações 0..1, exceto roasAtual/roasEquilibrio/roasNecessario que são razões)
     out.acosAtual = r.adsPctEfetivo;
     out.custoAdsAtual = r.adsRS;
     out.roasAtual = r.adsPctEfetivo>0.0001 ? 1/r.adsPctEfetivo : null;
-
     if(r.mcSemAds > 0.004){
       out.roasEquilibrio = r.venda / r.mcSemAds;
       out.acosMax = r.mcSemAds / r.venda;
@@ -961,7 +951,6 @@
       out.roasEquilibrio = null;
       out.acosMax = 0;
     }
-
     var margemDesejadaPosAds = Number(ps.margemDesejadaPosAds)||0;
     var custoAdsNecessario = r.mcSemAds - margemDesejadaPosAds*r.venda;
     if(r.mcSemAds <= 0.004){
@@ -975,7 +964,6 @@
       out.acosNecessario = custoAdsNecessario/r.venda;
       out.roasNecessarioMsg = null;
     }
-
     // Desconto máximo
     var discountMode = ps.discountMode || 'zerar';
     var floorPrice = discountMode==='meta' ? r.precoMetaMC : r.precoMinZerar;
@@ -986,15 +974,12 @@
       out.descontoMaxPct = 0; out.descontoMaxRS = 0;
     }
     out.menorPrecoRecomendado = floorPrice;
-
     // Saúde da venda
     if(r.mc < -0.004) out.health = 'bad';
     else if(r.mcPct < state.config.metaMCPct) out.health = 'warn';
     else out.health = 'good';
-
     return out;
   }
-
   function infoIcon(title, text){
     var span = document.createElement('span');
     span.className = 'info-ic';
@@ -1005,7 +990,6 @@
     span.addEventListener('click', function(ev){ ev.stopPropagation(); showTooltip(ev.clientX, ev.clientY, title, text); setTimeout(hideTooltip, 3800); });
     return span;
   }
-
   function readoutRowRich(container, k, v, infoTitle, infoText){
     var row = document.createElement('div'); row.className='readout-row';
     var kSpan = document.createElement('span'); kSpan.className='rk';
@@ -1015,7 +999,6 @@
     row.appendChild(kSpan); row.appendChild(vSpan);
     container.appendChild(row);
   }
-
   // ---- Indicador de saúde da venda ----
   function renderHealthCard(r, adv){
     var card = document.createElement('section'); card.className='card health-card health-'+adv.health;
@@ -1024,7 +1007,6 @@
     var top = document.createElement('div'); top.className='health-top';
     top.innerHTML = '<span class="health-emoji">'+icon+'</span><span class="health-title">'+title+'</span>';
     card.appendChild(top);
-
     if(adv.health==='bad'){
       var msgB = document.createElement('div'); msgB.className='health-msg';
       msgB.textContent = 'Você perde '+money(Math.abs(r.mc))+' por venda. Preço mínimo para não ter prejuízo: '+money(r.precoMinZerar)+'.';
@@ -1034,7 +1016,6 @@
       msgW.textContent = 'A venda ainda tem lucro, mas está abaixo da meta de MC configurada ('+pct(state.config.metaMCPct)+').';
       card.appendChild(msgW);
     }
-
     var grid = document.createElement('div'); grid.className='health-grid readout-list';
     readoutRowRich(grid, 'Lucro líquido por venda', money(r.mc));
     readoutRowRich(grid, 'MC', pct(r.mcPct), 'Margem de Contribuição', 'O que sobra da venda depois de todos os custos: comissão/tarifa, frete, imposto, produto, ads e rateio de custo fixo.');
@@ -1049,14 +1030,12 @@
     card.appendChild(grid);
     return card;
   }
-
   // ---- Publicidade — Ads / ROAS ----
   function renderAdsRoasCard(s, r, adv, vendaValida){
     var card = document.createElement('section'); card.className='card';
     var head = document.createElement('div'); head.className='card-head';
     head.innerHTML = '<div><h2>Publicidade — Ads / ROAS</h2><div class="sub">Modele o investimento em anúncios por percentual da venda ou por ROAS.</div></div>';
     card.appendChild(head);
-
     var modeField = document.createElement('div'); modeField.className='field';
     var modeLbl = document.createElement('label'); modeLbl.textContent='Definir Ads por'; modeField.appendChild(modeLbl);
     var seg = document.createElement('div'); seg.className='seg-toggle';
@@ -1068,7 +1047,6 @@
     });
     modeField.appendChild(seg);
     card.appendChild(modeField);
-
     if((s.adsMode||'pct')==='roas'){
       var fg = document.createElement('div'); fg.className='field-grid'; fg.style.marginTop='12px';
       fg.appendChild(field({label:'ROAS atual/pretendido', value:s.roas, step:'0.1', onInput:function(v){ s.roas=v; }}));
@@ -1077,14 +1055,12 @@
       hint.textContent = 'Com ROAS ativo, ele substitui o campo "Ads / publicidade (%)" da seção Entradas neste cálculo.';
       card.appendChild(hint);
     }
-
     var kpiRow = document.createElement('div'); kpiRow.className='kpi-row kpi-row-3'; kpiRow.style.margin='16px 0 0';
     kpiRow.innerHTML =
       kpiCard('ACOS atual', pct(adv.acosAtual), false, ICONS.percent, 'accent', 'custo de Ads: '+money(adv.custoAdsAtual)) +
       kpiCard('ROAS atual', adv.roasAtual!=null ? num(adv.roasAtual) : '—', false, ICONS.trend, 'accent', adv.roasAtual!=null ? 'a cada R$1 em ads, retornam '+num(adv.roasAtual) : 'sem investimento em ads no momento') +
       kpiCard('Máximo Ads por venda', vendaValida ? money(Math.max(0,r.mcSemAds)) : '—', false, ICONS.scale, 'accent', vendaValida ? 'antes de zerar a margem' : 'preencha o valor de venda');
     card.appendChild(kpiRow);
-
     var kpiRow2 = document.createElement('div'); kpiRow2.className='kpi-row'; kpiRow2.style.gridTemplateColumns='repeat(2,1fr)'; kpiRow2.style.marginTop='16px';
     if(vendaValida){
       kpiRow2.innerHTML =
@@ -1096,13 +1072,11 @@
         kpiCard('Lucro após Ads', money(0), false, ICONS.wallet, 'accent', 'preencha o valor de venda');
     }
     card.appendChild(kpiRow2);
-
     if(vendaValida){
       var beforeAfter = document.createElement('div'); beforeAfter.className='readout-list';
       beforeAfter.innerHTML = readoutRow('Lucro antes de Ads', money(r.mcSemAds)) + readoutRow('Lucro após Ads', money(r.mc));
       card.appendChild(beforeAfter);
     }
-
     var goalWrap = document.createElement('div'); goalWrap.style.cssText='margin-top:16px; padding-top:14px; border-top:1px solid var(--border);';
     var fgGoal = document.createElement('div'); fgGoal.className='field-grid';
     fgGoal.appendChild(percentField({label:'Margem desejada pós-Ads', value:s.margemDesejadaPosAds||0,
@@ -1123,7 +1097,6 @@
     card.appendChild(goalWrap);
     return card;
   }
-
   // ---- Metas de preço (lucro desejado / ROI desejado) ----
   function renderPriceGoalsCard(s, r, adv){
     var card = document.createElement('section'); card.className='card';
@@ -1143,7 +1116,6 @@
     card.appendChild(res);
     return card;
   }
-
   // ---- Desconto máximo ----
   function renderDiscountCard(s, r, adv){
     var card = document.createElement('section'); card.className='card';
@@ -1167,7 +1139,6 @@
     card.appendChild(kpiRow);
     return card;
   }
-
   // ---- Simulador de promoção ----
   function renderPromoSimulator(s, calcFn){
     var card = document.createElement('section'); card.className='card';
@@ -1175,7 +1146,6 @@
     var fg = document.createElement('div'); fg.className='field-grid';
     fg.appendChild(field({label:'Preço promocional', prefix:'R$', value:s.promoPrice||0, step:'0.01', onInput:function(v){ s.promoPrice=v; }}));
     card.appendChild(fg);
-
     var promoPrice = Number(s.promoPrice)||0;
     if(promoPrice>0){
       var rAtual = calcFn();
@@ -1203,7 +1173,6 @@
     }
     return card;
   }
-
   // ---- Comparador de até 3 preços ----
   function renderPriceComparator3(s, calcFn){
     var card = document.createElement('section'); card.className='card';
@@ -1214,7 +1183,6 @@
       fg.appendChild(field({label:'Preço '+(i+1), prefix:'R$', value:v, step:'0.01', onInput:function(val){ s.cmp[i]=val; }}));
     });
     card.appendChild(fg);
-
     var anyFilled = s.cmp.some(function(v){ return (Number(v)||0) > 0.004; });
     if(!anyFilled){
       var emptyNote = document.createElement('p'); emptyNote.className='note'; emptyNote.style.margin='14px 0 0';
@@ -1222,7 +1190,6 @@
       card.appendChild(emptyNote);
       return card;
     }
-
     var results = s.cmp.map(function(v){
       var rr = calcFn(Number(v)||0);
       var aa = advancedMetrics(rr, s);
@@ -1232,7 +1199,6 @@
     results.forEach(function(res, i){
       if(res.r.venda>0 && res.r.mcPct>bestScore){ bestScore=res.r.mcPct; bestIdx=i; }
     });
-
     var wrap = document.createElement('div'); wrap.className='table-scroll'; wrap.style.marginTop='14px';
     var rowsDef = [
       {k:'Taxas (marketplace)', get:function(x){ return money(x.r.taxaLiquida!=null ? x.r.taxaLiquida : x.r.tarifaRS); }},
@@ -1264,7 +1230,6 @@
     }
     return card;
   }
-
   function rankList(rows){
     var max = Math.max.apply(null, rows.map(function(r){ return Math.abs(r.value); }).concat([1]));
     var html = rows.slice().sort(function(a,b){ return b.value-a.value; }).map(function(r){
@@ -1287,12 +1252,10 @@
       row.addEventListener('mouseleave', hideTooltip);
     });
   }
-
   // Volumes padrão usados na Projeção de Lucro por Vendas (item 7 do pedido).
   var PROJECTION_VOLUMES = [50, 100, 300, 500, 1000, 2000, 3000, 5000, 7500, 10000];
   // Volumes "principais" destacados visualmente nos cards (item 12).
   var PROJECTION_HIGHLIGHT = [100, 500, 1000, 5000, 10000];
-
   // ======================================================================
   // PROJEÇÃO POR VOLUME — sem duplicar custo fixo (item 8/17)
   // mcUnit = margem de contribuição por venda SEM o rateio de custo fixo
@@ -1313,7 +1276,6 @@
     });
     return { mcUnit:mcUnit, custosFixosMensais:custosFixosMensais, hasFixedCosts:hasFixedCosts, breakEvenQtd:breakEvenQtd, volumes:volumes };
   }
-
   function projectionChart(volumes, values, breakEvenQtd){
     var W = 760, H = 220, padL = 60, padR = 16, padT = 16, padB = 30;
     var plotW = W-padL-padR, plotH = H-padT-padB;
@@ -1384,9 +1346,7 @@
       hideTooltip();
     });
   }
-
   function intFmt(v){ return Math.round(v).toLocaleString('pt-BR'); }
-
   // ======================================================================
   // SEÇÃO RECOLHÍVEL — agrupa cards relacionados (item 14: hierarquia visual).
   // Retorna o wrapper (para dar root.appendChild) já com um "._body" onde os
@@ -1412,7 +1372,6 @@
     wrap._body = body;
     return wrap;
   }
-
   // ---- Estado inicial neutro (item 5): nenhum valor de venda preenchido ----
   function renderNeutralHero(){
     var card = document.createElement('section'); card.className = 'card hero-empty';
@@ -1422,19 +1381,16 @@
       '<p>Preencha os dados do produto e o valor de venda para visualizar sua rentabilidade.</p>';
     return card;
   }
-
   // ---- Ponto de equilíbrio + grade de volumes (itens 7, 8, 9, 12) ----
   function renderProjectionOverviewCard(proj, vendaValida){
     var card = document.createElement('section'); card.className = 'card';
     card.innerHTML = '<div class="card-head"><div><h2>Projeção de Lucro por Vendas</h2><div class="sub">Lucro operacional estimado em diferentes volumes de vendas/mês, usando a MC unitária já calculada — sem digitar nada de novo.</div></div></div>';
-
     if(!vendaValida){
       var emptyNote = document.createElement('p'); emptyNote.className = 'note'; emptyNote.style.margin = '0';
       emptyNote.textContent = 'Preencha o valor de venda para ver a projeção de lucro por volume.';
       card.appendChild(emptyNote);
       return card;
     }
-
     if(proj.hasFixedCosts){
       var beWrap = document.createElement('div'); beWrap.style.marginBottom = '14px';
       if(proj.breakEvenQtd!=null){
@@ -1447,7 +1403,6 @@
       }
       card.appendChild(beWrap);
     }
-
     var grid = document.createElement('div'); grid.className = 'proj-grid';
     proj.volumes.forEach(function(v){
       var isMain = PROJECTION_HIGHLIGHT.indexOf(v.vendas)!==-1;
@@ -1467,7 +1422,6 @@
     card.appendChild(note);
     return card;
   }
-
   function renderProjectionChartCard(proj, vendaValida){
     var card = document.createElement('section'); card.className = 'card';
     card.innerHTML = '<div class="card-head"><div><h2>Gráfico de escala</h2><div class="sub">Lucro operacional projetado até 10.000 vendas/mês.</div></div></div>';
@@ -1486,7 +1440,6 @@
     wireProjectionChart(chartWrap, chartData);
     return card;
   }
-
   // ---- Meta personalizada de vendas (item 10) ----
   function renderCustomSimCard(s, r, proj, vendaValida){
     var card = document.createElement('section'); card.className = 'card';
@@ -1494,7 +1447,6 @@
     var fg = document.createElement('div'); fg.className = 'field-grid'; fg.style.gridTemplateColumns='1fr';
     fg.appendChild(field({label:'Simular quantidade (vendas/mês)', value:s.simVendas||0, step:'1', onInput:function(v){ s.simVendas=v; }}));
     card.appendChild(fg);
-
     var n = Number(s.simVendas)||0;
     if(!vendaValida){
       var emptyNote = document.createElement('p'); emptyNote.className = 'note'; emptyNote.style.margin = '14px 0 0';
@@ -1516,7 +1468,6 @@
     }
     return card;
   }
-
   // ---- Meta de lucro (item 11) ----
   function renderProfitGoalCard(s, r, proj, vendaValida){
     var card = document.createElement('section'); card.className = 'card';
@@ -1524,7 +1475,6 @@
     var fg = document.createElement('div'); fg.className = 'field-grid'; fg.style.gridTemplateColumns='1fr';
     fg.appendChild(field({label:'Quero lucrar (por mês)', prefix:'R$', value:s.metaLucroMensal||0, step:'1', onInput:function(v){ s.metaLucroMensal=v; }}));
     card.appendChild(fg);
-
     var lucroDesejado = Number(s.metaLucroMensal)||0;
     if(!vendaValida){
       var emptyNote = document.createElement('p'); emptyNote.className = 'note'; emptyNote.style.margin = '14px 0 0';
@@ -1546,7 +1496,6 @@
     }
     return card;
   }
-
   function field(opts){
     // opts: {label, type:'number'|'text', value, prefix, suffix, step, onInput, colSpan}
     var wrap = document.createElement('div'); wrap.className = 'field' + (opts.colSpan===2?' span-2':'');
@@ -1582,7 +1531,6 @@
     wrap.appendChild(iw);
     return wrap;
   }
-
   // Compact inline percent input (no label of its own — used inside custom bars like metaMCBar).
   function inlinePercentInput(id, value, onInput){
     var iw = document.createElement('div'); iw.className='input-wrap';
@@ -1594,7 +1542,6 @@
     var suf=document.createElement('span'); suf.className='suffix'; suf.textContent='%'; iw.appendChild(suf);
     return iw;
   }
-
   // Small editable "goal" bar shown at the top of Shopee/ML tabs so the person can set
   // their own MC% target right where it's used, instead of only in Custos fixos.
   function metaMCBar(idSuffix){
@@ -1611,7 +1558,6 @@
     bar.appendChild(hint);
     return bar;
   }
-
   // ======================================================================
   // RESET (item 15): "Limpar cálculo" (só a aba atual) é separado de
   // "Limpar dados" (tudo — já existia, com confirm()). Não altera config
@@ -1632,7 +1578,6 @@
     btn.addEventListener('click', function(){ resetTabCalculation(tabKey, tabLabel); });
     return btn;
   }
-
   // ======================================================================
   // VIEW: SHOPEE
   // ======================================================================
@@ -1642,7 +1587,6 @@
     var vendaValida = r.venda > 0.004;
     var adv = advancedMetrics(r, s);
     var proj = projectionMetrics(r);
-
     // ---- RESULTADO ----
     var resultGroup = sectionGroup('Resultado', 'Lucro, MC, ROI e saúde da venda.', false);
     if(vendaValida){
@@ -1660,11 +1604,9 @@
       resultGroup._body.appendChild(metaMCBar('shopee'));
     }
     root.appendChild(resultGroup);
-
     // ---- DADOS DA VENDA ----
     var dadosGroup = sectionGroup('Dados da venda', 'Preço, custo, imposto, frete, taxas etc.', false);
     var grid = document.createElement('div'); grid.className='grid-2col';
-
     // Left: entradas
     var left = document.createElement('section'); left.className='card';
     var leftHead = document.createElement('div'); leftHead.className='card-head';
@@ -1681,7 +1623,6 @@
     fg.appendChild(percentField({label:'Comissão de afiliado', value:s.affiliatePct||0, onInput:function(v){ s.affiliatePct=v; }}));
     fg.appendChild(field({label:'Outros custos variáveis', prefix:'R$', value:s.outrosVariaveis, step:'0.01', onInput:function(v){ s.outrosVariaveis=v; }}));
     left.appendChild(fg);
-
     var readout = document.createElement('div'); readout.className='readout-list';
     readout.innerHTML =
       readoutRow('Faixa aplicada', r.band.label) +
@@ -1694,7 +1635,6 @@
       pixNote.textContent = 'Nesta faixa a Shopee também dá '+pct(r.band.pixPct)+' ('+money(r.valorSubsidio)+') de desconto Pix ao comprador — isso é um incentivo pago pela Shopee, não sai da sua comissão nem entra no seu custo.';
       left.appendChild(pixNote);
     }
-
     var refDetails = document.createElement('details'); refDetails.className='ref-table';
     refDetails.innerHTML = '<summary>'+svgIcon('<path class="chev" d="M9 6l6 6-6 6"/>')+' Ver tabela de comissões Shopee</summary>';
     var refTableWrap = document.createElement('div'); refTableWrap.className='table-scroll';
@@ -1709,7 +1649,6 @@
     refDetails.appendChild(pixCaption);
     left.appendChild(refDetails);
     grid.appendChild(left);
-
     // Right: composição + alerta
     var right = document.createElement('section'); right.className='card';
     right.innerHTML = '<div class="card-head"><div><h2>Composição do custo</h2><div class="sub">O que consome a margem nesta venda.</div></div></div>';
@@ -1730,12 +1669,10 @@
     grid.appendChild(right);
     dadosGroup._body.appendChild(grid);
     root.appendChild(dadosGroup);
-
     // ---- PUBLICIDADE ----
     var pubGroup = sectionGroup('Publicidade', 'ROAS, ACOS e metas de anúncios.', true);
     pubGroup._body.appendChild(renderAdsRoasCard(s, r, adv, vendaValida));
     root.appendChild(pubGroup);
-
     // ---- PRECIFICAÇÃO ----
     var precoGroup = sectionGroup('Precificação', 'Preço mínimo, preço para margem desejada, desconto máximo etc.', true);
     var precoCard = document.createElement('section'); precoCard.className='card';
@@ -1751,7 +1688,6 @@
     precoGroup._body.appendChild(renderPromoSimulator(s, calcShopee));
     precoGroup._body.appendChild(renderPriceComparator3(s, calcShopee));
     root.appendChild(precoGroup);
-
     // ---- PROJEÇÃO ----
     var projGroup = sectionGroup('Projeção', '50 até 10.000 vendas, ponto de equilíbrio e meta de lucro.', true);
     projGroup._body.appendChild(renderProjectionOverviewCard(proj, vendaValida));
@@ -1760,7 +1696,6 @@
     projGroup._body.appendChild(renderProfitGoalCard(s, r, proj, vendaValida));
     root.appendChild(projGroup);
   }
-
   // ======================================================================
   // VIEW: MERCADO LIVRE
   // ======================================================================
@@ -1770,7 +1705,6 @@
     var vendaValida = r.venda > 0.004;
     var adv = advancedMetrics(r, m);
     var proj = projectionMetrics(r);
-
     // ---- RESULTADO ----
     var resultGroup = sectionGroup('Resultado', 'Lucro, MC, ROI e saúde da venda.', false);
     if(vendaValida){
@@ -1788,11 +1722,9 @@
       resultGroup._body.appendChild(metaMCBar('ml'));
     }
     root.appendChild(resultGroup);
-
     // ---- DADOS DA VENDA ----
     var dadosGroup = sectionGroup('Dados da venda', 'Preço, custo, imposto, frete, taxas etc.', false);
     var grid = document.createElement('div'); grid.className='grid-2col';
-
     var left = document.createElement('section'); left.className='card';
     var leftHead = document.createElement('div'); leftHead.className='card-head';
     leftHead.innerHTML = '<div><h2>Entradas — Mercado Livre</h2><div class="sub">Preencha os dados do produto, da venda e do envio.</div></div>';
@@ -1800,7 +1732,6 @@
     left.appendChild(leftHead);
     var fg = document.createElement('div'); fg.className='field-grid';
     fg.appendChild(field({label:'Produto / SKU', type:'text', value:m.sku, colSpan:2, onInput:function(v){ m.sku=v; }}));
-
     var tipoField = document.createElement('div'); tipoField.className='field';
     var tipoLbl = document.createElement('label'); tipoLbl.textContent='Tipo de anúncio'; tipoField.appendChild(tipoLbl);
     var tipoSel = document.createElement('select');
@@ -1812,7 +1743,6 @@
     });
     tipoField.appendChild(tipoSel);
     fg.appendChild(tipoField);
-
     fg.appendChild(field({label:'Valor de venda', prefix:'R$', value:m.valorVenda, step:'0.01', onInput:function(v){ m.valorVenda=v; }}));
     fg.appendChild(field({label:'Custo do produto', prefix:'R$', value:m.custoProduto, step:'0.01', onInput:function(v){ m.custoProduto=v; }}));
     fg.appendChild(percentField({label:'Imposto', value:m.impostoPct, onInput:function(v){ m.impostoPct=v; }}));
@@ -1821,11 +1751,9 @@
     fg.appendChild(percentField({label:'Comissão de afiliado', value:m.affiliatePct||0, onInput:function(v){ m.affiliatePct=v; }}));
     fg.appendChild(field({label:'Outros custos variáveis', prefix:'R$', value:m.outrosVariaveis, step:'0.01', onInput:function(v){ m.outrosVariaveis=v; }}));
     left.appendChild(fg);
-
     var subHead = document.createElement('div'); subHead.style.cssText='margin-top:18px; padding-top:14px; border-top:1px solid var(--border);';
     subHead.innerHTML = '<div class="card-head" style="margin-bottom:12px;"><div><h2 style="font-size:13px;">Logística</h2><div class="sub">Dimensões e peso para calcular o frete pela tabela do ML.</div></div></div>';
     left.appendChild(subHead);
-
     var fg2 = document.createElement('div'); fg2.className='field-grid cols-3';
     fg2.appendChild(field({label:'Peso real', value:m.pesoReal, suffix:'kg', step:'0.01', onInput:function(v){ m.pesoReal=v; }}));
     fg2.appendChild(field({label:'Comprimento', value:m.compr, suffix:'cm', step:'1', onInput:function(v){ m.compr=v; }}));
@@ -1845,12 +1773,10 @@
     toggleField.appendChild(seg);
     fg3.appendChild(toggleField);
     left.appendChild(fg3);
-
     var saveHint = document.createElement('div'); saveHint.className='save-hint';
     saveHint.innerHTML = '<div class="sh-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M8 4v4h6V4"/><path d="M8 20v-6h8v6"/></svg></div>'+
       '<div class="sh-text">Preencheu peso e medidas? Clique em <strong>Salvar meus dados</strong> no topo da página para não precisar digitar tudo de novo na próxima vez — o arquivo baixado já abre com esses valores preenchidos.</div>';
     left.appendChild(saveHint);
-
     var readout = document.createElement('div'); readout.className='readout-list';
     readout.innerHTML =
       readoutRow('Peso cubado', num(r.pesoCubado)+' kg') +
@@ -1860,7 +1786,6 @@
       readoutRow('Custo de envio calculado', money(r.custoEnvio)) +
       readoutRow('Rateio de custo fixo/venda', money(r.rateioFixo));
     left.appendChild(readout);
-
     var refDetails = document.createElement('details'); refDetails.className='ref-table';
     refDetails.innerHTML = '<summary>'+svgIcon('<path class="chev" d="M9 6l6 6-6 6"/>')+' Ver tabela de frete completa (peso × faixa de preço)</summary>';
     var refTableWrap = document.createElement('div'); refTableWrap.className='table-scroll';
@@ -1877,7 +1802,6 @@
     refDetails.appendChild(refTableWrap);
     left.appendChild(refDetails);
     grid.appendChild(left);
-
     var right = document.createElement('section'); right.className='card';
     right.innerHTML = '<div class="card-head"><div><h2>Composição do custo</h2><div class="sub">O que consome a margem nesta venda.</div></div></div>';
     right.innerHTML += alertBanner(r.mc, r.mcPct, vendaValida);
@@ -1897,12 +1821,10 @@
     grid.appendChild(right);
     dadosGroup._body.appendChild(grid);
     root.appendChild(dadosGroup);
-
     // ---- PUBLICIDADE ----
     var pubGroup = sectionGroup('Publicidade', 'ROAS, ACOS e metas de anúncios.', true);
     pubGroup._body.appendChild(renderAdsRoasCard(m, r, adv, vendaValida));
     root.appendChild(pubGroup);
-
     // ---- PRECIFICAÇÃO ----
     var precoGroup = sectionGroup('Precificação', 'Preço mínimo, preço para margem desejada, desconto máximo etc.', true);
     var precoCard = document.createElement('section'); precoCard.className='card';
@@ -1918,7 +1840,6 @@
     precoGroup._body.appendChild(renderPromoSimulator(m, calcML));
     precoGroup._body.appendChild(renderPriceComparator3(m, calcML));
     root.appendChild(precoGroup);
-
     // ---- PROJEÇÃO ----
     var projGroup = sectionGroup('Projeção', '50 até 10.000 vendas, ponto de equilíbrio e meta de lucro.', true);
     projGroup._body.appendChild(renderProjectionOverviewCard(proj, vendaValida));
@@ -1927,7 +1848,6 @@
     projGroup._body.appendChild(renderProfitGoalCard(m, r, proj, vendaValida));
     root.appendChild(projGroup);
   }
-
   // ======================================================================
   // VIEW: SHEIN
   // Estrutura igual à da Shopee/ML (mesmos grupos, mesmos cards reutilizados
@@ -1941,7 +1861,6 @@
     var vendaValida = r.venda > 0.004;
     var adv = advancedMetrics(r, s);
     var proj = projectionMetrics(r);
-
     // ---- RESULTADO ----
     var resultGroup = sectionGroup('Resultado', 'Lucro, MC, ROI e saúde da venda.', false);
     if(vendaValida){
@@ -1959,11 +1878,9 @@
       resultGroup._body.appendChild(metaMCBar('shein'));
     }
     root.appendChild(resultGroup);
-
     // ---- DADOS DA VENDA ----
     var dadosGroup = sectionGroup('Dados da venda', 'Preço, custo, imposto, envio, comissão etc.', false);
     var grid = document.createElement('div'); grid.className='grid-2col';
-
     var left = document.createElement('section'); left.className='card';
     var leftHead = document.createElement('div'); leftHead.className='card-head';
     leftHead.innerHTML = '<div><h2>Entradas — SHEIN</h2><div class="sub">Preencha os dados do produto e da venda.</div></div>';
@@ -1979,18 +1896,15 @@
     fg.appendChild(percentField({label:'Ads / publicidade', value:s.adsPct, onInput:function(v){ s.adsPct=v; }}));
     fg.appendChild(field({label:'Outros custos variáveis', prefix:'R$', value:s.outrosVariaveis, step:'0.01', onInput:function(v){ s.outrosVariaveis=v; }}));
     left.appendChild(fg);
-
     var commissionNote = document.createElement('p'); commissionNote.className='note';
     commissionNote.textContent = 'Comissão padrão da SHEIN: 16%. Esse campo é editável, caso sua categoria, acordo com a SHEIN ou a política vigente use uma taxa diferente.';
     left.appendChild(commissionNote);
-
     var readout = document.createElement('div'); readout.className='readout-list';
     readout.innerHTML =
       readoutRow('Comissão SHEIN (seu custo)', money(r.comissaoRS)) +
       readoutRow('Rateio de custo fixo/venda', money(r.rateioFixo));
     left.appendChild(readout);
     grid.appendChild(left);
-
     // Right: composição + alerta
     var right = document.createElement('section'); right.className='card';
     right.innerHTML = '<div class="card-head"><div><h2>Composição do custo</h2><div class="sub">O que consome a margem nesta venda.</div></div></div>';
@@ -2010,12 +1924,10 @@
     grid.appendChild(right);
     dadosGroup._body.appendChild(grid);
     root.appendChild(dadosGroup);
-
     // ---- PUBLICIDADE ----
     var pubGroup = sectionGroup('Publicidade', 'ROAS, ACOS e metas de anúncios.', true);
     pubGroup._body.appendChild(renderAdsRoasCard(s, r, adv, vendaValida));
     root.appendChild(pubGroup);
-
     // ---- PRECIFICAÇÃO ----
     var precoGroup = sectionGroup('Precificação', 'Preço mínimo, preço para margem desejada, desconto máximo etc.', true);
     var precoCard = document.createElement('section'); precoCard.className='card';
@@ -2031,7 +1943,6 @@
     precoGroup._body.appendChild(renderPromoSimulator(s, calcShein));
     precoGroup._body.appendChild(renderPriceComparator3(s, calcShein));
     root.appendChild(precoGroup);
-
     // ---- PROJEÇÃO ----
     var projGroup = sectionGroup('Projeção', '50 até 10.000 vendas, ponto de equilíbrio e meta de lucro.', true);
     projGroup._body.appendChild(renderProjectionOverviewCard(proj, vendaValida));
@@ -2040,7 +1951,6 @@
     projGroup._body.appendChild(renderProfitGoalCard(s, r, proj, vendaValida));
     root.appendChild(projGroup);
   }
-
   // ======================================================================
   // VIEW: TIKTOK SHOP
   // Estrutura igual à Shopee/SHEIN, mais 3 blocos próprios do TikTok:
@@ -2059,7 +1969,6 @@
     var adv0 = advancedMetrics(r0, s);
     var advAff = advancedMetrics(rAff, s);
     var proj = tiktokBlendedProjection();
-
     // ---- RESULTADO ----
     var resultGroup = sectionGroup('Resultado', 'Lucro, MC, ROI e saúde da venda (considerando o interruptor de afiliado abaixo).', false);
     if(vendaValida){
@@ -2077,22 +1986,18 @@
       resultGroup._body.appendChild(metaMCBar('tiktok'));
     }
     root.appendChild(resultGroup);
-
     // ---- DADOS DA VENDA ----
     var dadosGroup = sectionGroup('Dados da venda', 'Preço, custo, comissão, taxa fixa, imposto, envio e afiliado.', false);
     var grid = document.createElement('div'); grid.className='grid-2col';
-
     var left = document.createElement('section'); left.className='card';
     var leftHead = document.createElement('div'); leftHead.className='card-head';
     leftHead.innerHTML = '<div><h2>Entradas — TikTok Shop</h2><div class="sub">Preencha os dados do produto e da venda.</div></div>';
     leftHead.appendChild(resetCalcButton('tiktok', 'TikTok Shop'));
     left.appendChild(leftHead);
-
     var fg = document.createElement('div'); fg.className='field-grid';
     fg.appendChild(field({label:'Produto / SKU', type:'text', value:s.sku, colSpan:2, onInput:function(v){ s.sku=v; }}));
     fg.appendChild(field({label:'Valor de venda', prefix:'R$', value:s.valorVenda, step:'0.01', onInput:function(v){ s.valorVenda=v; }}));
     fg.appendChild(field({label:'Custo do produto', prefix:'R$', value:s.custoProduto, step:'0.01', onInput:function(v){ s.custoProduto=v; }}));
-
     var feeAutoField = document.createElement('div'); feeAutoField.className='field span-2';
     var feeAutoLbl = document.createElement('label'); feeAutoLbl.textContent='Taxa de vendas automática (por faixa de preço)'; feeAutoField.appendChild(feeAutoLbl);
     var feeAutoSeg = document.createElement('div'); feeAutoSeg.className='seg-toggle';
@@ -2104,7 +2009,6 @@
     });
     feeAutoField.appendChild(feeAutoSeg);
     fg.appendChild(feeAutoField);
-
     if(s.comissaoAutoPorFaixa){
       var bandField = document.createElement('div'); bandField.className='field span-2';
       var bandLbl = document.createElement('label'); bandLbl.textContent='Faixa aplicada'; bandField.appendChild(bandLbl);
@@ -2117,25 +2021,21 @@
       fg.appendChild(percentField({label:'Comissão TikTok Shop', value:s.comissaoPct, onInput:function(v){ s.comissaoPct=v; }}));
       fg.appendChild(field({label:'Taxa fixa por item', prefix:'R$', value:s.taxaFixaPorItem, step:'0.01', onInput:function(v){ s.taxaFixaPorItem=v; }}));
     }
-
     fg.appendChild(percentField({label:'Imposto', value:s.impostoPct, onInput:function(v){ s.impostoPct=v; }}));
     fg.appendChild(field({label:'Envio / logística', prefix:'R$', value:s.custoEnvio, step:'0.01', onInput:function(v){ s.custoEnvio=v; }}));
     fg.appendChild(percentField({label:'Ads / publicidade', value:s.adsPct, onInput:function(v){ s.adsPct=v; }}));
     fg.appendChild(field({label:'Outros custos variáveis', prefix:'R$', value:s.outrosVariaveis, step:'0.01', onInput:function(v){ s.outrosVariaveis=v; }}));
     left.appendChild(fg);
-
     var feeNote = document.createElement('p'); feeNote.className='note';
     feeNote.textContent = s.comissaoAutoPorFaixa
       ? 'Padrão TikTok Shop: abaixo de R$50,00 → 10% + R$4,00 fixo; a partir de R$50,00 → 6% + R$6,00 fixo. Desligue a taxa automática acima se sua categoria, acordo com a plataforma ou promoção usar valores diferentes.'
       : 'As taxas da TikTok Shop podem variar conforme a estrutura de taxas vigente, categoria, promoções ou condições da conta. Confira o Seller Center se necessário.';
     left.appendChild(feeNote);
-
     // Afiliado — bem visível, dentro da própria entrada principal
     var affWrap = document.createElement('div'); affWrap.style.cssText='margin-top:18px; padding-top:14px; border-top:1px solid var(--border);';
     var affHead = document.createElement('div'); affHead.className='card-head'; affHead.style.marginBottom='12px';
     affHead.innerHTML = '<div><h2 style="font-size:13px;">Afiliado</h2><div class="sub">Comissão paga a criadores de conteúdo quando a venda vem de afiliado.</div></div>';
     affWrap.appendChild(affHead);
-
     var affFg = document.createElement('div'); affFg.className='field-grid';
     var affToggleField = document.createElement('div'); affToggleField.className='field';
     var affToggleLbl = document.createElement('label'); affToggleLbl.textContent='Venda gerada por afiliado'; affToggleField.appendChild(affToggleLbl);
@@ -2150,13 +2050,11 @@
     affFg.appendChild(affToggleField);
     affFg.appendChild(percentField({label:'Comissão de afiliado', value:s.affiliatePct, onInput:function(v){ s.affiliatePct=v; }}));
     affWrap.appendChild(affFg);
-
     var affCostLine = document.createElement('div'); affCostLine.className='readout-list';
     affCostLine.innerHTML = readoutRow('Custo do afiliado nesta venda', vendaValida ? money(r0.venda*(Number(s.affiliatePct)||0)) : '—');
     affWrap.appendChild(affCostLine);
     left.appendChild(affWrap);
     grid.appendChild(left);
-
     // Right: composição + alerta
     var right = document.createElement('section'); right.className='card';
     right.innerHTML = '<div class="card-head"><div><h2>Composição do custo</h2><div class="sub">O que consome a margem nesta venda (cenário atual: '+(r.useAffiliate?'com afiliado':'orgânico')+').</div></div></div>';
@@ -2179,7 +2077,6 @@
     grid.appendChild(right);
     dadosGroup._body.appendChild(grid);
     root.appendChild(dadosGroup);
-
     // ---- CENÁRIOS ----
     var cenGroup = sectionGroup('Cenários', 'Orgânico, via afiliado, com Ads e afiliado+Ads lado a lado.', true);
     if(vendaValida){
@@ -2194,12 +2091,10 @@
         kpiCard('Afiliado + Ads', money(profitAffAds), profitAffAds<0, ICONS.percent, profitAffAds<0?'critical':'warning', 'os dois custos juntos');
       scenCard.appendChild(scenRow);
       cenGroup._body.appendChild(scenCard);
-
       var scenGrid = document.createElement('div'); scenGrid.className='compare-grid';
       scenGrid.appendChild(compareCard('Venda Orgânica', 'tiktok', r0, adv0, false));
       scenGrid.appendChild(compareCard('Venda via Afiliado', 'tiktok', rAff, advAff, false));
       cenGroup._body.appendChild(scenGrid);
-
       var diffCard = document.createElement('section'); diffCard.className='card';
       diffCard.innerHTML = '<div class="card-head"><div><h2>Impacto do afiliado</h2><div class="sub">Quanto a comissão de afiliado tira da sua margem, nesta venda.</div></div></div>';
       var diffReadout = document.createElement('div'); diffReadout.className='readout-list';
@@ -2214,7 +2109,6 @@
       cenGroup._body.appendChild(renderNeutralHero());
     }
     root.appendChild(cenGroup);
-
     // ---- AFILIADOS: LIMITES E SIMULADOR ----
     var affGroup = sectionGroup('Afiliados', 'Comissão máxima sustentável e simulador de cenários de comissão.', true);
     if(vendaValida){
@@ -2225,7 +2119,6 @@
         kpiCard('Comissão máxima antes do prejuízo', pct(aa.maxAffiliatePct), false, ICONS.scale, 'accent', 'lucro vai a zero nesse ponto') +
         kpiCard('Comissão máxima p/ manter a meta de MC', pct(aa.maxAffiliatePctForTarget), false, ICONS.target, 'accent', 'meta atual: '+pct(state.config.metaMCPct));
       limitsCard.appendChild(limitsRow);
-
       var limitsNote = document.createElement('div'); limitsNote.style.marginTop='14px';
       if(aa.overLimit){
         limitsNote.innerHTML = '<div class="alert-banner critical" style="margin-bottom:0;">'+svgIcon(ICONS.alert)+'<span>A comissão configurada ('+pct(aa.currentAffiliatePct)+') está acima do limite de equilíbrio ('+pct(aa.maxAffiliatePct)+') — a venda via afiliado dá prejuízo.</span></div>';
@@ -2235,7 +2128,6 @@
       }
       limitsCard.appendChild(limitsNote);
       affGroup._body.appendChild(limitsCard);
-
       var simCard = document.createElement('section'); simCard.className='card';
       simCard.innerHTML = '<div class="card-head"><div><h2>Simulador de comissão de afiliado</h2><div class="sub">Como o lucro muda em diferentes percentuais — sua comissão atual aparece destacada.</div></div></div>';
       var simPcts = [0, 0.05, 0.08, 0.10, 0.12, 0.15, 0.20, 0.25];
@@ -2263,7 +2155,6 @@
       affGroup._body.appendChild(renderNeutralHero());
     }
     root.appendChild(affGroup);
-
     // ---- PUBLICIDADE ----
     var pubGroup = sectionGroup('Publicidade', 'ROAS, ACOS e metas de anúncios — considerando também o afiliado.', true);
     pubGroup._body.appendChild(renderAdsRoasCard(s, r, adv, vendaValida));
@@ -2280,7 +2171,6 @@
       pubGroup._body.appendChild(affAdsCard);
     }
     root.appendChild(pubGroup);
-
     // ---- PRECIFICAÇÃO ----
     var precoGroup = sectionGroup('Precificação', 'Preço mínimo, preço para margem desejada, desconto máximo etc.', true);
     var precoCard = document.createElement('section'); precoCard.className='card';
@@ -2296,7 +2186,6 @@
     precoGroup._body.appendChild(renderPromoSimulator(s, calcTiktok));
     precoGroup._body.appendChild(renderPriceComparator3(s, calcTiktok));
     root.appendChild(precoGroup);
-
     // ---- PROJEÇÃO ----
     var projGroup = sectionGroup('Projeção', '50 até 10.000 vendas, mix de afiliados, ponto de equilíbrio e meta de lucro.', true);
     var shareCard = document.createElement('section'); shareCard.className='card';
@@ -2322,7 +2211,6 @@
     projGroup._body.appendChild(renderProfitGoalCard(s, r, proj, vendaValida));
     root.appendChild(projGroup);
   }
-
   // ======================================================================
   // VIEW: CUSTOS FIXOS
   // ======================================================================
@@ -2332,7 +2220,6 @@
     var rateioM = rateioPorVenda(state.fixedCosts.vendasMesML);
     var rateioSh = rateioPorVenda(state.fixedCosts.vendasMesShein);
     var rateioTt = rateioPorVenda(state.fixedCosts.vendasMesTiktok);
-
     var kpiRow = document.createElement('div'); kpiRow.className='kpi-row';
     kpiRow.innerHTML =
       kpiCard('Total fixo mensal (ativos)', money(total), false, ICONS.wallet, 'accent', state.fixedCosts.items.filter(function(i){return i.active;}).length+' itens ativos') +
@@ -2342,16 +2229,13 @@
       kpiCard('Rateio por venda · TikTok Shop', money(rateioTt), false, ICONS.box, 'accent', 'com '+num(state.fixedCosts.vendasMesTiktok)+' vendas/mês') +
       kpiCard('Margem de segurança', pct(state.fixedCosts.safetyMarginPct), false, ICONS.scale, 'accent', 'somada ao rateio dos quatro canais');
     root.appendChild(kpiRow);
-
     var grid = document.createElement('div'); grid.className='grid-2col';
-
     var left = document.createElement('section'); left.className='card';
     left.innerHTML = '<div class="card-head"><div><h2>Custos fixos mensais</h2><div class="sub">Desative um item para excluí-lo do rateio sem apagar o valor.</div></div></div>';
     var list = document.createElement('div'); list.className='cost-list';
     state.fixedCosts.items.forEach(function(item, idx){
       var row = document.createElement('div'); row.className='cost-row'+(item.active?'':' inactive');
       var name = document.createElement('div'); name.className='cost-name'; name.textContent = item.name; row.appendChild(name);
-
       var iw = document.createElement('div'); iw.className='input-wrap';
       var pre = document.createElement('span'); pre.className='prefix'; pre.textContent='R$'; iw.appendChild(pre);
       var inp = document.createElement('input'); inp.type='text'; inp.inputMode='decimal'; inp.className='has-prefix'; inp.value=formatNumForInput(item.value);
@@ -2359,7 +2243,6 @@
       inp.addEventListener('input', function(){ item.value = parseNum(inp.value); renderActiveTab(); });
       iw.appendChild(inp);
       row.appendChild(iw);
-
       var toggle = document.createElement('div'); toggle.className='cost-toggle';
       [['Ativo',true],['Inativo',false]].forEach(function(pair){
         var b=document.createElement('button'); b.type='button'; b.textContent=pair[0];
@@ -2372,7 +2255,6 @@
     });
     left.appendChild(list);
     grid.appendChild(left);
-
     var right = document.createElement('section'); right.className='card';
     right.innerHTML = '<div class="card-head"><div><h2>Rateio &amp; premissas</h2><div class="sub">Como o custo fixo é diluído em cada venda, por canal.</div></div></div>';
     var fg = document.createElement('div'); fg.className='field-grid'; fg.style.gridTemplateColumns='1fr';
@@ -2389,7 +2271,6 @@
     grid.appendChild(right);
     root.appendChild(grid);
   }
-
   // ======================================================================
   // VIEW: COMPARATIVO
   // Generalizado para N canais (Shopee, Mercado Livre e agora SHEIN) em vez
@@ -2413,7 +2294,6 @@
       return { key:ch.key, label:ch.label, r:r, adv:adv, proj:proj };
     });
   }
-
   function renderComparativo(root){
     var tiktokModeCard = document.createElement('section'); tiktokModeCard.className='card';
     tiktokModeCard.innerHTML = '<div class="card-head"><div><h2>TikTok Shop nesta comparação</h2><div class="sub">Escolha se o TikTok entra com venda orgânica ou já considerando a comissão de afiliado.</div></div></div>';
@@ -2426,10 +2306,8 @@
     });
     tiktokModeCard.appendChild(tiktokModeSeg);
     root.appendChild(tiktokModeCard);
-
     var channels = compareChannels();
     var valid = channels.filter(function(c){ return c.r.venda > 0.004; });
-
     if(valid.length < 2){
       var note = document.createElement('div'); note.className='alert-banner neutral';
       note.innerHTML = svgIcon(ICONS.box)+'<span>Preencha o valor de venda em pelo menos duas abas (Shopee, Mercado Livre, SHEIN ou TikTok Shop) para comparar.</span>';
@@ -2437,7 +2315,6 @@
     } else {
       var best = valid.reduce(function(a,b){ return b.r.mc>a.r.mc ? b : a; });
       var others = valid.filter(function(c){ return c.key!==best.key; });
-
       var recBanner = document.createElement('div'); recBanner.className='recommend-banner';
       var diffLines = others.map(function(o){
         return '<strong>'+best.label+'</strong> deixa '+money(best.r.mc-o.r.mc)+' a mais de margem por venda do que '+o.label+'.';
@@ -2446,7 +2323,6 @@
         'MELHOR MARKETPLACE PARA ESSE PRODUTO: <strong>'+best.label+'</strong> — '+money(best.r.mc)+' de lucro por venda. '+diffLines+
         ' Os valores vêm do que está preenchido em cada calculadora — ajuste as abas Shopee, Mercado Livre, SHEIN e TikTok Shop para simular outros cenários.</div>';
       root.appendChild(recBanner);
-
       // Diferença projetada por mês (item 14/9): usa a mesma projeção de lucro operacional
       // já calculada na aba Projeção de cada canal (MC unitária × volume − custos fixos),
       // no volume de referência definido em COMPARATIVO_REF_VOLUME.
@@ -2462,14 +2338,12 @@
         '<strong>'+bestMonthly.label+'</strong> sairia à frente (lucro operacional, já descontando custos fixos).</div>';
       root.appendChild(monthlyBanner);
     }
-
     var cgrid = document.createElement('div'); cgrid.className='compare-grid cols-4';
     var bestKey = valid.length ? valid.reduce(function(a,b){ return b.r.mc>a.r.mc ? b : a; }).key : null;
     channels.forEach(function(c){
       cgrid.appendChild(compareCard(c.label, c.key, c.r, c.adv, c.r.venda>0.004 && c.key===bestKey));
     });
     root.appendChild(cgrid);
-
     var chartCard = document.createElement('section'); chartCard.className='card';
     chartCard.innerHTML = '<div class="card-head"><div><h2>MC por venda — lado a lado</h2><div class="sub">Comparação direta da margem de contribuição em reais.</div></div></div>';
     var rankWrap = document.createElement('div'); rankWrap.className='rank-list';
@@ -2478,11 +2352,9 @@
     root.appendChild(chartCard);
     wireRankList(rankWrap);
   }
-
   function marketplaceFee(key, r){
     return key==='ml' ? r.tarifaRS : r.comissaoRS;
   }
-
   function compareCard(title, key, r, adv, winner){
     var el = document.createElement('section'); el.className='compare-card'+(winner?' winner':'');
     var head = document.createElement('div'); head.className='compare-head';
@@ -2512,7 +2384,6 @@
     });
     return el;
   }
-
   // ======================================================================
   // VIEW: DASHBOARD (item 10) — resumo executivo dos dois canais lado a lado,
   // reaproveitando os mesmos cálculos já usados nas abas Shopee/ML/Projeção
@@ -2523,7 +2394,6 @@
     var head = document.createElement('div'); head.className='card-head';
     head.innerHTML = '<div class="compare-head" style="margin-bottom:0;"><div class="compare-mark '+key+'">'+title.slice(0,2).toUpperCase()+'</div><div class="compare-title">'+title+'</div></div>';
     card.appendChild(head);
-
     var vendaValida = r.venda > 0.004;
     if(!vendaValida){
       var p = document.createElement('p'); p.className='note'; p.style.margin='0';
@@ -2531,7 +2401,6 @@
       card.appendChild(p);
       return card;
     }
-
     var feesTotal = marketplaceFee(key, r);
     var grid = document.createElement('div'); grid.className='kpi-row'; grid.style.gridTemplateColumns='repeat(3,1fr)';
     grid.innerHTML =
@@ -2546,14 +2415,12 @@
       kpiCard('Lucro antes de Ads', money(r.mcSemAds), r.mcSemAds<0, ICONS.wallet, r.mcSemAds<0?'critical':'accent', '—') +
       kpiCard('Lucro após Ads', money(r.mc), r.mc<0, ICONS.wallet, r.mc<0?'critical':'good', '—');
     card.appendChild(grid);
-
     var readout = document.createElement('div'); readout.className='readout-list';
     readout.innerHTML =
       readoutRow('Break-even ACOS', pct(adv.acosMax)) +
       readoutRow('Break-even ROAS', adv.roasEquilibrio!=null?num(adv.roasEquilibrio):'—') +
       readoutRow('Custos fixos mensais', moneyThousands(proj.custosFixosMensais)) +
       readoutRow('Unidades p/ break-even', proj.breakEvenQtd!=null?intFmt(proj.breakEvenQtd)+' vendas/mês':'—');
-
     var metaLucro = Number(tabState.metaLucroMensal)||0;
     if(metaLucro>0 && proj.mcUnit>0.004){
       var vendasNecessarias = Math.ceil((metaLucro + proj.custosFixosMensais)/proj.mcUnit);
@@ -2563,12 +2430,10 @@
     } else {
       readout.innerHTML += readoutRow('Meta de lucro mensal', 'não definida (aba Projeção)');
     }
-
     var volEntry = proj.volumes.filter(function(v){ return v.vendas===COMPARATIVO_REF_VOLUME; })[0];
     if(volEntry){
       readout.innerHTML += readoutRow('Projeção a '+intFmt(COMPARATIVO_REF_VOLUME)+' vendas/mês', moneyThousands(volEntry.lucroOperacional));
     }
-
     // TikTok Shop tem afiliado — item 29 pede esses números extras no dashboard.
     if(key==='tiktok'){
       var aa = tiktokAffiliateAnalysis();
@@ -2584,18 +2449,14 @@
         readout.innerHTML += readoutRow('Comissões de afiliado no mês', moneyThousands(volEntry.comissaoAfiliadoTotal));
       }
     }
-
     card.appendChild(readout);
     return card;
   }
-
   function renderDashboard(root){
     var channels = compareChannels();
-
     var intro = document.createElement('div'); intro.className='recommend-banner';
     intro.innerHTML = '<div class="r-icon">'+svgIcon(ICONS.box)+'</div><div class="r-text">Resumo executivo com os principais indicadores dos quatro canais, lado a lado. Os valores vêm do que já está preenchido nas abas Shopee, Mercado Livre, SHEIN, TikTok Shop e Custos fixos — não precisa preencher nada aqui.</div>';
     root.appendChild(intro);
-
     var grid = document.createElement('div'); grid.className='compare-grid cols-4';
     channels.forEach(function(c){
       var tabState = c.key==='shopee' ? state.shopee : (c.key==='ml' ? state.ml : (c.key==='shein' ? state.shein : state.tiktok));
@@ -2603,7 +2464,6 @@
     });
     root.appendChild(grid);
   }
-
   // ======================================================================
   // HELPERS DE MARKUP
   // ======================================================================
@@ -2615,7 +2475,527 @@
     '</div>';
   }
   function readoutRow(k, v){ return '<div class="readout-row"><span class="rk">'+k+'</span><span class="rv">'+v+'</span></div>'; }
-
+  // ======================================================================
+  // VIEW: PESQUISA DE MERCADO (Shopee)
+  // Como a API da Shopee não aceita chamadas de outra origem (CORS) nem
+  // acesso sem o login do usuário, os dados são coletados rodando um
+  // pequeno script no Console da própria página do anúncio (o usuário abre
+  // o produto do concorrente na Shopee, cola o script no F12 > Console, e
+  // cola o resultado copiado de volta aqui). Isso é só leitura/organização
+  // local — nada é buscado automaticamente por este app.
+  // ======================================================================
+  var SHOPEE_RESEARCH_SCRIPT = "(function () {\n  let shopId, itemId;\n  let match = location.href.match(/-i\\.(\\d+)\\.(\\d+)/);\n  if (match) {\n    shopId = match[1];\n    itemId = match[2];\n  } else {\n    match = location.href.match(/\\/product\\/(\\d+)\\/(\\d+)/);\n    if (match) {\n      shopId = match[1];\n      itemId = match[2];\n    }\n  }\n  if (!shopId || !itemId) {\n    console.log(\"Não encontrei o ID da loja/anúncio nesta URL. Abra a página do produto e tente de novo.\");\n    return;\n  }\n  function formatarIdade(dataCriacao) {\n    const agora = new Date();\n    let anos = agora.getFullYear() - dataCriacao.getFullYear();\n    let meses = agora.getMonth() - dataCriacao.getMonth();\n    let dias = agora.getDate() - dataCriacao.getDate();\n    if (dias < 0) {\n      meses--;\n      dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate();\n    }\n    if (meses < 0) {\n      anos--;\n      meses += 12;\n    }\n    return anos + \" ano(s), \" + meses + \" mes(es) e \" + dias + \" dia(s)\";\n  }\n  fetch(\"https://shopee.com.br/api/v4/item/get?itemid=\" + itemId + \"&shopid=\" + shopId, {\n    headers: { accept: \"application/json\" },\n    credentials: \"include\",\n  })\n    .then((r) => r.json())\n    .then((resposta) => {\n      const item = resposta.data;\n      if (!item) {\n        console.log(\"Não recebi os dados do produto.\", resposta);\n        return;\n      }\n      const criadoEm = new Date(item.ctime * 1000);\n      const diasAtivo = Math.max(1, Math.floor((Date.now() - criadoEm.getTime()) / 86400000));\n      const precoAtual = item.price / 100000;\n      const vendasRecentes = item.sold ?? 0;\n      const totalHistorico = item.historical_sold ?? 0;\n      const resumo = {\n        nome: item.name || \"\",\n        linkOrigem: location.href,\n        precoAtual: precoAtual,\n        criadoEm: criadoEm.toISOString(),\n        diasAtivo: diasAtivo,\n        vendas30d: vendasRecentes,\n        mediaRecenteDia: Math.round((vendasRecentes / 30) * 100) / 100,\n        totalHistorico: totalHistorico,\n        mediaHistoricaDia: Math.round((totalHistorico / diasAtivo) * 100) / 100,\n        nota: (item.item_rating && item.item_rating.rating_star) || null,\n        avaliacoes: (item.item_rating && item.item_rating.rating_count && item.item_rating.rating_count[0]) || 0,\n        curtidas: item.liked_count ?? 0,\n        estoque: item.stock ?? 0,\n        variacoes: (item.models || []).map(function (m) { return { nome: m.name || \"\", preco: (m.price || 0) / 100000, estoque: m.stock ?? 0 }; }),\n        capturadoEm: new Date().toISOString()\n      };\n      console.log(\n        \"%c📊 RAIO-X DO ANÚNCIO SHOPEE\",\n        \"font-size:16px;font-weight:bold;color:#4fc3f7;background:#0d1117;padding:8px 16px;border-radius:4px;\"\n      );\n      console.table({\n        \"📦 Produto\": resumo.nome,\n        \"📅 Criado em\": criadoEm.toLocaleString(\"pt-BR\"),\n        \"⏳ Idade\": formatarIdade(criadoEm),\n        \"🛒 Vendas recentes (30d)\": resumo.vendas30d,\n        \"🔥 Média recente / dia\": resumo.mediaRecenteDia,\n        \"📦 Total histórico vendido\": resumo.totalHistorico,\n        \"📈 Média histórica / dia\": resumo.mediaHistoricaDia,\n        \"⭐ Nota\": resumo.nota ?? \"N/D\",\n        \"💬 Avaliações\": resumo.avaliacoes,\n        \"❤️ Curtidas\": resumo.curtidas,\n        \"📦 Estoque atual\": resumo.estoque,\n        \"💰 Preço atual\": \"R$ \" + precoAtual.toFixed(2).replace(\".\", \",\"),\n      });\n      if (resumo.variacoes.length) {\n        console.log(\"🎨 Variações (\" + resumo.variacoes.length + \"):\");\n        console.table(resumo.variacoes);\n      }\n      const jsonStr = JSON.stringify(resumo);\n      const avisouCopiado = () => console.log(\"%c✅ Copiado! Volte na calculadora, aba \\\"Pesquisa de mercado\\\", e cole (Ctrl+V) na caixa de texto.\", \"color:#20d47a;font-weight:bold;font-size:13px;\");\n      const avisouFalhou = () => {\n        console.log(\"%c⚠️ Não consegui copiar sozinho. Copie o texto abaixo manualmente: clique na linha de baixo com o botão direito e escolha \\\"Copy string contents\\\" (ou selecione o texto e Ctrl+C).\", \"color:#f5b83d;font-weight:bold;\");\n        console.log(jsonStr);\n      };\n      // navigator.clipboard funciona de forma confiável mesmo dentro do .then() (assíncrono);\n      // o copy() do console às vezes falha nesse contexto, por isso ele fica só como reserva.\n      if (navigator.clipboard && navigator.clipboard.writeText) {\n        navigator.clipboard.writeText(jsonStr).then(avisouCopiado, () => {\n          try { copy(jsonStr); avisouCopiado(); } catch (e) { avisouFalhou(); }\n        });\n      } else {\n        try { copy(jsonStr); avisouCopiado(); } catch (e) { avisouFalhou(); }\n      }\n    })\n    .catch((err) => console.error(\"Deu erro ao buscar os dados:\", err));\n})();\n";
+  function idadeFormatada(criadoEmISO){
+    if(!criadoEmISO) return '—';
+    var dataCriacao = new Date(criadoEmISO);
+    if(isNaN(dataCriacao.getTime())) return '—';
+    var agora = new Date();
+    var anos = agora.getFullYear() - dataCriacao.getFullYear();
+    var meses = agora.getMonth() - dataCriacao.getMonth();
+    var dias = agora.getDate() - dataCriacao.getDate();
+    if(dias < 0){ meses--; dias += new Date(agora.getFullYear(), agora.getMonth(), 0).getDate(); }
+    if(meses < 0){ anos--; meses += 12; }
+    return anos + ' ano(s), ' + meses + ' mês(es) e ' + dias + ' dia(s)';
+  }
+  function migratePesquisaItem(item){
+    if(item && Array.isArray(item.history)) return item;
+    if(!item) return item;
+    var snapshot = {
+      capturadoEm: item.capturadoEm || new Date().toISOString(),
+      precoAtual: item.precoAtual, criadoEm: item.criadoEm, diasAtivo: item.diasAtivo,
+      vendas30d: item.vendas30d, mediaRecenteDia: item.mediaRecenteDia,
+      totalHistorico: item.totalHistorico, mediaHistoricaDia: item.mediaHistoricaDia,
+      nota: item.nota, avaliacoes: item.avaliacoes, curtidas: item.curtidas, estoque: item.estoque,
+      variacoes: Array.isArray(item.variacoes) ? item.variacoes : []
+    };
+    return { id: item.id, nome: item.nome, linkOrigem: item.linkOrigem, history: [snapshot] };
+  }
+  function pesquisaLatest(item){
+    var h = (item && item.history) || [];
+    return h.length ? h[h.length-1] : null;
+  }
+  function pesquisaStats(){
+    var list = state.pesquisa.shopee;
+    var n = list.length;
+    var latests = list.map(pesquisaLatest).filter(Boolean);
+    var precoMedio = latests.length ? latests.reduce(function(s,c){ return s+(Number(c.precoAtual)||0); },0)/latests.length : 0;
+    var vendasDiaMedia = latests.length ? latests.reduce(function(s,c){ return s+(Number(c.mediaRecenteDia)||0); },0)/latests.length : 0;
+    return { n:n, precoMedio:precoMedio, vendasDiaMedia:vendasDiaMedia };
+  }
+  function copyResearchScriptToClipboard(){
+    var txt = SHOPEE_RESEARCH_SCRIPT;
+    function done(){ showToast('<strong>Script copiado.</strong> Cole (Ctrl+V) no Console (F12) da página do produto, na Shopee.'); }
+    function manualFallback(){
+      try{
+        var ta = document.createElement('textarea');
+        ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+        document.body.appendChild(ta); ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        done();
+      }catch(e){
+        showToast('<strong>Não consegui copiar automaticamente.</strong> Selecione o texto do script acima e copie manualmente (Ctrl+C).');
+      }
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done, manualFallback);
+    } else {
+      manualFallback();
+    }
+  }
+  // ---- Histórico de vendas (Pesquisa de mercado): série diária estimada a partir
+  // dos totais históricos capturados a cada nova coleta no mesmo produto. ----
+  function pesquisaFilterRange(){
+    var f = state.pesquisa.filtro || {preset:'30d'};
+    var now = new Date();
+    var to = now, from;
+    if(f.preset==='7d'){ from = new Date(now.getTime() - 7*86400000); }
+    else if(f.preset==='15d'){ from = new Date(now.getTime() - 15*86400000); }
+    else if(f.preset==='custom'){
+      from = f.from ? new Date(f.from+'T00:00:00') : new Date(now.getTime() - 30*86400000);
+      to = f.to ? new Date(f.to+'T23:59:59') : now;
+    } else { from = new Date(now.getTime() - 30*86400000); }
+    return { from:from, to:to };
+  }
+  function pesquisaSnapshotsInRange(item, range){
+    return (item.history||[]).filter(function(s){
+      var d = new Date(s.capturadoEm);
+      return d >= range.from && d <= range.to;
+    }).slice().sort(function(a,b){ return new Date(a.capturadoEm) - new Date(b.capturadoEm); });
+  }
+  function pesquisaDailySeries(snaps){
+    var out = [];
+    for(var i=0;i<snaps.length;i++){
+      var s = snaps[i];
+      var rupture = Number(s.estoque)===0;
+      var dailyRate = null;
+      if(i>0){
+        var prev = snaps[i-1];
+        var days = Math.max(1, (new Date(s.capturadoEm)-new Date(prev.capturadoEm))/86400000);
+        var deltaVendas = (Number(s.totalHistorico)||0) - (Number(prev.totalHistorico)||0);
+        dailyRate = deltaVendas/days;
+      }
+      out.push({ date:new Date(s.capturadoEm), dailyRate:dailyRate, totalHistorico:Number(s.totalHistorico)||0, estoque:Number(s.estoque)||0, rupture:rupture });
+    }
+    return out;
+  }
+  function pesquisaChart(points){
+    var W=760, H=200, padL=54, padR=16, padT=16, padB=30;
+    var plotW=W-padL-padR, plotH=H-padT-padB;
+    var values = points.map(function(p){ return p.dailyRate; });
+    var maxV = Math.max.apply(null, values.concat([0]));
+    var minV = Math.min.apply(null, values.concat([0]));
+    var domainMax = maxV>0 ? maxV*1.18 : 1;
+    var domainMin = minV<0 ? minV*1.18 : 0;
+    if(domainMax<=domainMin) domainMax = domainMin+1;
+    var range = (domainMax-domainMin) || 1;
+    function xAt(i){ return padL + (points.length>1 ? plotW*i/(points.length-1) : plotW/2); }
+    function yAt(v){ return padT + plotH - ((v-domainMin)/range)*plotH; }
+    var zeroY = yAt(0);
+    var linePts = values.map(function(v,i){ return xAt(i)+','+yAt(v); }).join(' ');
+    var areaPts = 'M'+xAt(0)+','+zeroY+' ' + values.map(function(v,i){ return 'L'+xAt(i)+','+yAt(v); }).join(' ') + ' L'+xAt(points.length-1)+','+zeroY+' Z';
+    var gridLines = '';
+    for(var gs=0; gs<=3; gs++){
+      var gv = domainMin + range*gs/3;
+      var gy = yAt(gv);
+      gridLines += '<line class="gridline" x1="'+padL+'" y1="'+gy+'" x2="'+(W-padR)+'" y2="'+gy+'"/>';
+      gridLines += '<text class="axis-label" x="'+(padL-8)+'" y="'+(gy+3)+'" text-anchor="end">'+num(gv)+'</text>';
+    }
+    var zeroLine = '<line class="gridline zero-line" x1="'+padL+'" y1="'+zeroY+'" x2="'+(W-padR)+'" y2="'+zeroY+'"/>';
+    var labelStep = Math.ceil(points.length/6) || 1;
+    var xLabels = points.map(function(p,i){
+      if(i%labelStep!==0 && i!==points.length-1) return '';
+      return '<text class="axis-label" x="'+xAt(i)+'" y="'+(H-10)+'" text-anchor="middle">'+p.date.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+'</text>';
+    }).join('');
+    var pointsSvg = points.map(function(p,i){
+      return '<circle class="chart-point'+(p.rupture?' neg':'')+'" data-i="'+i+'" cx="'+xAt(i)+'" cy="'+yAt(p.dailyRate)+'" r="4.5"/>';
+    }).join('');
+    var svg = '<svg viewBox="0 0 '+W+' '+H+'" preserveAspectRatio="none" role="img" aria-label="Vendas diárias estimadas ao longo do tempo">'+
+      '<defs><linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">'+
+      '<stop offset="0%" stop-color="var(--accent-2)" stop-opacity="0.28"/>'+
+      '<stop offset="100%" stop-color="var(--accent-2)" stop-opacity="0"/>'+
+      '</linearGradient></defs>'+
+      gridLines + zeroLine + '<path class="chart-area" d="'+areaPts+'"/>' + '<polyline class="chart-line" points="'+linePts+'"/>' + pointsSvg + xLabels +
+      '<line class="crosshair-line" id="crosshair-research" x1="0" y1="'+padT+'" x2="0" y2="'+(padT+plotH)+'" style="opacity:0"/>'+
+      '<rect id="hit-overlay-research" x="'+padL+'" y="'+padT+'" width="'+plotW+'" height="'+plotH+'" fill="transparent"/>'+
+      '</svg>';
+    return { svg:svg, W:W, points:points, xAt:xAt };
+  }
+  function wirePesquisaChart(wrap, chartData){
+    var svgEl = wrap.querySelector('svg');
+    var overlay = wrap.querySelector('#hit-overlay-research');
+    var crosshair = wrap.querySelector('#crosshair-research');
+    var pointEls = Array.prototype.slice.call(wrap.querySelectorAll('.chart-point'));
+    function nearestIndex(mouseX){
+      var best=0, bestDist=Infinity;
+      for(var i=0;i<chartData.points.length;i++){ var d=Math.abs(chartData.xAt(i)-mouseX); if(d<bestDist){bestDist=d;best=i;} }
+      return best;
+    }
+    overlay.addEventListener('mousemove', function(ev){
+      var rect = svgEl.getBoundingClientRect();
+      var scaleX = chartData.W/rect.width;
+      var mouseX = (ev.clientX-rect.left)*scaleX;
+      var i = nearestIndex(mouseX);
+      crosshair.setAttribute('x1', chartData.xAt(i)); crosshair.setAttribute('x2', chartData.xAt(i));
+      crosshair.style.opacity = 1;
+      pointEls.forEach(function(pt){ pt.classList.toggle('hover', Number(pt.getAttribute('data-i'))===i); });
+      var p = chartData.points[i];
+      var label = (p.label || p.date.toLocaleDateString('pt-BR')) + (p.rupture ? ' · estoque zerado' : '');
+      showTooltip(ev.clientX, ev.clientY, label, num(Math.round(p.dailyRate*100)/100)+' vendas/dia');
+    });
+    overlay.addEventListener('mouseleave', function(){
+      crosshair.style.opacity = 0;
+      pointEls.forEach(function(pt){ pt.classList.remove('hover'); });
+      hideTooltip();
+    });
+  }
+  function renderPesquisaHistorico(root, item){
+    var history = item.history || [];
+    if(history.length < 2) return;
+    var card = document.createElement('section'); card.className='card';
+    card.innerHTML = '<div class="card-head"><div><h2>Evolução dia a dia (capturas ao longo do tempo)</h2><div class="sub">Esse gráfico compara suas próprias capturas deste produto em datas diferentes — quanto mais vezes você recapturar o mesmo anúncio ao longo do tempo, mais preciso fica.</div></div></div>';
+    var filterRow = document.createElement('div'); filterRow.className='research-filter-row';
+    var seg = document.createElement('div'); seg.className='seg-toggle'; seg.style.width='auto';
+    var presets = [['7d','7 dias'],['15d','15 dias'],['30d','Mês'],['custom','Personalizado']];
+    presets.forEach(function(pair){
+      var b=document.createElement('button'); b.type='button'; b.textContent=pair[1];
+      if((state.pesquisa.filtro.preset||'30d')===pair[0]) b.className='on';
+      b.addEventListener('click', function(){ state.pesquisa.filtro.preset=pair[0]; renderActiveTab(); });
+      seg.appendChild(b);
+    });
+    filterRow.appendChild(seg);
+    card.appendChild(filterRow);
+    if(state.pesquisa.filtro.preset==='custom'){
+      var customRow = document.createElement('div'); customRow.className='field-grid cols-3'; customRow.style.marginBottom='14px';
+      var fFrom = document.createElement('div'); fFrom.className='field';
+      var lblFrom = document.createElement('label'); lblFrom.textContent='De'; fFrom.appendChild(lblFrom);
+      var inpFrom = document.createElement('input'); inpFrom.type='date'; inpFrom.value = state.pesquisa.filtro.from || '';
+      inpFrom.addEventListener('change', function(){ state.pesquisa.filtro.from = inpFrom.value; renderActiveTab(); });
+      fFrom.appendChild(inpFrom);
+      customRow.appendChild(fFrom);
+      var fTo = document.createElement('div'); fTo.className='field';
+      var lblTo = document.createElement('label'); lblTo.textContent='Até'; fTo.appendChild(lblTo);
+      var inpTo = document.createElement('input'); inpTo.type='date'; inpTo.value = state.pesquisa.filtro.to || '';
+      inpTo.addEventListener('change', function(){ state.pesquisa.filtro.to = inpTo.value; renderActiveTab(); });
+      fTo.appendChild(inpTo);
+      customRow.appendChild(fTo);
+      card.appendChild(customRow);
+    }
+    var range = pesquisaFilterRange();
+    var snapsInRange = pesquisaSnapshotsInRange(item, range);
+    var series = pesquisaDailySeries(snapsInRange);
+    var chartPoints = series.filter(function(p){ return p.dailyRate!=null; });
+    if(!chartPoints.length){
+      var empty2 = document.createElement('div'); empty2.className='empty';
+      empty2.textContent = 'Nenhuma captura dentro do período selecionado. Tente um período maior ou personalizado.';
+      card.appendChild(empty2);
+      root.appendChild(card);
+      return;
+    }
+    var totalVendasPeriodo = snapsInRange[snapsInRange.length-1].totalHistorico - snapsInRange[0].totalHistorico;
+    var diasPeriodo = Math.max(1, (new Date(snapsInRange[snapsInRange.length-1].capturadoEm) - new Date(snapsInRange[0].capturadoEm))/86400000);
+    var mediaDiariaPeriodo = totalVendasPeriodo/diasPeriodo;
+    var pico = chartPoints.reduce(function(best,p){ return (best===null || p.dailyRate>best.dailyRate) ? p : best; }, null);
+    var rupturas = snapsInRange.filter(function(s){ return Number(s.estoque)===0; });
+    var kpiRow2 = document.createElement('div'); kpiRow2.className='kpi-row'; kpiRow2.style.marginBottom='16px';
+    kpiRow2.innerHTML =
+      kpiCard('Vendas no período', num(totalVendasPeriodo), false, ICONS.box, 'accent', Math.round(diasPeriodo)+' dias') +
+      kpiCard('Média diária no período', num(Math.round(mediaDiariaPeriodo*100)/100), false, ICONS.trend, 'accent', 'vendas/dia') +
+      kpiCard('Pico de vendas/dia', num(Math.round(pico.dailyRate*100)/100), false, ICONS.target, 'accent', 'em '+pico.date.toLocaleDateString('pt-BR')) +
+      kpiCard('Rupturas de estoque', String(rupturas.length), rupturas.length>0, ICONS.alert, rupturas.length>0?'critical':'good', rupturas.length>0 ? 'estoque zerado em alguma captura' : 'nenhuma detectada');
+    card.appendChild(kpiRow2);
+    var chartWrap = document.createElement('div'); chartWrap.className='chart-wrap';
+    var chartData = pesquisaChart(chartPoints);
+    chartWrap.innerHTML = chartData.svg;
+    card.appendChild(chartWrap);
+    if(rupturas.length){
+      var rupBanner = document.createElement('div'); rupBanner.className='alert-banner critical'; rupBanner.style.marginTop='16px';
+      var datas = rupturas.map(function(s){ return new Date(s.capturadoEm).toLocaleDateString('pt-BR'); }).join(', ');
+      rupBanner.innerHTML = svgIcon(ICONS.alert)+'<span><strong>Ruptura de estoque detectada</strong> em: '+datas+' — o produto ficou com estoque zerado nessas capturas.</span>';
+      card.appendChild(rupBanner);
+    }
+    root.appendChild(card);
+    wirePesquisaChart(chartWrap, chartData);
+  }
+  // ---- Variações (Pesquisa de mercado): a Shopee não expõe vendas por variação,
+  // só estoque por variação — usamos isso como indício (estoque baixo/zerado) e,
+  // com 2+ capturas, estimamos vendido por variação pela queda de estoque. ----
+  function pesquisaVariacaoDeltas(item){
+    var history = (item.history||[]).filter(function(s){ return Array.isArray(s.variacoes) && s.variacoes.length; });
+    if(history.length < 2) return null;
+    var atual = history[history.length-1];
+    var anterior = history[history.length-2];
+    var diasPeriodo = Math.max(1, (new Date(atual.capturadoEm) - new Date(anterior.capturadoEm))/86400000);
+    var deltas = atual.variacoes.map(function(vAtual){
+      var vAnt = anterior.variacoes.filter(function(v){ return v.nome===vAtual.nome; })[0];
+      if(!vAnt) return { nome: vAtual.nome, estoqueAnterior: null, estoqueAtual: Number(vAtual.estoque)||0, vendidoEstimado: null, repos:false, nova:true };
+      var estAnt = Number(vAnt.estoque)||0, estAtual = Number(vAtual.estoque)||0;
+      var repos = estAtual > estAnt;
+      var vendido = repos ? 0 : Math.max(0, estAnt - estAtual);
+      return { nome: vAtual.nome, estoqueAnterior: estAnt, estoqueAtual: estAtual, vendidoEstimado: vendido, repos: repos, nova:false };
+    });
+    deltas.sort(function(a,b){ return (b.vendidoEstimado||0) - (a.vendidoEstimado||0); });
+    return { diasPeriodo: Math.round(diasPeriodo), dataAnterior: anterior.capturadoEm, dataAtual: atual.capturadoEm, deltas: deltas };
+  }
+  function renderPesquisaVariacoes(root, item){
+    var latest = pesquisaLatest(item);
+    if(!latest || !Array.isArray(latest.variacoes) || !latest.variacoes.length) return;
+    var card = document.createElement('section'); card.className='card';
+    card.innerHTML = '<div class="card-head"><div><h2>Variações deste anúncio</h2><div class="sub">A Shopee não informa quantas vendas cada variação teve — só o estoque atual de cada uma. Variação com estoque baixo ou zerado é o maior indício de qual está vendendo mais rápido.</div></div></div>';
+    var ordenadas = latest.variacoes.slice().sort(function(a,b){ return (Number(a.estoque)||0) - (Number(b.estoque)||0); });
+    var scrollWrap = document.createElement('div'); scrollWrap.className='table-scroll';
+    var table = document.createElement('table');
+    var thead = '<thead><tr><th>Variação</th><th>Preço</th><th>Estoque atual</th></tr></thead>';
+    var rows = ordenadas.map(function(v){
+      var zerado = Number(v.estoque)===0;
+      return '<tr>'+
+        '<td style="text-align:left;">'+(v.nome?String(v.nome):'—')+(zerado?' <span style="color:var(--critical);font-weight:600;">· esgotado</span>':'')+'</td>'+
+        '<td>'+money(Number(v.preco)||0)+'</td>'+
+        '<td'+(zerado?' style="color:var(--critical);font-weight:600;"':'')+'>'+num(Number(v.estoque)||0)+'</td>'+
+      '</tr>';
+    }).join('');
+    table.innerHTML = thead + '<tbody>'+rows+'</tbody>';
+    scrollWrap.appendChild(table);
+    card.appendChild(scrollWrap);
+    var deltaInfo = pesquisaVariacaoDeltas(item);
+    if(deltaInfo){
+      var deltaNote = document.createElement('p'); deltaNote.className='note'; deltaNote.style.marginTop='16px';
+      deltaNote.textContent = 'Estimativa de vendas por variação nos últimos '+deltaInfo.diasPeriodo+' dia(s), comparando a queda de estoque entre a captura de '+new Date(deltaInfo.dataAnterior).toLocaleDateString('pt-BR')+' e a de '+new Date(deltaInfo.dataAtual).toLocaleDateString('pt-BR')+'. É uma estimativa — pode errar se o vendedor repuser estoque no meio do caminho.';
+      card.appendChild(deltaNote);
+      var scrollWrap2 = document.createElement('div'); scrollWrap2.className='table-scroll'; scrollWrap2.style.marginTop='10px';
+      var table2 = document.createElement('table');
+      var thead2 = '<thead><tr><th>Variação</th><th>Estoque anterior</th><th>Estoque atual</th><th>Vendido (estimado)</th></tr></thead>';
+      var rows2 = deltaInfo.deltas.map(function(d){
+        var vendTxt = d.nova ? '— (variação nova)' : (d.repos ? 'reposição de estoque' : num(d.vendidoEstimado));
+        var destaque = (!d.nova && !d.repos && d.vendidoEstimado>0);
+        return '<tr>'+
+          '<td style="text-align:left;">'+(d.nome?String(d.nome):'—')+'</td>'+
+          '<td>'+(d.estoqueAnterior!=null?num(d.estoqueAnterior):'—')+'</td>'+
+          '<td>'+num(d.estoqueAtual)+'</td>'+
+          '<td'+(destaque?' style="color:var(--good);font-weight:600;"':'')+'>'+vendTxt+'</td>'+
+        '</tr>';
+      }).join('');
+      table2.innerHTML = thead2 + '<tbody>'+rows2+'</tbody>';
+      scrollWrap2.appendChild(table2);
+      card.appendChild(scrollWrap2);
+    } else if((item.history||[]).length < 2){
+      var hint = document.createElement('p'); hint.className='note'; hint.style.marginTop='16px';
+      hint.textContent = 'Recapture este produto em outra data pra ver uma estimativa de quantas unidades cada variação vendeu, baseada na queda de estoque.';
+      card.appendChild(hint);
+    }
+    root.appendChild(card);
+  }
+  function renderPesquisaDetalhe(root, item){
+    var latest = pesquisaLatest(item);
+    var back = document.createElement('button'); back.type='button'; back.className='ghost'; back.style.marginBottom='16px';
+    back.innerHTML = svgIcon(ICONS.arrowLeft)+'Voltar à lista';
+    back.addEventListener('click', function(){ state.pesquisa.selectedId = null; renderActiveTab(); });
+    root.appendChild(back);
+    var linkHtml = item.linkOrigem ? ' <a class="research-link" href="'+String(item.linkOrigem).replace(/"/g,'&quot;')+'" target="_blank" rel="noopener" style="display:inline-flex;vertical-align:-1px;">'+svgIcon(ICONS.link)+'</a>' : '';
+    var header = document.createElement('section'); header.className='card';
+    header.innerHTML = '<div class="card-head"><div><h2>'+(item.nome?String(item.nome):'(sem nome)')+linkHtml+'</h2>'+
+      '<div class="sub">Última captura em '+(latest.capturadoEm ? new Date(latest.capturadoEm).toLocaleString('pt-BR') : '—')+' · Anúncio criado em '+(latest.criadoEm ? new Date(latest.criadoEm).toLocaleDateString('pt-BR') : '—')+' ('+idadeFormatada(latest.criadoEm)+') · '+(item.history.length)+' captura(s) registrada(s)</div></div></div>';
+    root.appendChild(header);
+    var recente = Number(latest.mediaRecenteDia)||0;
+    var historica = Number(latest.mediaHistoricaDia)||0;
+    var trendCls='neutral', trendIcon=ICONS.box, trendMsg='Sem média histórica suficiente para comparar a tendência de vendas.';
+    if(historica>0.004){
+      var trendPct = (recente-historica)/historica;
+      if(trendPct > 0.15){ trendCls='good'; trendIcon=ICONS.trend; trendMsg='Vendas em alta: média recente '+pct(trendPct)+' acima da média histórica.'; }
+      else if(trendPct < -0.15){ trendCls='critical'; trendIcon=ICONS.alert; trendMsg='Vendas em queda: média recente '+pct(Math.abs(trendPct))+' abaixo da média histórica.'; }
+      else { trendCls='warning'; trendIcon=ICONS.scale; trendMsg='Vendas estáveis: média recente próxima da média histórica.'; }
+    }
+    var trendBanner = document.createElement('div'); trendBanner.className='alert-banner '+trendCls;
+    trendBanner.innerHTML = svgIcon(trendIcon)+'<span>'+trendMsg+'</span>';
+    root.appendChild(trendBanner);
+    var kpiRow = document.createElement('div'); kpiRow.className='kpi-row';
+    kpiRow.innerHTML =
+      kpiCard('Preço atual', money(Number(latest.precoAtual)||0), false, ICONS.wallet, 'accent', '—') +
+      kpiCard('Vendas no mês (30d)', num(Number(latest.vendas30d)||0), false, ICONS.trend, 'accent', num(recente)+'/dia em média') +
+      kpiCard('Venda por dia (recente)', num(recente), false, ICONS.trend, 'accent', 'média dos últimos 30 dias') +
+      kpiCard('Dias ativo', latest.diasAtivo!=null ? num(latest.diasAtivo) : '—', false, ICONS.box, 'accent', idadeFormatada(latest.criadoEm));
+    root.appendChild(kpiRow);
+    var kpiRow1b = document.createElement('div'); kpiRow1b.className='kpi-row'; kpiRow1b.style.marginTop='16px';
+    kpiRow1b.innerHTML =
+      kpiCard('Total histórico vendido', num(Number(latest.totalHistorico)||0), false, ICONS.box, 'accent', 'desde a criação do anúncio') +
+      kpiCard('Venda por dia (desde criação)', num(historica), false, ICONS.trend, 'accent', 'média histórica do anúncio') +
+      kpiCard('Avaliação', latest.nota!=null?num(latest.nota):'—', false, ICONS.target, 'accent', num(Number(latest.avaliacoes)||0)+' avaliações') +
+      kpiCard('Estoque atual', num(Number(latest.estoque)||0), Number(latest.estoque)===0, ICONS.alert, Number(latest.estoque)===0?'critical':'accent', Number(latest.estoque)===0?'zerado nesta captura':'—');
+    root.appendChild(kpiRow1b);
+    var detCard = document.createElement('section'); detCard.className='card';
+    detCard.innerHTML = '<div class="card-head"><div><h2>Detalhes do anúncio (última captura)</h2></div></div>';
+    var detReadout = document.createElement('div'); detReadout.className='readout-list';
+    detReadout.innerHTML =
+      readoutRow('Curtidas', num(Number(latest.curtidas)||0)) +
+      readoutRow('Anúncio criado em', latest.criadoEm ? new Date(latest.criadoEm).toLocaleDateString('pt-BR') : '—') +
+      readoutRow('Última captura em', latest.capturadoEm ? new Date(latest.capturadoEm).toLocaleString('pt-BR') : '—');
+    detCard.appendChild(detReadout);
+    root.appendChild(detCard);
+    renderPesquisaVariacoes(root, item);
+    renderPesquisaHistorico(root, item);
+    var meuPreco = Number(state.shopee.valorVenda)||0;
+    var cmpCard = document.createElement('section'); cmpCard.className='card';
+    cmpCard.innerHTML = '<div class="card-head"><div><h2>Comparação com o seu produto</h2><div class="sub">Baseado no valor de venda preenchido na aba Shopee.</div></div></div>';
+    if(meuPreco>0.004){
+      var precoConc = Number(latest.precoAtual)||0;
+      var diff = meuPreco - precoConc;
+      var diffPct = precoConc>0.004 ? diff/precoConc : null;
+      var cmpReadout = document.createElement('div'); cmpReadout.className='readout-list';
+      cmpReadout.innerHTML =
+        readoutRow('Seu preço', money(meuPreco)) +
+        readoutRow('Preço do concorrente', money(precoConc)) +
+        readoutRow('Diferença', (diff>=0?'+':'')+money(diff)+(diffPct!=null?' ('+(diffPct>=0?'+':'')+pct(diffPct)+')':''));
+      cmpCard.appendChild(cmpReadout);
+    } else {
+      var cmpNote = document.createElement('p'); cmpNote.className='note'; cmpNote.textContent='Preencha o valor de venda na aba Shopee para comparar com este concorrente.';
+      cmpCard.appendChild(cmpNote);
+    }
+    root.appendChild(cmpCard);
+  }
+  function renderPesquisa(root){
+    var selected = state.pesquisa.selectedId ? state.pesquisa.shopee.filter(function(c){ return c.id===state.pesquisa.selectedId; })[0] : null;
+    if(selected){ renderPesquisaDetalhe(root, selected); return; }
+    var stats = pesquisaStats();
+    var meuPreco = Number(state.shopee.valorVenda)||0;
+    var diffTxt = '—';
+    if(stats.n && meuPreco>0.004){
+      var diff = meuPreco - stats.precoMedio;
+      diffTxt = (diff>=0?'+':'') + money(diff) + ' vs. média dos concorrentes';
+    }
+    var kpiRow = document.createElement('div'); kpiRow.className='kpi-row';
+    kpiRow.innerHTML =
+      kpiCard('Concorrentes monitorados', String(stats.n), false, ICONS.search, 'accent', stats.n ? 'na pesquisa Shopee' : 'adicione o primeiro abaixo') +
+      kpiCard('Preço médio dos concorrentes', stats.n?money(stats.precoMedio):'—', false, ICONS.wallet, 'accent', stats.n ? num(stats.n)+' anúncio(s)' : '—') +
+      kpiCard('Seu preço (aba Shopee)', meuPreco>0.004?money(meuPreco):'—', false, ICONS.scale, 'accent', diffTxt) +
+      kpiCard('Vendas/dia média (concorrentes)', stats.n?num(stats.vendasDiaMedia):'—', false, ICONS.trend, 'accent', 'baseado em vendas recentes (30d)');
+    root.appendChild(kpiRow);
+    var howCard = document.createElement('section'); howCard.className='card';
+    howCard.innerHTML = '<div class="card-head"><div><h2>Como monitorar um concorrente</h2><div class="sub">A Shopee não permite consultar os dados de outro anúncio direto por aqui — por isso o script roda na própria página do produto.</div></div></div>'+
+      '<ol class="steps-list">'+
+        '<li>Abra o anúncio do concorrente direto na Shopee (a página do produto).</li>'+
+        '<li>Aperte <strong>F12</strong> (ou botão direito → "Inspecionar") e vá na aba <strong>Console</strong>.</li>'+
+        '<li>Cole o script abaixo ali e aperte Enter. Aguarde a mensagem verde de confirmação.</li>'+
+        '<li>Volte aqui, cole (Ctrl+V) o resultado na caixa "Adicionar concorrente" abaixo e clique em adicionar.</li>'+
+        '<li>Pra ver o histórico de vendas e crescimento, rode o mesmo script de novo neste produto daqui a alguns dias — cada nova captura vira um ponto no gráfico.</li>'+
+      '</ol>'+
+      '<div class="code-block"><pre><code id="pesquisa-script-code"></code></pre>'+
+        '<button type="button" class="ghost" id="btn-copy-research-script">'+svgIcon(ICONS.copy)+'Copiar script</button>'+
+      '</div>';
+    root.appendChild(howCard);
+    howCard.querySelector('#pesquisa-script-code').textContent = SHOPEE_RESEARCH_SCRIPT;
+    howCard.querySelector('#btn-copy-research-script').addEventListener('click', copyResearchScriptToClipboard);
+    var addCard = document.createElement('section'); addCard.className='card';
+    addCard.innerHTML = '<div class="card-head"><div><h2>Adicionar concorrente</h2><div class="sub">Cole aqui o texto (JSON) que o script gerou no Console. Se já existir um concorrente com o mesmo link ou nome, a captura é somada ao histórico dele em vez de duplicar a linha.</div></div></div>'+
+      '<textarea id="pesquisa-paste" rows="4" placeholder=\'Cole aqui o resultado copiado do script, ex.: {"nome":"...","precoAtual":55.8,...}\'></textarea>'+
+      '<div class="research-add-row">'+
+        '<button type="button" class="ghost" id="btn-paste-research">'+svgIcon(ICONS.copy)+'Colar da área de transferência</button>'+
+        '<button type="button" class="primary" id="btn-add-research">'+svgIcon(ICONS.search)+'Adicionar à pesquisa</button>'+
+      '</div>'+
+      '<p class="note" id="pesquisa-add-error" style="display:none;color:var(--critical);"></p>';
+    root.appendChild(addCard);
+    var textarea = addCard.querySelector('#pesquisa-paste');
+    var errEl = addCard.querySelector('#pesquisa-add-error');
+    addCard.querySelector('#btn-paste-research').addEventListener('click', function(){
+      if(navigator.clipboard && navigator.clipboard.readText){
+        navigator.clipboard.readText().then(function(txt){ textarea.value = txt; textarea.focus(); }, function(){
+          showToast('<strong>Não consegui ler a área de transferência.</strong> Cole manualmente com Ctrl+V na caixa de texto.');
+        });
+      } else {
+        showToast('<strong>Não consegui ler a área de transferência.</strong> Cole manualmente com Ctrl+V na caixa de texto.');
+      }
+    });
+    addCard.querySelector('#btn-add-research').addEventListener('click', function(){
+      errEl.style.display='none';
+      var raw = (textarea.value||'').trim();
+      if(!raw){ errEl.textContent='Cole o resultado do script antes de adicionar.'; errEl.style.display='block'; return; }
+      var parsed;
+      try{ parsed = JSON.parse(raw); }
+      catch(e){ errEl.textContent='Não consegui entender esse texto — confira se colou o JSON completo que o script gerou.'; errEl.style.display='block'; return; }
+      if(!parsed || typeof parsed.precoAtual === 'undefined'){ errEl.textContent='Faltam dados nesse texto — confira se copiou o resultado certo do script.'; errEl.style.display='block'; return; }
+      var snapshot = {
+        capturadoEm: parsed.capturadoEm || new Date().toISOString(),
+        precoAtual: parsed.precoAtual, criadoEm: parsed.criadoEm, diasAtivo: parsed.diasAtivo,
+        vendas30d: parsed.vendas30d, mediaRecenteDia: parsed.mediaRecenteDia,
+        totalHistorico: parsed.totalHistorico, mediaHistoricaDia: parsed.mediaHistoricaDia,
+        nota: parsed.nota, avaliacoes: parsed.avaliacoes, curtidas: parsed.curtidas, estoque: parsed.estoque,
+        variacoes: Array.isArray(parsed.variacoes) ? parsed.variacoes : []
+      };
+      var list = state.pesquisa.shopee;
+      var existing = null;
+      if(parsed.linkOrigem){ existing = list.filter(function(c){ return c.linkOrigem && c.linkOrigem===parsed.linkOrigem; })[0]; }
+      if(!existing && parsed.nome){ existing = list.filter(function(c){ return c.nome && c.nome===parsed.nome; })[0]; }
+      var isUpdate = !!existing;
+      var nomeFinal = parsed.nome || (existing && existing.nome) || '';
+      if(existing){
+        existing.nome = nomeFinal;
+        existing.linkOrigem = parsed.linkOrigem || existing.linkOrigem;
+        existing.history.push(snapshot);
+        existing.history.sort(function(a,b){ return new Date(a.capturadoEm) - new Date(b.capturadoEm); });
+      } else {
+        list.unshift({ id:'c'+Date.now()+Math.random().toString(36).slice(2,7), nome:nomeFinal, linkOrigem:parsed.linkOrigem||'', history:[snapshot] });
+      }
+      textarea.value = '';
+      renderActiveTab();
+      showToast('<strong>'+(isUpdate?'Nova captura adicionada ao histórico.':'Concorrente adicionado.')+'</strong> '+(nomeFinal ? String(nomeFinal).slice(0,60) : 'Item')+' já aparece na tabela abaixo.');
+    });
+    var tableCard = document.createElement('section'); tableCard.className='card';
+    tableCard.innerHTML = '<div class="card-head"><div><h2>Concorrentes monitorados</h2><div class="sub">Clique no nome ou no ícone de olho para ver a análise individual e o histórico de vendas do produto.</div></div></div>';
+    var list = state.pesquisa.shopee;
+    if(!list.length){
+      var empty = document.createElement('div'); empty.className='empty'; empty.textContent='Nenhum concorrente adicionado ainda.';
+      tableCard.appendChild(empty);
+    } else {
+      var scrollWrap = document.createElement('div'); scrollWrap.className='table-scroll';
+      var table = document.createElement('table');
+      var thead = '<thead><tr><th>Produto</th><th>Preço</th><th>Criado em</th><th>Idade</th><th>Vendas 30d</th><th>Média/dia (30d)</th><th>Total histórico</th><th>Média/dia (histórico)</th><th>Avaliações</th><th>Nota</th><th>Curtidas</th><th>Estoque</th><th>Capturas</th><th></th></tr></thead>';
+      var rows = list.map(function(c){
+        var latest = pesquisaLatest(c);
+        if(!latest) return '';
+        var criadoTxt = latest.criadoEm ? new Date(latest.criadoEm).toLocaleDateString('pt-BR') : '—';
+        var idadeTxt = idadeFormatada(latest.criadoEm);
+        var nomeTxt = c.nome ? String(c.nome) : '(sem nome)';
+        var nomeCurto = nomeTxt.length>42 ? nomeTxt.slice(0,42)+'…' : nomeTxt;
+        var linkHtml = c.linkOrigem ? '<a class="research-link" href="'+String(c.linkOrigem).replace(/"/g,'&quot;')+'" target="_blank" rel="noopener">'+svgIcon(ICONS.link)+'</a>' : '';
+        return '<tr>'+
+          '<td style="text-align:left;"><span class="research-name"><span class="cellval research-view-name" data-id="'+c.id+'">'+nomeCurto+'</span>'+linkHtml+'</span></td>'+
+          '<td>'+money(Number(latest.precoAtual)||0)+'</td>'+
+          '<td>'+criadoTxt+'</td>'+
+          '<td>'+idadeTxt+'</td>'+
+          '<td>'+num(Number(latest.vendas30d)||0)+'</td>'+
+          '<td>'+num(Number(latest.mediaRecenteDia)||0)+'</td>'+
+          '<td>'+num(Number(latest.totalHistorico)||0)+'</td>'+
+          '<td>'+num(Number(latest.mediaHistoricaDia)||0)+'</td>'+
+          '<td>'+num(Number(latest.avaliacoes)||0)+'</td>'+
+          '<td>'+(latest.nota!=null ? num(latest.nota) : '—')+'</td>'+
+          '<td>'+num(Number(latest.curtidas)||0)+'</td>'+
+          '<td>'+num(Number(latest.estoque)||0)+'</td>'+
+          '<td>'+String(c.history.length)+'</td>'+
+          '<td><span class="research-actions">'+
+            '<button type="button" class="ghost research-view" data-id="'+c.id+'" title="Ver detalhes">'+svgIcon(ICONS.eye)+'</button>'+
+            '<button type="button" class="ghost research-remove" data-id="'+c.id+'" title="Remover">'+svgIcon(ICONS.trash)+'</button>'+
+          '</span></td>'+
+        '</tr>';
+      }).join('');
+      table.innerHTML = thead + '<tbody>'+rows+'</tbody>';
+      scrollWrap.appendChild(table);
+      tableCard.appendChild(scrollWrap);
+    }
+    root.appendChild(tableCard);
+    tableCard.querySelectorAll('.research-view, .research-view-name').forEach(function(el){
+      el.addEventListener('click', function(){
+        state.pesquisa.selectedId = el.getAttribute('data-id');
+        renderActiveTab();
+      });
+    });
+    tableCard.querySelectorAll('.research-remove').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var id = btn.getAttribute('data-id');
+        var match = state.pesquisa.shopee.filter(function(c){ return c.id===id; })[0];
+        var idx = match ? state.pesquisa.shopee.indexOf(match) : -1;
+        if(idx>=0){ state.pesquisa.shopee.splice(idx,1); renderActiveTab(); }
+      });
+    });
+  }
   // ======================================================================
   // NAV + RENDER PRINCIPAL
   // ======================================================================
@@ -2624,11 +3004,11 @@
     { id:'ml', label:'Mercado Livre' },
     { id:'shein', label:'SHEIN' },
     { id:'tiktok', label:'TikTok Shop' },
+    { id:'pesquisa', label:'Pesquisa de mercado' },
     { id:'comparativo', label:'Comparativo' },
     { id:'custos', label:'Custos fixos' },
     { id:'dashboard', label:'Dashboard' }
   ];
-
   function renderNav(){
     var nav = document.getElementById('nav-row');
     nav.innerHTML = '';
@@ -2641,7 +3021,6 @@
       nav.appendChild(btn);
     });
   }
-
   function renderActiveTabInner(){
     renderNav();
     var root = document.getElementById('view-root');
@@ -2650,11 +3029,11 @@
     else if(state.activeTab==='ml') renderML(root);
     else if(state.activeTab==='shein') renderShein(root);
     else if(state.activeTab==='tiktok') renderTiktok(root);
+    else if(state.activeTab==='pesquisa') renderPesquisa(root);
     else if(state.activeTab==='comparativo') renderComparativo(root);
     else if(state.activeTab==='dashboard') renderDashboard(root);
     else renderCustosFixos(root);
   }
-
   // Reconstruir a tela inteira a cada tecla digitada perderia o foco do campo — então
   // guardamos qual input estava focado (e a posição do cursor) antes de renderizar de
   // novo, e devolvemos o foco pro campo equivalente depois.
@@ -2683,7 +3062,6 @@
       }
     }
   }
-
   // ======================================================================
   // SALVAR / EXPORTAR / IMPORTAR
   // ======================================================================
@@ -2695,7 +3073,6 @@
     document.body.appendChild(a); a.click(); document.body.removeChild(a);
     setTimeout(function(){ URL.revokeObjectURL(url); }, 1000);
   }
-
   var toastTimer = null;
   function showToast(html){
     var t = document.getElementById('toast');
@@ -2708,7 +3085,6 @@
       setTimeout(function(){ t.hidden = true; }, 200);
     }, 6000);
   }
-
   // Tracks whether the in-memory state still matches what was loaded/last saved,
   // so we can gently warn before the tab closes with unsaved measurements/prices.
   var lastSavedSnapshot = JSON.stringify(state);
@@ -2719,7 +3095,6 @@
       return ev.returnValue;
     }
   });
-
   document.getElementById('btn-clear-data').addEventListener('click', clearSavedData);
   document.getElementById('btn-export').addEventListener('click', function(){
     downloadBlob(JSON.stringify(state, null, 2), 'calculadora-lucro-dados.json', 'application/json');
@@ -2751,7 +3126,6 @@
     lastSavedSnapshot = JSON.stringify(state);
     showToast('<strong>Dados salvos.</strong> Um novo arquivo .html foi baixado com peso, medidas e preços preenchidos. Da próxima vez, abra esse arquivo (não o original) para continuar de onde parou.');
   });
-
   // Ao focar num campo que está com "0", seleciona o valor —
   // assim digitar já substitui, sem precisar apagar antes.
   document.addEventListener('focusin', function(ev){
@@ -2761,10 +3135,7 @@
       el.select();
     }
   });
-
   renderActiveTab();
 })();
 </script>
-
-
 </body></html>
