@@ -523,30 +523,13 @@
     };
   }
   // ======================================================================
-  // SALVAMENTO AUTOMÁTICO (localStorage)
-  // Cada alteração de campo re-renderiza a tela (renderActiveTab), e é nesse
-  // ponto que também persistimos o estado no localStorage deste navegador —
-  // então não existe um "botão salvar" separado para isso, é automático.
-  // Isso é independente do botão "Salvar meus dados" (que baixa um .html) e
-  // do Exportar/Importar (.json): esses continuam funcionando exatamente como antes.
+  // LIMPAR DADOS
+  // Sem salvamento automático: os campos ficam só na memória desta página
+  // enquanto você usa. O botão "Salvar meus dados" (baixa um .html) e o
+  // Exportar/Importar (.json) continuam funcionando exatamente como antes.
   // ======================================================================
-  var AUTOSAVE_KEY = 'calculadoraLucroMarketplace:autosave:v1';
-  function autoSaveState(){
-    try{ localStorage.setItem(AUTOSAVE_KEY, JSON.stringify(state)); }
-    catch(e){ /* localStorage indisponível (modo privado, quota etc.) — segue sem autosave */ }
-  }
-  function loadAutoSavedState(){
-    try{
-      var raw = localStorage.getItem(AUTOSAVE_KEY);
-      if(!raw) return null;
-      var parsed = JSON.parse(raw);
-      if(parsed && parsed.shopee && parsed.ml) return parsed;
-    }catch(e){ /* ignora dado corrompido */ }
-    return null;
-  }
   function clearSavedData(){
-    if(!confirm('Tem certeza que deseja apagar todos os dados salvos? Isso vai limpar os campos preenchidos nesta calculadora (neste navegador).')) return;
-    try{ localStorage.removeItem(AUTOSAVE_KEY); }catch(e){}
+    if(!confirm('Tem certeza que deseja limpar todos os campos preenchidos nesta calculadora?')) return;
     state = defaultState();
     lastSavedSnapshot = JSON.stringify(state);
     renderActiveTab();
@@ -575,11 +558,8 @@
   }
   var state = null;
   function loadInitialState(){
-    // Prioridade: 1) autosave deste navegador (mais recente) — 2) dados
-    // embutidos no arquivo .html (de um "Salvar meus dados" anterior, útil
-    // ao abrir em outro computador/navegador) — 3) padrão de fábrica.
-    var auto = loadAutoSavedState();
-    if(auto) return ensureSheinDefaults(auto);
+    // Prioridade: 1) dados embutidos no arquivo .html (de um "Salvar meus
+    // dados" anterior) — 2) padrão de fábrica. Sem salvamento automático.
     var seedEl = document.getElementById('app-data');
     var raw = (seedEl.textContent || '').trim();
     if(raw && raw !== 'SEED_PLACEHOLDER'){
@@ -3047,7 +3027,6 @@
       try{ selStart = active.selectionStart; selEnd = active.selectionEnd; }catch(e){}
     }
     renderActiveTabInner();
-    autoSaveState();
     if(fid){
       var el = document.querySelector('[data-fid="'+fid.replace(/"/g,'\\"')+'"]');
       if(el){
