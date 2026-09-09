@@ -556,16 +556,15 @@
     }
     return st;
   }
+  // Limpeza única de uma versão antiga desta calculadora que chegou a salvar
+  // automaticamente no navegador (localStorage) — isso foi removido; esta
+  // linha só apaga esse resíduo antigo, se existir, e não grava nada novo.
+  try{ localStorage.removeItem('calculadoraLucroMarketplace:autosave:v1'); }catch(e){}
   var state = null;
+  // Ferramenta de simulação apenas: sempre abre zerada, nada fica salvo em
+  // lugar nenhum (nem localStorage, nem dado embutido no arquivo). Fechar a
+  // aba ou abrir o arquivo de novo sempre volta ao padrão de fábrica.
   function loadInitialState(){
-    // Prioridade: 1) dados embutidos no arquivo .html (de um "Salvar meus
-    // dados" anterior) — 2) padrão de fábrica. Sem salvamento automático.
-    var seedEl = document.getElementById('app-data');
-    var raw = (seedEl.textContent || '').trim();
-    if(raw && raw !== 'SEED_PLACEHOLDER'){
-      try{ var parsed = JSON.parse(raw); if(parsed && parsed.shopee && parsed.ml) return ensureSheinDefaults(parsed); }
-      catch(e){ console.warn('Falha ao ler dados salvos, usando padrão.', e); }
-    }
     return defaultState();
   }
   state = loadInitialState();
